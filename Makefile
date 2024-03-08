@@ -3,13 +3,25 @@ NAME	:= minishell
 # Compiler
 CC	:=	cc
 CFLAGS	:=	-Wextra -Wall -Werror
-INC		= -I ./includes/
+INC		= -I ./include/
+
+# Libft
+LIBFT_PATH	:=	./lib/libft/
+LIBFT_NAME	:=	libft.a
+LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
+
 # Source
 SRCS	:=	src/main.c
 
+# Objects
 OBJS	:=	$(SRCS:.c=.o)
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
+
+# Making Libft
+$(LIBFT):
+	@echo "Making Libft..."
+	@make -sC $(LIBFT_PATH)
 
 %.o: %c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)
@@ -22,10 +34,13 @@ $(NAME): $(OBJS)
 clean:
 	@echo "Cleaning object files..."
 	@rm -rf $(OBJS)
+	@make clean -sC $(LIBFT_PATH)
+
 
 fclean: clean
 	@echo "Cleaning Minishell..."
 	@rm -rf $(NAME)
+	@make fclean -sC $(LIBFT_PATH)
 
 re: fclean all
 
