@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 01:50:46 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 03:19:59 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_token	**lexer(const char *input)
  * @param value
  * @return t_token*
  */
-t_token	*create_new_token(token_type type, char *value)
+t_token	*create_new_token(t_token_type type, char *value)
 {
 	t_token	*token;
 
@@ -71,9 +71,9 @@ void	free_tokens(t_token **tokens)
 	i = 0;
 	while (tokens[i])
 	{
-		if (token->value)
-			free(token->value);
-		free(token);
+		if (tokens[i]->value)
+			free(tokens[i]->value);
+		free(tokens[i]);
 	}
 }
 
@@ -87,7 +87,7 @@ void	free_tokens(t_token **tokens)
 void	assign_tokens(t_token **tokens, char **split_tokens, int token_count)
 {
 	int			i;
-	token_type	type;
+	t_token_type	type;
 
 	i = 0;
 	while (i < token_count)

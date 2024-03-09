@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:34:12 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 01:44:59 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 03:17:00 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char		*input;
 	t_token		**tokens;
+	t_ast_node	*ast;
 
 	(void)argc;
 	(void)argv;
@@ -25,8 +26,10 @@ int	main(int argc, char **argv, char **env)
 		input = readline("minishell> ");
 		tokens = lexer(input);
 		//print_tokens(tokens);
+		ast = parser(tokens);
+		//print_ast(ast, 0);
 		break ;
 	}
-	free_tokens(tokens);
+	//free_tokens(tokens);
 	return (EXIT_SUCCESS);
 }

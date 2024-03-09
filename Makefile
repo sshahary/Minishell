@@ -13,6 +13,7 @@ LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 # Source
 SRCS	:=	src/main.c \
 			src/parser/lexer.c\
+			src/parser/parser.c \
 			test.c
 
 # Objects
