@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 01:43:47 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:50:13 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 typedef enum
 {
-	COMMAND,
-	ARGUMENT,
-	PIPE,
-	REDIRECT,
-	END
+	T_COMMAND,
+	T_ARGUMENT,
+	T_PIPE,
+	T_REDIRECT,
+	T_END
 }	token_type;
 
 typedef struct s_token
@@ -44,5 +44,6 @@ void	assign_tokens(t_token **tokens, char **split_tokens, int token_count);
 
 // Tests
 void	print_tokens(t_token **tokens);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 01:44:37 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:50:46 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	assign_tokens(t_token **tokens, char **split_tokens, int token_count)
 	while (i < token_count)
 	{
 		if (i == 0)
-			type = COMMAND;
+			type = T_COMMAND;
 		else if (strcmp(split_tokens[i], "|") == 0)
-			type = PIPE;
+			type = T_PIPE;
 		else if (strcmp(split_tokens[i], ">") == 0)
-			type = REDIRECT;
+			type = T_REDIRECT;
 		else
-			type = ARGUMENT;
+			type = T_ARGUMENT;
 		tokens[i] = create_new_token(type, split_tokens[i]);
 		i++;
 	}
