@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:34:12 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:17:00 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 03:32:44 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 		tokens = lexer(input);
 		//print_tokens(tokens);
 		ast = parser(tokens);
-		//print_ast(ast, 0);
+		print_ast(ast, 0);
 		break ;
 	}
 	//free_tokens(tokens);

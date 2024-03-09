@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:19:59 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 03:27:01 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_token	**lexer(const char *input)
  * @param value
  * @return t_token*
  */
-t_token	*create_new_token(t_token_type type, char *value)
+t_token	*create_new_token(t_type type, char *value)
 {
 	t_token	*token;
 
@@ -86,20 +86,26 @@ void	free_tokens(t_token **tokens)
  */
 void	assign_tokens(t_token **tokens, char **split_tokens, int token_count)
 {
-	int			i;
-	t_token_type	type;
+	int		i;
+	t_type	type;
 
 	i = 0;
 	while (i < token_count)
 	{
 		if (i == 0)
-			type = T_COMMAND;
+			type = COMMAND;
 		else if (strcmp(split_tokens[i], "|") == 0)
-			type = T_PIPE;
+			type = PIPE;
 		else if (strcmp(split_tokens[i], ">") == 0)
-			type = T_REDIRECT;
+			type = REDIRECT_OUT;
+		else if (strcmp(split_tokens[i], "<") == 0)
+			type = REDIRECT_IN;
+		else if (strcmp(split_tokens[i], ">>") == 0)
+			type = REDIRECT_OUT_APPEND;
+		else if (strcmp(split_tokens[i], "<<") == 0)
+			type = HEREDOC;
 		else
-			type = T_ARGUMENT;
+			type = ARGUMENT;
 		tokens[i] = create_new_token(type, split_tokens[i]);
 		i++;
 	}

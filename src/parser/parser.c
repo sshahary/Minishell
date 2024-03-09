@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 01:55:33 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:20:16 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 03:32:33 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ t_ast_node	*parser(t_token **tokens)
 
 t_ast_node	*parse_pipe(t_token **tokens, int *index)
 {
-	t_ast_node	*left;
-	t_ast_node	*right;
+	t_ast_node	*prev;
+	t_ast_node	*next;
 
-	left = parse_commands(tokens, index);
-	if (tokens[*index] != NULL && tokens[*index]->type == T_PIPE)
+	prev = parse_commands(tokens, index);
+	if (tokens[*index] != NULL && tokens[*index]->type == PIPE)
 	{
 		(*index)++;
-		t_ast_node *right = parse_pipe(tokens, index);
-		return (create_new_node(N_PIPE, NULL, left, right));
+		next = parse_pipe(tokens, index);
+		return (create_new_node(PIPE, NULL, prev, next));
 	}
 	else
 	{
-		(void)right;
-		return (left);
+		(void)next;
+		return (prev);
 	}
 }
 
@@ -46,7 +46,7 @@ t_ast_node	*parse_commands(t_token **tokens, int *index)
 
 	args_count = 0;
 	i = *index;
-	while (tokens[*index] != NULL && tokens[*index]->type != T_PIPE)
+	while (tokens[*index] != NULL && tokens[*index]->type != PIPE)
 	{
 		args_count++;
 		(*index)++;
@@ -61,10 +61,10 @@ t_ast_node	*parse_commands(t_token **tokens, int *index)
 		(*index)++;
 		i++;
 	}
-	return (create_new_node(N_COMMAND, args, NULL, NULL));
+	return (create_new_node(COMMAND, args, NULL, NULL));
 }
 
-t_ast_node	*create_new_node(t_node_type t, char **a, t_ast_node *p, t_ast_node *n)
+t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n)
 {
 	t_ast_node	*node;
 
