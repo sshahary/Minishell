@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:29:17 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:13:48 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		assign_tokens(t_token **tokens, char **split_tokens, int token_count);
 
 // Parser
 t_ast_node	*parser(t_token **tokens);
-t_ast_node	*parse_pipe(t_token **tokens, int *index);
+t_ast_node	*parse_pipes_and_redirections(t_token **tokens, int *index);
 t_ast_node	*parse_commands(t_token **tokens, int *index);
 t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n);
 

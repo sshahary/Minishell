@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 01:55:33 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:32:33 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:13:36 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ t_ast_node	*parser(t_token **tokens)
 {
 	int index = 0;
 
-	return (parse_pipe(tokens, &index));
+	return (parse_pipes_and_redirections(tokens, &index));
 }
 
-t_ast_node	*parse_pipe(t_token **tokens, int *index)
+t_ast_node	*parse_pipes_and_redirections(t_token **tokens, int *index)
 {
 	t_ast_node	*prev;
 	t_ast_node	*next;
+	t_type		temp;
 
 	prev = parse_commands(tokens, index);
-	if (tokens[*index] != NULL && tokens[*index]->type == PIPE)
+	if (tokens[*index] != NULL && tokens[*index]->type != COMMAND && tokens[*index]->type != ARGUMENT)
 	{
+		temp = tokens[*index]->type;
 		(*index)++;
-		next = parse_pipe(tokens, index);
-		return (create_new_node(PIPE, NULL, prev, next));
+		next = parse_pipes_and_redirections(tokens, index);
+		return (create_new_node(temp, NULL, prev, next));
 	}
 	else
 	{
@@ -46,7 +48,7 @@ t_ast_node	*parse_commands(t_token **tokens, int *index)
 
 	args_count = 0;
 	i = *index;
-	while (tokens[*index] != NULL && tokens[*index]->type != PIPE)
+	while (tokens[*index] != NULL && (tokens[*index]->type == COMMAND || tokens[*index]->type == ARGUMENT))
 	{
 		args_count++;
 		(*index)++;
