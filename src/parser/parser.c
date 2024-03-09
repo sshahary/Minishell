@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 01:55:33 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:13:36 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:36:04 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,25 @@ t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n)
 	node->prev = p;
 	node->next = n;
 	return (node);
+}
+
+void	free_ast(t_ast_node *node)
+{
+	int	i;
+
+	i = 0;
+	if (node == NULL)
+		return ;
+	free_ast(node->next);
+	free_ast(node->prev);
+	if (node->args != NULL)
+	{
+		while (node->args[i])
+		{
+			free(node->args[i]);
+			i++;
+		}
+		free(node->args);
+	}
+	free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 03:27:01 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:38:32 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ void	free_tokens(t_token **tokens)
 		if (tokens[i]->value)
 			free(tokens[i]->value);
 		free(tokens[i]);
+		i++;
 	}
+	free(tokens);
 }
 
 /**
