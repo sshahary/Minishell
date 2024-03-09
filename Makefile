@@ -11,7 +11,9 @@ LIBFT_NAME	:=	libft.a
 LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Source
-SRCS	:=	src/main.c
+SRCS	:=	src/main.c \
+			src/parser/lexer.c\
+			test.c
 
 # Objects
 OBJS	:=	$(SRCS:.c=.o)
@@ -29,7 +31,7 @@ $(LIBFT):
 # Compiling Minishell
 $(NAME): $(OBJS)
 	@echo "Compiling Minishell..."
-	@$(CC) $(OBJS) $(INC) -o $(NAME) -l readline
+	@$(CC) $(OBJS) $(LIBFT) $(INC) -o $(NAME) -l readline
 
 clean:
 	@echo "Cleaning object files..."
