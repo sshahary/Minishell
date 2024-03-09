@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 01:35:03 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:44:37 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,16 @@ t_token	*create_new_token(token_type type, char *value)
 }
 
 /**
- * @brief frees a token
+ * @brief frees the array of tokens
  *
  * @param token
  */
-void	free_token(t_token *token)
+void	free_tokens(t_token **tokens)
 {
-	if (token)
+	int	i;
+
+	i = 0;
+	while (tokens[i])
 	{
 		if (token->value)
 			free(token->value);
