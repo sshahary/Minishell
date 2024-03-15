@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:36:42 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:28:50 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,13 @@ void		free_ast(t_ast_node *node);
 // Tests
 void		print_tokens(t_token **tokens);
 void		print_ast(t_ast_node *node, int level);
+
+
+
+//execution
+
+int			ft_error(char *str);
+void		run_pipeline(char *commands);
+
 
 #endif

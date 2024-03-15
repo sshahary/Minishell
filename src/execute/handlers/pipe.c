@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/03/14 17:56:39 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:33:20 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,68 +42,43 @@ void	run_pipeline(char *commands)
 	pid_t	pid;
 	char	*command;
 	int		status;
+	char	*end;
 
 	command = ft_strsep(&commands, "|");
-	// Split commands based on the pipe character '|'
 	while ((command) != NULL)
 	{
-		// Trim leading and trailing spaces
 		while (*command == ' ')
 			command++;
-		char *end = command + ft_strlen(command) - 1;
+		end = command + ft_strlen(command) - 1;
 		while (end > command && *end == ' ')
 			end--;
-		*(end + 1) = '\0';	
-		// Create pipe
+		*(end + 1) = '\0';
 		if (pipe(pipefd) == -1)
-		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
-		// Fork a child process
-		if ((pid = fork()) == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+			ft_error("pipe");
+		pid = fork();
+		if ((pid) == -1)
+			ft_error("fork");
 		if (pid == 0)
-		{	// Child process
-			// Close read end of the pipe
-			close(pipefd[0]);	
-			// Redirect stdout to the write end of the pipe
+		{
+			close(pipefd[0]);
 			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			{
-				perror("dup2");
-				exit(EXIT_FAILURE);
-			}
-			// Close unnecessary file descriptors
-			close(pipefd[1]);	
-			// Execute the command
-			if (execlp(command, command, NULL) == -1)
-			{
-				perror("execlp");
-				exit(EXIT_FAILURE);
-			}
+				ft_error("dup2");
+			close(pipefd[1]);
 		}
 		else
-		{	// Parent process
-			// Close write end of the pipe
+		{
 			close(pipefd[1]);
-			// Wait for child process to complete
 			wait(&status);
-			// Close read end of the pipe
 			close(pipefd[0]);
 		}
 	}
 }
 
-int	main(int argc, char **argv)
+int	main()
 {
-	if (argc < 2)
-	{
-		return (-1);
-	}
-	// Skip the program name (argv[0]) and pass the remaining arguments to run_pipeline
-	run_pipeline(*argv + 1);
+	char commands[] = "ls -l | grep test | wc -l";
+	printf("Executing command: %s\n", commands);
+	run_pipeline(commands);
 	return (0);
 }
+
