@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 14:39:55 by sshahary          #+#    #+#             */
-/*   Updated: 2024/03/15 17:32:50 by sshahary         ###   ########.fr       */
+/*   Created: 2024/03/15 17:17:07 by sshahary          #+#    #+#             */
+/*   Updated: 2024/03/16 14:34:03 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	echo(int argc, char *argv[])
+int	cd(char *path)
 {
-	int	i;
-	int	newline;
-
-	newline = 1;
-	if (argc > 1 && ft_strncmp(argv[1], "-n", 2) == 0)
+	if (chdir(path) != 0)
 	{
-		newline = 0;
-		argc--;
-		argv++;
+		perror("chdir");
+		return (-1);
 	}
-	i = 1;
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
-	}
-	if (newline)
-		printf("\n");
+	return (0);
 }
