@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:17:07 by sshahary          #+#    #+#             */
-/*   Updated: 2024/03/16 14:34:03 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:47:51 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	cd(char *path)
 {
 	if (chdir(path) != 0)
 	{
-		perror("chdir");
+		ft_error("chdir");
 		return (-1);
 	}
 	return (0);
