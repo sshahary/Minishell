@@ -40,14 +40,14 @@ int	env(char **envp, int fd)
 	return (1);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	int fd = 1;
-	while(1)
-	{
-		env(envp, fd);
-	}
-dprintf(2,"test\n");
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	int fd = 1;
+// 	while(1)
+// 	{
+// 		env(envp, fd);
+// 	}
+// dprintf(2,"test\n");
 
-	return (0);
-}
+// 	return (0);
+// }

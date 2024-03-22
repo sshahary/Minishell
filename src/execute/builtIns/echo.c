@@ -35,11 +35,3 @@ void	echo(int argc, char *argv[])
 	if (newline)
 		printf("\n");
 }
-
-// int	main(int ac, char *argv[])
-// {
-// 	if (ac < 2)
-// 		return (1);
-// 	echo(ac, argv);
-// 	return (0);
-// }
