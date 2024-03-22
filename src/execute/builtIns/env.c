@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 22:50:27 by sshahary          #+#    #+#             */
-/*   Updated: 2024/03/20 22:56:19 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:22:13 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	env(char **envp, int fd)
 		{
 			ft_putstr_fd(envp[i], fd);
 			ft_putchar('\n', fd);
-			write(1, "\n", 1);
 		}
 		i++;
 	}
@@ -43,10 +42,12 @@ int	env(char **envp, int fd)
 
 int	main(int argc, char **argv, char **envp)
 {
-    int fd = 1; // File descriptor for stdout (standard output)
+	int fd = 1;
+	while(1)
+	{
+		env(envp, fd);
+	}
+dprintf(2,"test\n");
 
-    // Call the env function with the provided envp array and file descriptor
-    env(envp, fd);
-
-    return 0;
+	return (0);
 }

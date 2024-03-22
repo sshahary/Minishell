@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/15 14:28:50 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:05:54 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -35,7 +36,7 @@ typedef enum s_type
 typedef struct s_token
 {
 	t_type	type;
-	char		*value;
+	char	*value;
 }	t_token;
 
 typedef struct s_ast_node
@@ -66,7 +67,11 @@ void		print_ast(t_ast_node *node, int level);
 
 
 //execution
-
+typedef struct s_shell
+{
+	char	**argv;
+	int		ac;
+}	t_shell;
 int			ft_error(char *str);
 void		run_pipeline(char *commands);
 

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:39:55 by sshahary          #+#    #+#             */
-/*   Updated: 2024/03/15 17:32:50 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:35:22 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,11 @@ void	echo(int argc, char *argv[])
 	if (newline)
 		printf("\n");
 }
+
+// int	main(int ac, char *argv[])
+// {
+// 	if (ac < 2)
+// 		return (1);
+// 	echo(ac, argv);
+// 	return (0);
+// }
