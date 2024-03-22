@@ -67,11 +67,16 @@ void		print_ast(t_ast_node *node, int level);
 
 
 //execution
-typedef struct s_shell
+#define MAX_COMMAND_LENGTH 100
+
+typedef struct s_command
 {
-	char	**argv;
-	int		ac;
-}	t_shell;
+    char command[MAX_COMMAND_LENGTH];
+    char *arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
+    int num_arguments;
+    char *environment_variables[100]; // Example for environment variables
+    int num_environment_variables;
+}	t_command;
 int			ft_error(char *str);
 void		run_pipeline(char *commands);
 
