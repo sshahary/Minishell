@@ -12,15 +12,19 @@
 
 #include "../../../include/minishell.h"
 
-int	pwd(int fd)
-{
-	char	*str;
+int pwd(int fd) {
+    char *cwd = getcwd(NULL, 0); // Allocate memory for the current working directory
+    if (cwd == NULL) {
+        // Handle error, if any
+        return 0; // Return 0 to indicate failure
+    }
+    
+    // Write the current working directory to the specified file descriptor
+    write(fd, cwd, strlen(cwd));
+    write(fd, "\n", 1);
 
-	str = getcwd(NULL, 0);
-	ft_putstr_fd(str, fd);
-	write(fd, "\n", 1);
-	// free(str);
-	return (1);
+    free(cwd); // Free the memory allocated by getcwd
+    return 1; // Return 1 to indicate success
 }
 
 // int	main(void)
