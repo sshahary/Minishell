@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/06 15:00:34 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:08:53 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -64,5 +65,22 @@ t_token	*lexer_handle_word(t_lexer	*lexer);
 t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
 void	free_tokens(t_token *tokens);
+
+
+
+//execution
+#define MAX_COMMAND_LENGTH 100
+
+typedef struct s_command
+{
+    char command[MAX_COMMAND_LENGTH];
+    char *arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
+    int num_arguments;
+    char *environment_variables[100]; // Example for environment variables
+    int num_environment_variables;
+}	t_command;
+int			ft_error(char *str);
+void		run_pipeline(char *commands);
+
 
 #endif
