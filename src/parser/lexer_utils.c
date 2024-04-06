@@ -1,0 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/06 15:05:03 by rpambhar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+t_token	*lexer_handle_redirection_out(t_lexer	*lexer)
+{
+	t_token	*token;
+
+	lexer->position++;
+	lexer->position++;
+	token = (t_token *)malloc(sizeof(t_token));
+	if (lexer->input[lexer->position] == '>')
+	{
+		lexer->position++;
+		token->type = REDIRECT_OUT_APPEND;
+	}
+	else
+		token->type = REDIRECT_OUT;
+	token->value = NULL;
+	return (token);
+}
+
+t_token	*lexer_handle_word(t_lexer	*lexer)
+{
+	t_token	*token;
+	int		word_length;
+	int		start_position;
+	int		end_position;
+
+	start_position = lexer->position;
+	while (lexer->input[lexer->position] != '\0' && \
+	(ft_isalnum(lexer->input[lexer->position]) || \
+	lexer->input[lexer->position] == '-' || \
+	lexer->input[lexer->position] == '-' || \
+	lexer->input[lexer->position] == '.'))
+		lexer->position++;
+	end_position = lexer->position;
+	word_length = end_position - start_position;
+	token = (t_token *)malloc(sizeof(t_token));
+	token->value = malloc((word_length + 1) * sizeof(char));
+	ft_strlcpy(token->value, lexer->input + start_position, word_length + 1);
+	token->type = WORD;
+	return (token);
+}
+
+t_token	*lexer_handle_error(void)
+{
+	t_token	*token;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	token->type = ERROR;
+	token->value = NULL;
+	token->next = NULL;
+	return (token);
+}
+
+t_token	*lexer_handle_eof(void)
+{
+	t_token	*token;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	token->type = END;
+	token->value = NULL;
+	return (token);
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token	*temp;
+
+	while (tokens)
+	{
+		temp = tokens;
+		if (temp->value != NULL)
+			free(temp->value);
+		tokens = tokens->next;
+		free(temp);
+	}
+}

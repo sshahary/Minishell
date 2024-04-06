@@ -11,10 +11,10 @@ LIBFT_NAME	:=	libft.a
 LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Source
-SRCS	:=	src/main.c \
+SRCS	:=	src/parser_test.c \
 			src/parser/lexer.c\
-			src/parser/parser.c \
-			test.c
+			src/parser/lexer_utils.c
+
 
 # Objects
 OBJS	:=	$(SRCS:.c=.o)

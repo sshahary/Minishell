@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:36:42 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:00:34 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,46 @@
 
 typedef enum s_type
 {
-	COMMAND,
-	ARGUMENT,
+	WORD,
 	PIPE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	REDIRECT_OUT_APPEND,
-	HEREDOC
+	HEREDOC,
+	ERROR,
+	END,
 }	t_type;
 
 typedef struct s_token
 {
-	t_type	type;
+	t_type		type;
 	char		*value;
+	struct s_token		*next;
+	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_ast_node
+typedef struct s_parser
 {
-	t_type				type;
-	char				**args;
-	struct s_ast_node	*prev;
-	struct s_ast_node	*next;
-}	t_ast_node;
+	t_token		*tokens;
+	int			exit_code;
+}	t_parser;
+
+typedef struct s_lexer
+{
+	char	*input;
+	int		position;
+}	t_lexer;
 
 // Lexer
-t_token		**lexer(const char *input);
-t_token		*create_new_token(t_type type, char *value);
-void		free_tokens(t_token **tokens);
-void		assign_tokens(t_token **tokens, char **split_tokens, int token_count);
-
-// Parser
-t_ast_node	*parser(t_token **tokens);
-t_ast_node	*parse_pipes_and_redirections(t_token **tokens, int *index);
-t_ast_node	*parse_commands(t_token **tokens, int *index);
-t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n);
-void		free_ast(t_ast_node *node);
-
-// Tests
-void		print_tokens(t_token **tokens);
-void		print_ast(t_ast_node *node, int level);
+t_token	*lexer(char *input);
+t_lexer	*init_lexer(char *input);
+t_token	*get_token(t_lexer *lexer);
+t_token	*lexer_handle_pipe(t_lexer	*lexer);
+t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
+t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
+t_token	*lexer_handle_word(t_lexer	*lexer);
+t_token	*lexer_handle_error();
+t_token	*lexer_handle_eof();
+void	free_tokens(t_token *tokens);
 
 #endif

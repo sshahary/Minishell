@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:10:05 by rpambhar          #+#    #+#             */
-/*   Updated: 2023/10/08 12:38:30 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:21:15 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len;
-	size_t	i;
+	int	len;
+	int	i;
 	char	*str;
 
 	len = ft_strlen(s1) + ft_strlen(s2);

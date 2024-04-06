@@ -6,19 +6,20 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:34:12 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:37:48 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:01:09 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 void	check_leaks(void);
+// void print_tokens(t_token *tokens);
 
 int	main(int argc, char **argv, char **env)
 {
 	char		*input;
-	t_token		**tokens;
-	t_ast_node	*ast;
+	t_parser	parser;
+
 
 	atexit(check_leaks);
 	(void)argc;
@@ -27,18 +28,25 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("minishell> ");
-		tokens = lexer(input);
-		//print_tokens(tokens);
-		ast = parser(tokens);
-		print_ast(ast, 0);
+		parser.tokens = lexer(input);
 		break ;
 	}
-	free_tokens(tokens);
-	free_ast(ast);
+	free_tokens(parser.tokens);
 	free(input);
 	return (EXIT_SUCCESS);
 }
 
+// void print_tokens(t_token *tokens)
+// {
+// 	while (tokens->next)
+// 	{
+// 		if (tokens->type == PIPE)
+// 			printf("PIPE\n");
+// 		if (tokens->type == WORD)
+// 			printf("WORD\n");
+// 		tokens = tokens->next;
+// 	}
+// }
 
 void	check_leaks(void)
 {

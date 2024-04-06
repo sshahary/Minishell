@@ -5,111 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 00:33:30 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:38:32 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/03/27 07:53:24 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/06 15:05:07 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/**
- * @brief Splits the input into tokens
- *
- * @param input
- * @return t_token**
- */
-t_token	**lexer(const char *input)
+t_token	*lexer(char *input)
 {
-	t_token	**tokens;
-	char	**split_tokens;
-	int		token_count;
+	t_lexer	*lexer;
+	t_token	*tokens;
+	t_token	*temp;
 	int		i;
 
-	i = -1;
-	token_count = 0;
-	split_tokens = ft_split(input, ' ');
-	while (split_tokens[token_count])
-		token_count++;
-	tokens = (t_token **)malloc(sizeof(t_token *) * (token_count + 1));
-	if (!tokens)
-		return (NULL);
-	assign_tokens(tokens, split_tokens, token_count);
-	while (split_tokens[++i])
-		free(split_tokens[i]);
-	free(split_tokens);
+	i = 0;
+	lexer = init_lexer(input);
+	tokens = get_token(lexer);
+	tokens->prev = NULL;
+	temp = tokens;
+	while (tokens->type != END)
+	{
+		tokens->next = get_token(lexer);
+		tokens = tokens->next;
+	}
+	tokens = temp;
+	free(lexer);
 	return (tokens);
 }
 
-/**
- * @brief Create a new token object
- *
- * @param type
- * @param value
- * @return t_token*
- */
-t_token	*create_new_token(t_type type, char *value)
+t_lexer	*init_lexer(char *input)
+{
+	t_lexer	*lexer;
+
+	lexer = (t_lexer *)malloc(sizeof(t_lexer));
+	lexer->input = input;
+	lexer->position = 0;
+	return (lexer);
+}
+
+t_token	*get_token(t_lexer *lexer)
+{
+	while (!(lexer->position >= ft_strlen(lexer->input)))
+	{
+		if (ft_isspace(lexer->input[lexer->position]))
+		{
+			lexer->position++;
+		}
+		if (lexer->input[lexer->position] == '|')
+			return (lexer_handle_pipe(lexer));
+		if (lexer->input[lexer->position] == '<')
+			return (lexer_handle_redirection_in(lexer));
+		if (lexer->input[lexer->position] == '>')
+			return (lexer_handle_redirection_out(lexer));
+		if (ft_isalnum(lexer->input[lexer->position]) || \
+		lexer->input[lexer->position] == '-' || \
+		lexer->input[lexer->position] == '-' || \
+		lexer->input[lexer->position] == '.')
+			return (lexer_handle_word(lexer));
+		return (lexer_handle_error());
+	}
+	return (lexer_handle_eof());
+}
+
+t_token	*lexer_handle_pipe(t_lexer	*lexer)
 {
 	t_token	*token;
 
+	lexer->position++;
 	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = ft_strdup(value);
+	token->type = PIPE;
+	token->value = NULL;
 	return (token);
 }
 
-/**
- * @brief frees the array of tokens
- *
- * @param token
- */
-void	free_tokens(t_token **tokens)
+t_token	*lexer_handle_redirection_in(t_lexer	*lexer)
 {
-	int	i;
+	t_token	*token;
 
-	i = 0;
-	while (tokens[i])
+	lexer->position++;
+	token = (t_token *)malloc(sizeof(t_token));
+	if (lexer->input[lexer->position] == '<')
 	{
-		if (tokens[i]->value)
-			free(tokens[i]->value);
-		free(tokens[i]);
-		i++;
+		lexer->position++;
+		token->type = HEREDOC;
 	}
-	free(tokens);
-}
-
-/**
- * @brief Parses the input and creates new tokens
- *
- * @param tokens
- * @param split_tokens
- * @param token_count
- */
-void	assign_tokens(t_token **tokens, char **split_tokens, int token_count)
-{
-	int		i;
-	t_type	type;
-
-	i = 0;
-	while (i < token_count)
-	{
-		if (i == 0)
-			type = COMMAND;
-		else if (strcmp(split_tokens[i], "|") == 0)
-			type = PIPE;
-		else if (strcmp(split_tokens[i], ">") == 0)
-			type = REDIRECT_OUT;
-		else if (strcmp(split_tokens[i], "<") == 0)
-			type = REDIRECT_IN;
-		else if (strcmp(split_tokens[i], ">>") == 0)
-			type = REDIRECT_OUT_APPEND;
-		else if (strcmp(split_tokens[i], "<<") == 0)
-			type = HEREDOC;
-		else
-			type = ARGUMENT;
-		tokens[i] = create_new_token(type, split_tokens[i]);
-		i++;
-	}
-	tokens[token_count] = NULL;
+	else
+		token->type = REDIRECT_IN;
+	token->value = NULL;
+	return (token);
 }
