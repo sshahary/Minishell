@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 07:53:24 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/06 15:05:07 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:17:55 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ t_token	*lexer(char *input)
 	temp = tokens;
 	while (tokens->type != END)
 	{
+		if (tokens->type == ERROR){
+			printf("minishell: syntax error unclosed quotes\n");
+			return (NULL);
+		}
 		tokens->next = get_token(lexer);
 		tokens = tokens->next;
 	}
@@ -41,6 +45,8 @@ t_lexer	*init_lexer(char *input)
 	lexer = (t_lexer *)malloc(sizeof(t_lexer));
 	lexer->input = input;
 	lexer->position = 0;
+	lexer->dquote = 0;
+	lexer->squote = 0;
 	return (lexer);
 }
 
@@ -58,12 +64,8 @@ t_token	*get_token(t_lexer *lexer)
 			return (lexer_handle_redirection_in(lexer));
 		if (lexer->input[lexer->position] == '>')
 			return (lexer_handle_redirection_out(lexer));
-		if (ft_isalnum(lexer->input[lexer->position]) || \
-		lexer->input[lexer->position] == '-' || \
-		lexer->input[lexer->position] == '-' || \
-		lexer->input[lexer->position] == '.')
+		if (!ft_isspace(lexer->input[lexer->position]))
 			return (lexer_handle_word(lexer));
-		return (lexer_handle_error());
 	}
 	return (lexer_handle_eof());
 }

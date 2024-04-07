@@ -2,7 +2,7 @@ NAME	:= minishell
 
 # Compiler
 CC	:=	cc
-CFLAGS	:=	-Wextra -Wall -Werror
+CFLAGS	:=	-Wextra -Wall -Werror -g3
 INC		= -I ./include/
 
 # Libft

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/06 15:08:53 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:17:55 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_lexer
 {
 	char	*input;
 	int		position;
+	int		dquote;
+	int		squote;
 }	t_lexer;
 
 // Lexer
@@ -64,6 +66,7 @@ t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
 t_token	*lexer_handle_word(t_lexer	*lexer);
 t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
+void	lexer_handle_quotes(t_lexer *lexer);
 void	free_tokens(t_token *tokens);
 
 
