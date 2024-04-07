@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:34:12 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 14:20:35 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 16:44:19 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,23 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	while (1)
 	{
-		input = readline("minishell> ");
+		input = readline("➜ ");
 		if (ft_strncmp("exit", input, 4) == 0)
-			exit(EXIT_SUCCESS);
+		{
+			free(input);
+			break ;
+		}
 		parser.tokens = lexer(input);
 		if (parser.tokens == NULL)
+		{
+			free(input);
+			free_tokens(parser.tokens);
 			continue;
+		}
+		free(input);
+		free_tokens(parser.tokens);
 	}
-	print_tokens(parser.tokens);
-	free_tokens(parser.tokens);
-	free(input);
+	// print_tokens(parser.tokens);
 	return (EXIT_SUCCESS);
 }
 

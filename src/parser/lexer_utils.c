@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 14:24:08 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:48:47 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ t_token	*lexer_handle_word(t_lexer	*lexer)
 
 void	lexer_handle_quotes(t_lexer *lexer)
 {
-	if (lexer->input[lexer->position] == '\'' && \
-	!lexer->squote && !lexer->dquote)
+	if (lexer->input[lexer->position] == '\'' && !lexer->squote && \
+	!lexer->dquote && lexer->input[lexer->position - 1] != '\\')
 		lexer->squote = 1;
-	else if (lexer->input[lexer->position] == '\'' \
-	&& lexer->squote && !lexer->dquote)
+	else if (lexer->input[lexer->position] == '\'' && lexer->squote && \
+	!lexer->dquote && lexer->input[lexer->position - 1] != '\\')
 		lexer->squote = 0;
-	else if (lexer->input[lexer->position] == '\"' \
-	&& !lexer->squote && !lexer->dquote)
+	else if (lexer->input[lexer->position] == '\"' && !lexer->squote && \
+	!lexer->dquote && lexer->input[lexer->position - 1] != '\\')
 		lexer->dquote = 1;
-	else if (lexer->input[lexer->position] == '\"' \
-	&& !lexer->squote && lexer->dquote)
+	else if (lexer->input[lexer->position] == '\"' && !lexer->squote && \
+	lexer->dquote && lexer->input[lexer->position - 1] != '\\')
 		lexer->dquote = 0;
 }
 
