@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 14:11:07 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:24:08 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ t_token	*lexer_handle_word(t_lexer	*lexer)
 	start_position = lexer->position;
 	while (lexer->input[lexer->position])
 	{
-		if (lexer->input[lexer->position] == '\'' || lexer->input[lexer->position] == '\"')
+		if (lexer->input[lexer->position] == '\'' || \
+		lexer->input[lexer->position] == '\"')
 			lexer_handle_quotes(lexer);
-		if (ft_isspace(lexer->input[lexer->position]) && !lexer->dquote && !lexer->squote)
+		if (ft_isspace(lexer->input[lexer->position]) && \
+		!lexer->dquote && !lexer->squote)
 			break ;
 		lexer->position++;
 	}
@@ -59,18 +61,20 @@ t_token	*lexer_handle_word(t_lexer	*lexer)
 
 void	lexer_handle_quotes(t_lexer *lexer)
 {
-
-	if (lexer->input[lexer->position] == '\'' && !lexer->squote && !lexer->dquote)
+	if (lexer->input[lexer->position] == '\'' && \
+	!lexer->squote && !lexer->dquote)
 		lexer->squote = 1;
-	else if (lexer->input[lexer->position] == '\'' && lexer->squote && !lexer->dquote)
+	else if (lexer->input[lexer->position] == '\'' \
+	&& lexer->squote && !lexer->dquote)
 		lexer->squote = 0;
-	else if (lexer->input[lexer->position] == '\"' && !lexer->squote && !lexer->dquote)
+	else if (lexer->input[lexer->position] == '\"' \
+	&& !lexer->squote && !lexer->dquote)
 		lexer->dquote = 1;
-	else if (lexer->input[lexer->position] == '\"' && !lexer->squote && lexer->dquote)
-	{
+	else if (lexer->input[lexer->position] == '\"' \
+	&& !lexer->squote && lexer->dquote)
 		lexer->dquote = 0;
-	}
 }
+
 t_token	*lexer_handle_error(void)
 {
 	t_token	*token;

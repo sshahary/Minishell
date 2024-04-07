@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 07:53:24 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 14:17:55 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:23:02 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_token	*lexer(char *input)
 	temp = tokens;
 	while (tokens->type != END)
 	{
-		if (tokens->type == ERROR){
+		if (tokens->type == ERROR)
+		{
 			printf("minishell: syntax error unclosed quotes\n");
 			return (NULL);
 		}
