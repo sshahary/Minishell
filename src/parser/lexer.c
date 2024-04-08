@@ -5,47 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 07:53:24 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 16:44:54 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/09 00:36:50 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token	*lexer(char *input)
+static t_lexer	*init_lexer(char *input);
+static t_token	*get_token(t_lexer *lexer);
+
+int	lexer(t_mini *mini)
 {
 	t_lexer	*lexer;
 	t_token	*tokens;
-	t_token	*temp;
-	int		i;
 
-	i = 0;
-	lexer = init_lexer(input);
-	tokens = get_token(lexer);
-	tokens->prev = NULL;
-	temp = tokens;
+	lexer = init_lexer(mini->input);
+	mini->tokens = get_token(lexer);
+	if (!lexer || !mini->tokens)
+		return (0);
+	tokens = mini->tokens;
 	while (tokens->type != END)
 	{
-		if (tokens->type == ERROR)
+		tokens->next = get_token(lexer);
+		if (!tokens->next || tokens->type == ERROR)
 		{
 			printf("minishell: syntax error unclosed quotes\n");
-			free_tokens(temp);
+			free(lexer->input);
 			free(lexer);
-			return (NULL);
+			return (0);
 		}
-		tokens->next = get_token(lexer);
 		tokens = tokens->next;
 	}
-	tokens = temp;
 	free(lexer);
-	return (tokens);
+	return (1);
 }
 
-t_lexer	*init_lexer(char *input)
+static t_lexer	*init_lexer(char *input)
 {
 	t_lexer	*lexer;
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer));
+	if (!lexer)
+		return (NULL);
 	lexer->input = input;
 	lexer->position = 0;
 	lexer->dquote = 0;
@@ -79,6 +81,8 @@ t_token	*lexer_handle_pipe(t_lexer	*lexer)
 
 	lexer->position++;
 	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	token->type = PIPE;
 	token->value = NULL;
 	return (token);

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 14:48:47 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 00:35:18 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,22 @@ t_token	*lexer_handle_eof(void)
 	token = (t_token *)malloc(sizeof(t_token));
 	token->type = END;
 	token->value = NULL;
+	token->next = NULL;
 	return (token);
 }
 
 void	free_tokens(t_token *tokens)
 {
-	t_token	*temp;
+	t_token	*current;
+	t_token *next;
 
-	while (tokens)
+	current = tokens;
+	while (current != NULL)
 	{
-		temp = tokens;
-		if (temp->value != NULL)
-			free(temp->value);
-		tokens = tokens->next;
-		free(temp);
+		next = current->next;
+		if (current->value != NULL)
+			free(current->value);
+		free(current);
+		current = next;
 	}
 }

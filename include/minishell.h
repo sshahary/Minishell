@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/07 13:17:55 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:59:19 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ typedef struct s_token
 	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_parser
+typedef struct s_mini
 {
+	char		*input;
 	t_token		*tokens;
 	int			exit_code;
-}	t_parser;
+}	t_mini;
 
 typedef struct s_lexer
 {
@@ -57,9 +58,8 @@ typedef struct s_lexer
 }	t_lexer;
 
 // Lexer
-t_token	*lexer(char *input);
-t_lexer	*init_lexer(char *input);
-t_token	*get_token(t_lexer *lexer);
+int		lexer(t_mini *mini);
+int		parser(t_mini *mini);
 t_token	*lexer_handle_pipe(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
@@ -68,6 +68,18 @@ t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
 void	lexer_handle_quotes(t_lexer *lexer);
 void	free_tokens(t_token *tokens);
+
+// Lexer
+// t_token	*lexer(char *input);
+// t_lexer	*init_lexer(char *input);
+// t_token	*get_token(t_lexer *lexer);
+
+
+// void	free_tokens(t_token *tokens);
+
+// Parser
+// void	parser(t_parser *parser);
+// int		check_pipes_and_redirection_erros(t_token *tokens);
 
 
 
