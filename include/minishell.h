@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 01:41:50 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 06:14:32 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ t_token	*lexer_handle_pipe(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
 t_token	*lexer_handle_word(t_lexer	*lexer);
+t_token	*get_word(int sp, int ep, int quotes, t_lexer *l);
 t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
-void	lexer_handle_quotes(t_lexer *lexer);
+void	lexer_handle_quotes(t_lexer *lexer, int *quotes);
 void	free_tokens(t_token *tokens);
 
 int	tokens_size(t_token *tokens);

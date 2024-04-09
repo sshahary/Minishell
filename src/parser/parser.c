@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 05:44:26 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 05:57:03 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	check_syntax_errors(t_mini *mini)
 	tokens = mini->tokens;
 	while (tokens)
 	{
+		if (tokens->type ==  WORD)
+			printf("WORD: %s\n", tokens->value);
 		if (!check_pipe_and_redirection_errors(tokens))
 			return (0);
 		tokens = tokens->next;
