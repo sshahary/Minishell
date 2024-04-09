@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 00:35:18 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 05:44:51 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ t_token	*lexer_handle_redirection_out(t_lexer	*lexer)
 	t_token	*token;
 
 	lexer->position++;
-	lexer->position++;
 	token = (t_token *)malloc(sizeof(t_token));
-	if (lexer->input[lexer->position] == '>')
+	if (lexer->input[lexer->position++] == '>')
 	{
 		lexer->position++;
 		token->type = REDIRECT_OUT_APPEND;
@@ -100,7 +99,7 @@ t_token	*lexer_handle_eof(void)
 void	free_tokens(t_token *tokens)
 {
 	t_token	*current;
-	t_token *next;
+	t_token	*next;
 
 	current = tokens;
 	while (current != NULL)
@@ -111,4 +110,21 @@ void	free_tokens(t_token *tokens)
 		free(current);
 		current = next;
 	}
+}
+
+int	tokens_size(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+	int		i;
+
+	current = tokens;
+	i = 0;
+	while (current != NULL)
+	{
+		next = current->next;
+		current = next;
+		i++;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 00:00:59 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:00:18 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	main(void)
 		if (!prompt(&mini.input))
 			break;
 		if (!parser(&mini))
+		{
+			free(mini.input);
 			continue ;
+		}
 		free(mini.input);
 	}
 }

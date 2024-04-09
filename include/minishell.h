@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/08 22:59:19 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 01:41:50 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,7 @@ t_token	*lexer_handle_eof();
 void	lexer_handle_quotes(t_lexer *lexer);
 void	free_tokens(t_token *tokens);
 
-// Lexer
-// t_token	*lexer(char *input);
-// t_lexer	*init_lexer(char *input);
-// t_token	*get_token(t_lexer *lexer);
-
-
-// void	free_tokens(t_token *tokens);
-
-// Parser
-// void	parser(t_parser *parser);
-// int		check_pipes_and_redirection_erros(t_token *tokens);
-
-
+int	tokens_size(t_token *tokens);
 
 //execution
 #define MAX_COMMAND_LENGTH 100
