@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 06:14:32 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 07:10:59 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,19 @@ typedef struct s_token
 	struct s_token		*prev;
 }	t_token;
 
+typedef struct s_cmds
+{
+	char		*commad;
+	char		**args;
+	struct s_cmds	*next;
+	struct s_cmds	*prev;
+}	t_cmds;
+
 typedef struct s_mini
 {
 	char		*input;
 	t_token		*tokens;
+	t_cmds		*cmds;
 	int			exit_code;
 }	t_mini;
 

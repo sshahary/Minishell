@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 06:08:02 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 07:20:43 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	lexer(t_mini *mini)
 {
 	t_lexer	*lexer;
 	t_token	*tokens;
+	t_token	*temp;
 
 	lexer = init_lexer(mini->input);
 	mini->tokens = get_token(lexer);
@@ -36,7 +37,9 @@ int	lexer(t_mini *mini)
 			free(lexer);
 			return (0);
 		}
+		temp = tokens;
 		tokens = tokens->next;
+		tokens->prev = temp;
 	}
 	free(lexer);
 	return (1);

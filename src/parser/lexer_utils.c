@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 06:14:15 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:08:45 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ t_token	*lexer_handle_word(t_lexer	*l)
 		if (l->input[l->position] == '\'' || l->input[l->position] == '\"')
 			lexer_handle_quotes(l, &quotes);
 		if (ft_isspace(l->input[l->position]) && !l->dquote && !l->squote)
+			break ;
+		if (l->input[l->position] == '|' || l->input[l->position] == '<' || \
+		l->input[l->position] == '>')
 			break ;
 		l->position++;
 	}
