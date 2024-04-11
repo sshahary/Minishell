@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:31:49 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:05:11 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void	check_leaks(void)
 	system("leaks minishell");
 }
 
-static int	prompt(char **input);
+static int	check_input(char *input);
 
 int	main(void)
 {
 	t_mini	mini;
-
 	atexit(check_leaks);
 	while (1)
 	{
-		if (!prompt(&mini.input))
-			break;
+		mini.input = readline("➜ ");
+		if (!check_input(mini.input))
+			continue ;
 		if (!parser(&mini))
 		{
 			free(mini.input);
@@ -38,12 +38,17 @@ int	main(void)
 	}
 }
 
-static int	prompt(char **input)
+static int	check_input(char *input)
 {
-	*input = readline("➜ ");
-	if (ft_strncmp("exit", *input, 4) == 0)
+	if (ft_strncmp("exit", input, 4) == 0)
 	{
-		free (*input);
+		free(input);
+		exit(EXIT_SUCCESS);
+	}
+	if (!input || input[0] == '\0')
+	{
+		if (input)
+			free (input);
 		return (0);
 	}
 	return (1);
