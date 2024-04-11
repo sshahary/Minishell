@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 12:48:11 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 09:59:55 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_error_msg(t_type type);
 int		check_pipe_and_redirection_errors(t_token *t);
 int		get_cmds(t_mini *mini);
 char	*redirection_to_string(t_token *tokens);
-int		get_args(t_mini *mini, t_token *tokens);
+int		get_args(t_token **tokens, t_cmds *cmd);
 void	free_cmds(t_cmds *cmds);
 void	reverse_cmds(t_cmds **head);
 
@@ -43,71 +43,86 @@ int	get_cmds(t_mini *mini)
 {
 	t_token	*tokens;
 	t_cmds	*cmds;
+	t_cmds	*prev_cmd;
+	t_cmds	*new_cmd;
 
 	tokens = mini->tokens;
+	cmds = NULL;
+	prev_cmd = NULL;
+	new_cmd = NULL;
 	while (tokens->type != END)
 	{
-		if (tokens->prev == NULL)
+
+		if (tokens->prev == NULL || tokens->prev->type == PIPE)
 		{
-			mini->cmds = malloc(sizeof(t_cmds));
-			mini->cmds->prev = NULL;
-			cmds = mini->cmds;
+			new_cmd = malloc(sizeof(t_cmds));
+			if (new_cmd == NULL)
+				return (0);
+			new_cmd->commad = ft_strdup(tokens->value);
+			new_cmd->args = NULL;
+			new_cmd->next = NULL;
+			new_cmd->prev = prev_cmd;
+			if (prev_cmd != NULL)
+				prev_cmd->next = new_cmd;
+			if (cmds == NULL)
+				cmds = new_cmd;
+			prev_cmd = new_cmd;
+			tokens = tokens->next;
 		}
 		if (tokens->type != PIPE)
 		{
-			if (tokens->prev == NULL || tokens->prev->type == PIPE)
-			{
-				mini->cmds->commad = ft_strdup(tokens->value);
-				tokens = tokens->next;
-			}
+			get_args(&tokens, prev_cmd);
 		}
-		if (tokens->type != PIPE)
-			get_args(mini, tokens);
-		if (tokens->type == PIPE && tokens->next->type != END)
-		{
-			mini->cmds->next = malloc(sizeof(t_cmds));
-			mini->cmds->next->prev = mini->cmds;
-			mini->cmds = mini->cmds->next;
-		}
-		else
-			mini->cmds->next = NULL;
-		if (tokens->next)
+		else if (tokens->type == PIPE)
 			tokens = tokens->next;
 	}
+	reverse_cmds(&cmds);
 	mini->cmds = cmds;
-	
+	while (cmds)
+	{
+		printf("COMMAND: %s\n", cmds->commad);
+		int i = 0;
+		while (cmds->args && cmds->args[i])
+		{
+			printf("\tARGUMENT-%d: %s\n", i, cmds->args[i]);
+			i++;
+		}
+		cmds = cmds->next;
+	}
 	return (1);
 }
 
-int	get_args(t_mini *mini, t_token *tokens)
+int	get_args(t_token **tokens, t_cmds *cmd)
 {
-	int		i;
-	int		j;
+	int		arg_count;
+	int		index;
 	t_token	*temp;
 
-	i = 0;
-	temp = tokens;
+	arg_count = 0;
+	temp = (*tokens);
 	while (temp->type != PIPE && temp->type != END)
 	{
-		i++;
+		arg_count++;
 		temp = temp->next;
 	}
-	mini->cmds->args = malloc((i + 1) * sizeof(char *));
-	mini->cmds->args[i] = NULL;
-	j = 0;
-	printf("J: %d\n", i);
-	while (i > 0 && j < i)
+	if (arg_count == 0)
+		return (1);
+	cmd->args = malloc((arg_count + 1) * sizeof(char *));
+	if (!cmd->args)
+		return	(0);
+	cmd->args[arg_count] = NULL;
+	index = 0;
+	// printf("Index: %d, arg_count: %d\n", index, arg_count);
+	while (index < arg_count)
 	{
-
-		if (tokens->type == WORD)
-			mini->cmds->args[j] = ft_strdup(tokens->value);
-		if (tokens->type != WORD)
-			mini->cmds->args[j] = redirection_to_string(tokens);
-		if (tokens->next)
-			tokens = tokens->next;
-		j++;
+		if ((*tokens)->type == WORD)
+			cmd->args[index] = ft_strdup((*tokens)->value);
+		else
+			cmd->args[index] = redirection_to_string((*tokens));
+		(*tokens) = (*tokens)->next;
+		index++;
 	}
-	return (0);
+	return (1);
 }
 
 char	*redirection_to_string(t_token *tokens)
@@ -148,8 +163,8 @@ int	check_syntax_errors(t_mini *mini)
 
 int	check_pipe_and_redirection_errors(t_token *t)
 {
-	if (t->type == 0)
-		printf("WORD: %s\n", t->value);
+	// if (t->type == 0)
+	// 	printf("WORD: %s\n", t->value);
 	if (t->type == 1 || t->type == 2 || t->type == 3 || t->type == 4 || \
 	t->type == 5)
 	{
@@ -197,7 +212,6 @@ void	free_cmds(t_cmds *cmds)
 			i = 0;
 			while (cmds->args[i] != NULL)
 			{
-				printf("ARGS: %s\n", cmds->args[i]);
 				free(cmds->args[i]);
 				i++;
 			}
