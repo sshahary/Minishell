@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 07:10:59 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:31:11 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_lexer
 
 // Lexer
 int		lexer(t_mini *mini);
-int		parser(t_mini *mini);
 t_token	*lexer_handle_pipe(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
 t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
@@ -78,6 +77,22 @@ t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
 void	lexer_handle_quotes(t_lexer *lexer, int *quotes);
 void	free_tokens(t_token *tokens);
+
+// Parser
+int		parser(t_mini *mini);
+int		check_syntax_errors(t_mini *mini);
+int		check_pipe_and_redirection_errors(t_token *t);
+int		get_cmds(t_mini *mini);
+int		create_cmds(t_token *tokens, t_cmds **cmds);
+int		create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds);
+int		get_args(t_token **tokens, t_cmds *cmd);
+void	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens);
+void	reverse_cmds(t_cmds **head);
+void	free_cmds(t_cmds *cmds);
+void	print_error_msg(t_type type);
+char	*redirection_to_string(t_token *tokens);
+
+// Expander
 
 int	tokens_size(t_token *tokens);
 

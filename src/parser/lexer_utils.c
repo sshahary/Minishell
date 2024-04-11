@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 12:08:45 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:36:16 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*lexer_handle_word(t_lexer	*l)
 
 t_token	*get_word(int sp, int ep, int quotes, t_lexer *l)
 {
-	int	word_length;
+	int		word_length;
 	t_token	*token;
 
 	if (quotes)
@@ -101,48 +101,4 @@ t_token	*lexer_handle_error(void)
 	token->value = NULL;
 	token->next = NULL;
 	return (token);
-}
-
-t_token	*lexer_handle_eof(void)
-{
-	t_token	*token;
-
-	token = (t_token *)malloc(sizeof(t_token));
-	token->type = END;
-	token->value = NULL;
-	token->next = NULL;
-	return (token);
-}
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = tokens;
-	while (current != NULL)
-	{
-		next = current->next;
-		if (current->value != NULL)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-}
-
-int	tokens_size(t_token *tokens)
-{
-	t_token	*current;
-	t_token	*next;
-	int		i;
-
-	current = tokens;
-	i = 0;
-	while (current != NULL)
-	{
-		next = current->next;
-		current = next;
-		i++;
-	}
-	return (i);
 }

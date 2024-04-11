@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/09 07:20:43 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:33:28 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,13 @@ int	lexer(t_mini *mini)
 		{
 			printf("minishell: syntax error unclosed quotes\n");
 			mini->exit_code = 258;
-			free(lexer);
-			return (0);
+			return (free(lexer), 0);
 		}
 		temp = tokens;
 		tokens = tokens->next;
 		tokens->prev = temp;
 	}
-	free(lexer);
-	return (1);
+	return (free(lexer), 1);
 }
 
 static t_lexer	*init_lexer(char *input)
