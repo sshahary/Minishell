@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:31:11 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:23:39 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	print_error_msg(t_type type);
 char	*redirection_to_string(t_token *tokens);
 
 // Expander
+int	expander(t_mini *mini);
+int	check_and_expand(char **str);
 
 int	tokens_size(t_token *tokens);
 

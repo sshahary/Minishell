@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:38:12 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:27:07 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,11 @@ int	parser(t_mini *mini)
 		return (0);
 	}
 	get_cmds(mini);
+	expander(mini);
 	free_tokens(mini->tokens);
 	return (1);
 }
 
-	// while (cmds)
-	// {
-	// 	printf("COMMAND: %s\n", cmds->commad);
-	// 	int	i = 0;
-	// 	while (cmds->args && cmds->args[i])
-	// 	{
-	// 		printf("\tARGUMENT-%d: %s\n", i, cmds->args[i]);
-	// 		i++;
-	// 	}
-	// 	cmds = cmds->next;
-	// }
 int	get_cmds(t_mini *mini)
 {
 	t_token	*tokens;
@@ -48,6 +38,8 @@ int	get_cmds(t_mini *mini)
 	tokens = mini->tokens;
 	cmds = NULL;
 	create_cmds(tokens, &cmds);
+	if (cmds == NULL)
+		return (1);
 	reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);

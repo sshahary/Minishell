@@ -17,6 +17,7 @@ SRCS	:=	src/parser_test.c \
 			src/parser/lexer_utils.c \
 			src/parser/parser_utils_1.c \
 			src/parser/parser_utils_2.c \
+			src/parser/expander.c \
 
 
 # Objects
