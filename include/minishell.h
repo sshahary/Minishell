@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 12:23:39 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:35:06 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		get_cmds(t_mini *mini);
 int		create_cmds(t_token *tokens, t_cmds **cmds);
 int		create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds);
 int		get_args(t_token **tokens, t_cmds *cmd);
-void	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens);
+int		fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens);
 void	reverse_cmds(t_cmds **head);
 void	free_cmds(t_cmds *cmds);
 void	print_error_msg(t_type type);

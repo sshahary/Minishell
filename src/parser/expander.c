@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:19 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 12:24:41 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:38:58 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int	expander(t_mini *mini)
 	while (mini->cmds)
 	{
 		i = 0;
-		check_and_expand(&mini->cmds->commad);
+		if (!check_and_expand(&mini->cmds->commad))
+			return (0);
 		while (mini->cmds->args && mini->cmds->args[i])
 		{
-			check_and_expand(&mini->cmds->args[i]);
+			if (!check_and_expand(&mini->cmds->args[i]))
+				return (0);
 			i++;
 		}
 		mini->cmds = mini->cmds->next;
@@ -55,11 +57,8 @@ int	check_and_expand(char **str)
 	{
 		free(*str);
 		(*str) = ft_strdup(value);
+		if (!(*str))
+			return (0);
 	}
-	// if (value)
-	// {
-	// 	printf("Variable Value: %s\n", &str[sp]);
-	// 	printf("Variable Value: %s\n", value);
-	// }
 	return (1);
 }

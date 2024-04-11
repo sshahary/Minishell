@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:36:16 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:43:48 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_token	*lexer_handle_redirection_out(t_lexer	*lexer)
 
 	lexer->position++;
 	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	if (lexer->input[lexer->position++] == '>')
 	{
 		lexer->position++;
@@ -64,6 +66,8 @@ t_token	*get_word(int sp, int ep, int quotes, t_lexer *l)
 	}
 	word_length = ep - sp;
 	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	token->value = malloc((word_length + 1) * sizeof(char));
 	ft_strlcpy(token->value, l->input + sp, word_length + 1);
 	token->type = WORD;
@@ -97,6 +101,8 @@ t_token	*lexer_handle_error(void)
 	t_token	*token;
 
 	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	token->type = ERROR;
 	token->value = NULL;
 	token->next = NULL;

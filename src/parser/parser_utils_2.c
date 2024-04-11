@@ -6,13 +6,13 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:55 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:43:22 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:37:15 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
+int	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
 {
 	int	index;
 
@@ -20,12 +20,21 @@ void	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
 	while (index < arg_count)
 	{
 		if ((*tokens)->type == WORD)
+		{
 			(*cmd)->args[index] = ft_strdup((*tokens)->value);
+			if ((*cmd)->args[index] == NULL)
+				return (0);
+		}
 		else
+		{
 			(*cmd)->args[index] = redirection_to_string((*tokens));
+			if ((*cmd)->args[index] == NULL)
+				return (0);
+		}
 		(*tokens) = (*tokens)->next;
 		index++;
 	}
+	return (1);
 }
 
 char	*redirection_to_string(t_token *tokens)
@@ -33,6 +42,8 @@ char	*redirection_to_string(t_token *tokens)
 	char	*output;
 
 	output = (char *)ft_calloc(3, sizeof(char));
+	if (!output)
+		return (NULL);
 	if (tokens->type == REDIRECT_IN)
 		output[0] = '<';
 	else if (tokens->type == REDIRECT_OUT)
@@ -58,7 +69,10 @@ int	check_syntax_errors(t_mini *mini)
 	while (tokens)
 	{
 		if (!check_pipe_and_redirection_errors(tokens))
+		{
+			mini->exit_code = 258;
 			return (0);
+		}
 		tokens = tokens->next;
 	}
 	return (1);

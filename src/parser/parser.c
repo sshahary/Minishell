@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 12:27:07 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:40:56 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@ int	parser(t_mini *mini)
 		free_tokens(mini->tokens);
 		return (0);
 	}
-	get_cmds(mini);
-	expander(mini);
+	if (!get_cmds(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
+	if (!expander(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
 	free_tokens(mini->tokens);
 	return (1);
 }
@@ -37,7 +45,8 @@ int	get_cmds(t_mini *mini)
 
 	tokens = mini->tokens;
 	cmds = NULL;
-	create_cmds(tokens, &cmds);
+	if (!create_cmds(tokens, &cmds))
+		return (0);
 	if (cmds == NULL)
 		return (1);
 	reverse_cmds(&cmds);
@@ -54,14 +63,18 @@ int	create_cmds(t_token *tokens, t_cmds **cmds)
 	{
 		if (tokens->prev == NULL || tokens->prev->type == PIPE)
 		{
-			create_new_cmd(&prev_cmd, &tokens, cmds);
+			if (!create_new_cmd(&prev_cmd, &tokens, cmds))
+				return (0);
 		}
 		if (tokens->type != PIPE)
-			get_args(&tokens, prev_cmd);
+		{
+			if (!get_args(&tokens, prev_cmd))
+				return (0);
+		}
 		else if (tokens->type == PIPE)
 			tokens = tokens->next;
 	}
-	return (0);
+	return (1);
 }
 
 int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
@@ -73,6 +86,8 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	if (new_cmd == NULL)
 		return (0);
 	new_cmd->commad = ft_strdup((*tokens)->value);
+	if (new_cmd->commad == NULL)
+		return (0);
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
 	new_cmd->prev = (*prev_cmd);
@@ -82,7 +97,7 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 		(*cmds) = new_cmd;
 	(*prev_cmd) = new_cmd;
 	(*tokens) = (*tokens)->next;
-	return (0);
+	return (1);
 }
 
 int	get_args(t_token **tokens, t_cmds *cmd)
@@ -103,6 +118,7 @@ int	get_args(t_token **tokens, t_cmds *cmd)
 	if (!cmd->args)
 		return (0);
 	cmd->args[arg_count] = NULL;
-	fill_args_array(arg_count, &cmd, tokens);
+	if (!fill_args_array(arg_count, &cmd, tokens))
+		return (0);
 	return (1);
 }
