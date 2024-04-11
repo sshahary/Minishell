@@ -6,9 +6,11 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:55 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:38:07 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:43:22 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/minishell.h"
 
 void	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
 {

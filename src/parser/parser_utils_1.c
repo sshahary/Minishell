@@ -6,9 +6,11 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 10:37:30 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/11 10:43:18 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/minishell.h"
 
 t_token	*lexer_handle_eof(void)
 {

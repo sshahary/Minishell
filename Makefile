@@ -14,7 +14,9 @@ LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 SRCS	:=	src/parser_test.c \
 			src/parser/parser.c \
 			src/parser/lexer.c \
-			src/parser/lexer_utils.c
+			src/parser/lexer_utils.c \
+			src/parser/parser_utils_1.c \
+			src/parser/parser_utils_2.c \
 
 
 # Objects
