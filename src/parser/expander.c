@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:19 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 13:38:58 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:52:14 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ int	check_and_expand(char **str)
 			return (0);
 	}
 	return (1);
+}
+
+void	print_cmds(t_mini *mini)
+{
+	int		i;
+	t_cmds	*temp;
+
+	temp = mini->cmds;
+	while (temp)
+	{
+		i = 0;
+		printf("Command: %s\n", temp->commad);
+		while (temp->args && temp->args[i])
+		{
+			printf("\tArg%d: <%s>\n", i, temp->args[i]);
+			i++;
+		}
+		temp = temp->next;
+	}
 }

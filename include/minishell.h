@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 13:35:06 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:37:09 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds);
 int		get_args(t_token **tokens, t_cmds *cmd);
 int		fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens);
 void	reverse_cmds(t_cmds **head);
-void	free_cmds(t_cmds *cmds);
+void	free_cmds(t_mini *mini);
 void	print_error_msg(t_type type);
 char	*redirection_to_string(t_token *tokens);
 
@@ -97,6 +97,7 @@ int	expander(t_mini *mini);
 int	check_and_expand(char **str);
 
 int	tokens_size(t_token *tokens);
+void	print_cmds(t_mini *mini);
 
 //execution
 #define MAX_COMMAND_LENGTH 100

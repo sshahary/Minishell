@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 13:56:56 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:56:02 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,37 @@ int	tokens_size(t_token *tokens)
 void	print_error_msg(t_type type)
 {
 	if (type == PIPE)
-		printf("minishell: syntax error near unexpected token `|'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 	else if (type == REDIRECT_IN)
-		printf("minishell: syntax error near unexpected token `<'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
 	else if (type == REDIRECT_OUT)
-		printf("minishell: syntax error near unexpected token `>'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
 	else if (type == REDIRECT_OUT_APPEND)
-		printf("minishell: syntax error near unexpected token `>>'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2);
 	else if (type == HEREDOC)
-		printf("minishell: syntax error near unexpected token `<<'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2);
 	else
-		printf("minishell: syntax error\n");
+		ft_putstr_fd("minishell: syntax error\n", 2);
 }
 
-void	free_cmds(t_cmds *cmds)
+void	free_cmds(t_mini *mini)
 {
-	t_cmds	*next_cmd;
-	int		i;
+	int	i;
+	t_cmds	*temp;
 
-	while (cmds != NULL)
+	while (mini->cmds)
 	{
-		next_cmd = cmds->next;
-		free(cmds->commad);
-		if (cmds->args != NULL)
+		i = 0;
+		free(mini->cmds->commad);
+		while (mini->cmds->args && mini->cmds->args[i])
 		{
-			i = 0;
-			while (cmds->args[i] != NULL)
-			{
-				free(cmds->args[i]);
-				i++;
-			}
-			free(cmds->args);
+			free(mini->cmds->args[i]);
+			i++;
 		}
-		free(cmds);
-		cmds = next_cmd;
+		if (mini->cmds->args)
+			free(mini->cmds->args);
+		temp = mini->cmds->next;
+		free(mini->cmds);
+		mini->cmds = temp;
 	}
 }

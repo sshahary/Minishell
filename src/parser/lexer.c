@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 13:42:47 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:56:26 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	lexer(t_mini *mini)
 		tokens->next = get_token(lexer);
 		if (!tokens->next || tokens->type == ERROR)
 		{
-			printf("minishell: syntax error unclosed quotes\n");
+			ft_putstr_fd("minishell: syntax error unclosed quotes\n", 2);
 			mini->exit_code = 258;
 			return (free(lexer), 0);
 		}
@@ -62,16 +62,14 @@ t_token	*get_token(t_lexer *lexer)
 	while (!(lexer->position >= ft_strlen(lexer->input)))
 	{
 		if (ft_isspace(lexer->input[lexer->position]))
-		{
 			lexer->position++;
-		}
-		if (lexer->input[lexer->position] == '|')
+		else if (lexer->input[lexer->position] == '|')
 			return (lexer_handle_pipe(lexer));
-		if (lexer->input[lexer->position] == '<')
+		else if (lexer->input[lexer->position] == '<')
 			return (lexer_handle_redirection_in(lexer));
-		if (lexer->input[lexer->position] == '>')
+		else if (lexer->input[lexer->position] == '>')
 			return (lexer_handle_redirection_out(lexer));
-		if (!ft_isspace(lexer->input[lexer->position]))
+		else if (!ft_isspace(lexer->input[lexer->position]))
 			return (lexer_handle_word(lexer));
 	}
 	return (lexer_handle_eof());
