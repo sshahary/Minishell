@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/12 10:45:05 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:06:48 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	if ((*cmds) == NULL)
 		(*cmds) = new_cmd;
 	(*prev_cmd) = new_cmd;
-	(*tokens) = (*tokens)->next;
+	if ((*tokens)->prev != NULL && (*tokens)->prev->type != PIPE)
+		(*tokens) = (*tokens)->next;
 	return (1);
 }
 
