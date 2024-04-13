@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:19 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/12 10:52:14 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/13 11:13:52 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	expander(t_mini *mini)
 	while (mini->cmds)
 	{
 		i = 0;
-		if (!check_and_expand(&mini->cmds->commad))
+		if (!check_and_expand(&mini->cmds->commad, mini))
 			return (0);
 		while (mini->cmds->args && mini->cmds->args[i])
 		{
-			if (!check_and_expand(&mini->cmds->args[i]))
+			if (!check_and_expand(&mini->cmds->args[i], mini))
 				return (0);
 			i++;
 		}
@@ -35,7 +35,7 @@ int	expander(t_mini *mini)
 	return (1);
 }
 
-int	check_and_expand(char **str)
+int	check_and_expand(char **str, t_mini *mini)
 {
 	int	i;
 	int	sp;
@@ -52,7 +52,7 @@ int	check_and_expand(char **str)
 		}
 		i++;
 	}
-	value = getenv(&(*str)[sp]);
+	value = get_env(&(*str)[sp], mini->env);
 	if (value)
 	{
 		free(*str);
@@ -80,4 +80,22 @@ void	print_cmds(t_mini *mini)
 		}
 		temp = temp->next;
 	}
+}
+
+char	*get_env(const char *name, char **env)
+{
+	int	name_len;
+	int	i;
+
+	name_len = ft_strlen(name);
+	i = 0;
+	while (env && env[i])
+	{
+		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		{
+			return &(env[i][name_len + 1]);
+		}
+		i++;
+	}
+	return (NULL);
 }

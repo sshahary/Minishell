@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:13:43 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/04 18:17:51 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:54:09 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int n);
 int		ft_toupper(int n);
 int		ft_isspace(const char c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 typedef struct s_lst
 {

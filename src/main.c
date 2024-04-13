@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_test.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/12 10:54:42 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/13 11:10:43 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ void	check_leaks(void)
 
 static int	check_input(char *input);
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
+	(void)argc;
+	(void)argv;
 	// atexit(check_leaks);
 
+	mini.env = env;
 	rl_bind_key('\t', rl_complete);
 	using_history();
 	while (1)
@@ -46,10 +49,16 @@ int	main(void)
 
 static int	check_input(char *input)
 {
-	if (ft_strncmp("exit", input, 4) == 0)
+	if (ft_strcmp("exit", input) == 0)
 	{
 		free(input);
 		exit(EXIT_SUCCESS);
+	}
+	if (ft_strcmp("clear", input) == 0)
+	{
+		free(input);
+		printf("\033[H\033[J");
+		return (0);
 	}
 	if (!input || input[0] == '\0')
 	{

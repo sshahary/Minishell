@@ -11,7 +11,7 @@ LIBFT_NAME	:=	libft.a
 LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Source
-SRCS	:=	src/parser_test.c \
+SRCS	:=	src/main.c \
 			src/parser/parser.c \
 			src/parser/lexer.c \
 			src/parser/lexer_utils.c \
