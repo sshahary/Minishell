@@ -5,42 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 17:34:12 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:37:48 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/13 11:10:43 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_leaks(void);
-
-int	main(int argc, char **argv, char **env)
-{
-	char		*input;
-	t_token		**tokens;
-	t_ast_node	*ast;
-
-	atexit(check_leaks);
-	(void)argc;
-	(void)argv;
-	(void)env;
-	while (1)
-	{
-		input = readline("minishell> ");
-		tokens = lexer(input);
-		//print_tokens(tokens);
-		ast = parser(tokens);
-		print_ast(ast, 0);
-		break ;
-	}
-	free_tokens(tokens);
-	free_ast(ast);
-	free(input);
-	return (EXIT_SUCCESS);
-}
-
-
 void	check_leaks(void)
 {
 	system("leaks minishell");
+}
+
+static int	check_input(char *input);
+
+int	main(int argc, char **argv, char **env)
+{
+	t_mini	mini;
+	(void)argc;
+	(void)argv;
+	// atexit(check_leaks);
+
+	mini.env = env;
+	rl_bind_key('\t', rl_complete);
+	using_history();
+	while (1)
+	{
+		mini.input = readline("➜ ");
+		add_history(mini.input);
+		if (!check_input(mini.input))
+			continue ;
+		if (!parser(&mini))
+		{
+			free(mini.input);
+			continue ;
+		}
+		print_cmds(&mini);
+		free(mini.input);
+		free_cmds(&mini);
+	}
+	clear_history();
+}
+
+static int	check_input(char *input)
+{
+	if (ft_strcmp("exit", input) == 0)
+	{
+		free(input);
+		exit(EXIT_SUCCESS);
+	}
+	if (ft_strcmp("clear", input) == 0)
+	{
+		free(input);
+		printf("\033[H\033[J");
+		return (0);
+	}
+	if (!input || input[0] == '\0')
+	{
+		if (input)
+			free (input);
+		return (0);
+	}
+	return (1);
 }

@@ -2,7 +2,7 @@ NAME	:= minishell
 
 # Compiler
 CC	:=	cc
-CFLAGS	:=	-Wextra -Wall -Werror
+CFLAGS	:=	-Wextra -Wall -Werror -g3
 INC		= -I ./include/
 
 # Libft
@@ -12,9 +12,13 @@ LIBFT		:=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Source
 SRCS	:=	src/main.c \
-			src/parser/lexer.c\
 			src/parser/parser.c \
-			test.c
+			src/parser/lexer.c \
+			src/parser/lexer_utils.c \
+			src/parser/parser_utils_1.c \
+			src/parser/parser_utils_2.c \
+			src/parser/expander.c \
+
 
 # Objects
 OBJS	:=	$(SRCS:.c=.o)

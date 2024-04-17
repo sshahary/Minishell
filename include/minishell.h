@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/22 20:10:14 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:58:43 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,82 @@
 
 typedef enum s_type
 {
-	COMMAND,
-	ARGUMENT,
+	WORD,
 	PIPE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	REDIRECT_OUT_APPEND,
-	HEREDOC
+	HEREDOC,
+	ERROR,
+	END,
 }	t_type;
 
 typedef struct s_token
 {
-	t_type	type;
-	char	*value;
+	t_type		type;
+	char		*value;
+	struct s_token		*next;
+	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_ast_node
+typedef struct s_cmds
 {
-	t_type				type;
-	char				**args;
-	struct s_ast_node	*prev;
-	struct s_ast_node	*next;
-}	t_ast_node;
+	char		*commad;
+	char		**args;
+	struct s_cmds	*next;
+	struct s_cmds	*prev;
+}	t_cmds;
+
+typedef struct s_mini
+{
+	char		*input;
+	char		**env;
+	t_token		*tokens;
+	t_cmds		*cmds;
+	int			exit_code;
+}	t_mini;
+
+typedef struct s_lexer
+{
+	char	*input;
+	int		position;
+	int		dquote;
+	int		squote;
+}	t_lexer;
 
 // Lexer
-t_token		**lexer(const char *input);
-t_token		*create_new_token(t_type type, char *value);
-void		free_tokens(t_token **tokens);
-void		assign_tokens(t_token **tokens, char **split_tokens, int token_count);
+int		lexer(t_mini *mini);
+t_token	*lexer_handle_pipe(t_lexer	*lexer);
+t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
+t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
+t_token	*lexer_handle_word(t_lexer	*lexer);
+t_token	*get_word(int sp, int ep, int quotes, t_lexer *l);
+t_token	*lexer_handle_error();
+t_token	*lexer_handle_eof();
+void	lexer_handle_quotes(t_lexer *lexer, int *quotes);
+void	free_tokens(t_token *tokens);
 
 // Parser
-t_ast_node	*parser(t_token **tokens);
-t_ast_node	*parse_pipes_and_redirections(t_token **tokens, int *index);
-t_ast_node	*parse_commands(t_token **tokens, int *index);
-t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n);
-void		free_ast(t_ast_node *node);
+int		parser(t_mini *mini);
+int		check_syntax_errors(t_mini *mini);
+int		check_pipe_and_redirection_errors(t_token *t);
+int		get_cmds(t_mini *mini);
+int		create_cmds(t_token *tokens, t_cmds **cmds);
+int		create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds);
+int		get_args(t_token **tokens, t_cmds *cmd);
+int		fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens);
+void	reverse_cmds(t_cmds **head);
+void	free_cmds(t_mini *mini);
+void	print_error_msg(t_type type);
+char	*redirection_to_string(t_token *tokens);
 
-// Tests
-void		print_tokens(t_token **tokens);
-void		print_ast(t_ast_node *node, int level);
+// Expander
+int		expander(t_mini *mini);
+int	check_and_expand(char **str, t_mini *mini);
+char	*get_env(const char *name, char **env);
 
-
+int	tokens_size(t_token *tokens);
+void	print_cmds(t_mini *mini);
 
 //execution
 #define MAX_COMMAND_LENGTH 100

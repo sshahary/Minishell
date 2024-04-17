@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:13:43 by rpambhar          #+#    #+#             */
-/*   Updated: 2023/12/27 04:37:20 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:54:09 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *str1, const char *str2, size_t n);
 size_t	ft_strlcpy(char *str1, const char *str2, size_t n);
-size_t	ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 char	*ft_strmapi(char *const s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strnstr(const char *str1, const char *str2, size_t n);
@@ -51,6 +51,8 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int n);
 int		ft_toupper(int n);
+int		ft_isspace(const char c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 typedef struct s_lst
 {

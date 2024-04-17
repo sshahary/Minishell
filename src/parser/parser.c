@@ -5,98 +5,121 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 01:55:33 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/09 10:36:04 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/12 11:06:48 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_ast_node	*parser(t_token **tokens)
+int	parser(t_mini *mini)
 {
-	int index = 0;
-
-	return (parse_pipes_and_redirections(tokens, &index));
+	if (!lexer(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
+	if (!check_syntax_errors(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
+	if (!get_cmds(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
+	if (!expander(mini))
+	{
+		free_tokens(mini->tokens);
+		return (0);
+	}
+	free_tokens(mini->tokens);
+	return (1);
 }
 
-t_ast_node	*parse_pipes_and_redirections(t_token **tokens, int *index)
+int	get_cmds(t_mini *mini)
 {
-	t_ast_node	*prev;
-	t_ast_node	*next;
-	t_type		temp;
+	t_token	*tokens;
+	t_cmds	*cmds;
 
-	prev = parse_commands(tokens, index);
-	if (tokens[*index] != NULL && tokens[*index]->type != COMMAND && tokens[*index]->type != ARGUMENT)
-	{
-		temp = tokens[*index]->type;
-		(*index)++;
-		next = parse_pipes_and_redirections(tokens, index);
-		return (create_new_node(temp, NULL, prev, next));
-	}
-	else
-	{
-		(void)next;
-		return (prev);
-	}
+	tokens = mini->tokens;
+	cmds = NULL;
+	if (!create_cmds(tokens, &cmds))
+		return (0);
+	if (cmds == NULL)
+		return (1);
+	reverse_cmds(&cmds);
+	mini->cmds = cmds;
+	return (1);
 }
 
-t_ast_node	*parse_commands(t_token **tokens, int *index)
+int	create_cmds(t_token *tokens, t_cmds **cmds)
 {
-	char	**args;
-	int		args_count;
-	int		i;
+	t_cmds	*prev_cmd;
 
-	args_count = 0;
-	i = *index;
-	while (tokens[*index] != NULL && (tokens[*index]->type == COMMAND || tokens[*index]->type == ARGUMENT))
+	prev_cmd = NULL;
+	while (tokens->type != END)
 	{
-		args_count++;
-		(*index)++;
-	}
-	args = malloc((args_count + 1) * sizeof(char *));
-	args[args_count] = NULL;
-	*index = i;
-	i = 0;
-	while (i < args_count)
-	{
-		args[i] = ft_strdup(tokens[*index]->value);
-		(*index)++;
-		i++;
-	}
-	return (create_new_node(COMMAND, args, NULL, NULL));
-}
-
-t_ast_node	*create_new_node(t_type t, char **a, t_ast_node *p, t_ast_node *n)
-{
-	t_ast_node	*node;
-
-	node = malloc(sizeof(t_ast_node));
-	if (!node)
-		return (NULL);
-	node->type = t;
-	node->args = a;
-	node->prev = p;
-	node->next = n;
-	return (node);
-}
-
-void	free_ast(t_ast_node *node)
-{
-	int	i;
-
-	i = 0;
-	if (node == NULL)
-		return ;
-	free_ast(node->next);
-	free_ast(node->prev);
-	if (node->args != NULL)
-	{
-		while (node->args[i])
+		if (tokens->prev == NULL || tokens->prev->type == PIPE)
 		{
-			free(node->args[i]);
-			i++;
+			if (!create_new_cmd(&prev_cmd, &tokens, cmds))
+				return (0);
 		}
-		free(node->args);
+		if (tokens->type != PIPE)
+		{
+			if (!get_args(&tokens, prev_cmd))
+				return (0);
+		}
+		else if (tokens->type == PIPE)
+			tokens = tokens->next;
 	}
-	free(node);
+	return (1);
+}
+
+int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
+{
+	t_cmds	*new_cmd;
+
+	new_cmd = NULL;
+	new_cmd = malloc(sizeof(t_cmds));
+	if (new_cmd == NULL)
+		return (0);
+	new_cmd->commad = ft_strdup((*tokens)->value);
+	if (new_cmd->commad == NULL)
+		return (0);
+	new_cmd->args = NULL;
+	new_cmd->next = NULL;
+	new_cmd->prev = (*prev_cmd);
+	if ((*prev_cmd) != NULL)
+		(*prev_cmd)->next = new_cmd;
+	if ((*cmds) == NULL)
+		(*cmds) = new_cmd;
+	(*prev_cmd) = new_cmd;
+	if ((*tokens)->prev != NULL && (*tokens)->prev->type != PIPE)
+		(*tokens) = (*tokens)->next;
+	return (1);
+}
+
+int	get_args(t_token **tokens, t_cmds *cmd)
+{
+	int		arg_count;
+	t_token	*temp;
+
+	arg_count = 0;
+	temp = (*tokens);
+	while (temp->type != PIPE && temp->type != END)
+	{
+		arg_count++;
+		temp = temp->next;
+	}
+	if (arg_count == 0)
+		return (1);
+	cmd->args = malloc((arg_count + 1) * sizeof(char *));
+	if (!cmd->args)
+		return (0);
+	cmd->args[arg_count] = NULL;
+	if (!fill_args_array(arg_count, &cmd, tokens))
+		return (0);
+	return (1);
 }
