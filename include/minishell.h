@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/03/20 12:05:54 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/03/22 20:10:14 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,28 @@ void		print_ast(t_ast_node *node, int level);
 
 typedef struct s_command
 {
-    char command[MAX_COMMAND_LENGTH];
-    char *arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
-    int num_arguments;
-    char *environment_variables[100]; // Example for environment variables
-    int num_environment_variables;
+	char	command[MAX_COMMAND_LENGTH];
+	char	*arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
+	int		num_arguments;
+	char	*environment_variables[100]; // Example for environment variables
+	int		num_environment_variables;
 }	t_command;
-int			ft_error(char *str);
-void		run_pipeline(char *commands);
+void	run_pipeline(char *commands);
+void	execute(t_command cmd, char **envp);
 
+
+//BuiltIns
+
+int		pwd(int fd);
+int		cd(char *path);
+void	echo(int argc, char *argv[]);
+int		env(char **envp, int fd);
+void	unset(char **envp, const char *name);
+void	export_variable(char **envp, const char *variable);
+
+//extras
+
+int		ft_equal(char *str);
+int		ft_error(char *str);
 
 #endif
