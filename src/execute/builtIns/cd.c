@@ -16,7 +16,7 @@ int	cd(char *path)
 {
 	if (chdir(path) != 0)
 	{
-		ft_error("chdir");
+		ft_error("chdir", 1);
 		return (-1);
 	}
 	return (0);

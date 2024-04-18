@@ -12,7 +12,7 @@
 
 #include "../../../include/minishell.h"
 
-void	echo(int argc, char *argv[])
+void	echo(int argc, char **argv)
 {
 	int	i;
 	int	newline;
