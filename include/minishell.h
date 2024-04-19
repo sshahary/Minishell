@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/17 12:58:43 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:01:15 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,28 +106,26 @@ void	print_cmds(t_mini *mini);
 
 typedef struct s_command
 {
-	char	command[MAX_COMMAND_LENGTH];
-	char	*arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
-	int		num_arguments;
-	char	*environment_variables[100]; // Example for environment variables
-	int		num_environment_variables;
+	t_mini	shell;
 }	t_command;
+
 void	run_pipeline(char *commands);
 void	execute(t_command cmd, char **envp);
 
 
 //BuiltIns
 
-int		pwd(int fd);
+int		pwd();
 int		cd(char *path);
-void	echo(int argc, char *argv[]);
+void	echo(int argc, char **argv);
 int		env(char **envp, int fd);
 void	unset(char **envp, const char *name);
-void	export_variable(char **envp, const char *variable);
+void	export(char **envp, const char *variable);
 
 //extras
 
 int		ft_equal(char *str);
-int		ft_error(char *str);
+int		ft_error(char *str, int status);
+
 
 #endif
