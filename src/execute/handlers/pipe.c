@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/18 16:45:12 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:15:00 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,51 @@ static	char	*ft_strsep(char **stringp, char *delim)
 	return (start);
 }
 
-static	char *find_command_path(const char *command)
+char *find_command_path(char *cmd, char **env)
 {
-	char	*path;
-	char	*path_copy;
-	char	*dir;
-	char	*command_path;
-	path = getenv("PATH");
-	if (path == NULL)
-		ft_error("PATH envornment doesnt exist");
-	path_copy = strdup(path);
-	if (path_copy == NULL)
-		ft_error("strdup", 1);
-	dir = strtok(path_copy, ":");
-	while (dir != NULL)
+	
+	int	i;
+
+	i = 0;
+	if (ft_strlen(cmd) == 1 && cmd[0] == '~')
+		cmd = "$HOME";
+	else if (cmd[0] == '$')
+		cmd += 1;
+
+	while (env[i])
 	{
-		command_path = malloc(ft_strlen(dir) + ft_strlen(command) + 2);
-		if (command_path == NULL)
-			return (1);
-		sprintf(command_path, "%s/%s", dir, command);
-		if (access(command_path, X_OK) == 0)
+		if (!(ft_strncmp(cmd, env[i], ft_strlen(cmd))))
 		{
-			free(path_copy);
-			return (command_path);
+			if (env[i][ft_strlen(cmd)] == '=')
+				return (ft_strchr(env[i], '=') + 1);
 		}
-		free(command_path);
-		dir = ft_strtok(NULL, ":");
+		i++;
 	}
-	free(path_copy);
-	return (NULL);
+	return ("");
 }
 
+
+// int main(int argc, char **argv, char **env) {
+//     if (argc != 2) {
+//         printf("Usage: %s <command>\n", argv[0]);
+//         return 1;
+//     }
+
+//     char *cmd = argv[1];
+
+//     // Print out the contents of the environment array
+//     printf("Environment variables:\n");
+//     for (int i = 0; env[i] != NULL; i++) {
+//         printf("%s\n", env[i]);
+//     }
+
+//     char *path = find_command_path(cmd, env);
+    
+//     if (*path) {
+//         printf("Path for %s: %s\n", cmd, path);
+//     } else {
+//         printf("Path for %s not found\n", cmd);
+//     }
+
+//     return 0;
+// }
