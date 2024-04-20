@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/19 15:15:00 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 05:57:27 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,136 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static	char	*ft_strsep(char **stringp, char *delim)
+void	ft_pfree(void **str)
 {
-	char	*start;
-	char	*end;
-
-	start = *stringp;
-	if (*stringp == NULL)
-		return (NULL);
-	end = ft_strnstr(start, delim, ft_strlen(start));
-	if (end != NULL)
-	{
-		*end = '\0';
-		*stringp = end + strlen(delim);
-	}
-	else
-		*stringp = NULL;
-	return (start);
-}
-
-char *find_command_path(char *cmd, char **env)
-{
-	
 	int	i;
 
 	i = 0;
-	if (ft_strlen(cmd) == 1 && cmd[0] == '~')
-		cmd = "$HOME";
-	else if (cmd[0] == '$')
-		cmd += 1;
-
-	while (env[i])
+	if (!str)
+		return ;
+	while (str[i])
 	{
-		if (!(ft_strncmp(cmd, env[i], ft_strlen(cmd))))
-		{
-			if (env[i][ft_strlen(cmd)] == '=')
-				return (ft_strchr(env[i], '=') + 1);
-		}
+		free(str[i]);
 		i++;
 	}
-	return ("");
+	free(str);
 }
 
+void	strclr(char *str)
+{
+	if (str != NULL)
+	{
+		while (*str != '\0')
+		{
+			*str = '\0';
+			str++;
+		}
+	}
+}
 
-// int main(int argc, char **argv, char **env) {
-//     if (argc != 2) {
-//         printf("Usage: %s <command>\n", argv[0]);
-//         return 1;
-//     }
+char	*strnew(size_t size)
+{
+	char	*str;
+	if (size == 0)
+		return (NULL);
 
-//     char *cmd = argv[1];
+	str = (char *)ft_calloc(size + 1, sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	return (str);
+}
 
-//     // Print out the contents of the environment array
-//     printf("Environment variables:\n");
-//     for (int i = 0; env[i] != NULL; i++) {
-//         printf("%s\n", env[i]);
-//     }
+char	*striok(char *str, const char *delim)
+{
+	static char	*next_token = NULL;
+	char		*token;
 
-//     char *path = find_command_path(cmd, env);
-    
-//     if (*path) {
-//         printf("Path for %s: %s\n", cmd, path);
-//     } else {
-//         printf("Path for %s not found\n", cmd);
-//     }
+	// If str is not NULL, start from str
+	if (str != NULL)
+		next_token = str;
 
-//     return 0;
-// }
+	// Skip leading delimiters
+	while (*next_token && ft_strchr(delim, *next_token))
+		next_token++;
+
+	// If no more tokens, return NULL
+	if (*next_token == '\0')
+		return NULL;
+
+	// Find the end of the token
+	token = next_token;
+	while (*next_token && !ft_strchr(delim, *next_token))
+		next_token++;
+
+	// If not at the end of the string, terminate the token
+	if (*next_token != '\0')
+		*next_token++ = '\0';
+
+	return (token);
+}
+
+char	*find_command_path(char *name, char **env)
+{
+	int		i;
+	char	*str;
+	char	**path;
+	char	*pathstr;
+
+	i = 0;
+	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
+		i++;
+	if (!(env[i]))
+		return (name);
+	path = ft_split(pathstr, ':');
+	i = 0;
+	while (path && path[i])
+	{
+		str = ft_strjoin(path[i], name);
+		if (!(access(str, F_OK)))
+		{
+			ft_pfree((void **)path);
+			return (str);
+		}
+		free(str);
+		i++;
+	}
+	ft_pfree((void **)path);
+	return (name);
+}
+
+int	pipex(char *name, char **env, char **args, char *exe)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(exe, args, env) == -1)
+			ft_error("permission denied", name, 1);
+		else
+		{
+			// Child process succeeded in executing command
+		}
+	}
+	else if (pid < 0)
+		ft_error("failed to fork", name, 1);
+	else
+		wait(&pid);
+	return (1);
+}
+
+char	**execute(char *name, char **args, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (!args || !*args || !**args)
+		return (env);
+	builtin(args);
+	if (access(args[0], F_OK) != -1)
+		pipex(name, env, args, args[0]);
+	else
+		find_command_path(name, args);
+	return (env);
+}
+

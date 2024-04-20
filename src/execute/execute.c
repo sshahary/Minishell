@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/18 17:05:47 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 03:31:27 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,74 +89,74 @@ void	builtin(char  **cmd)
 	else if (ft_strncmp(cmd[0], "export", 6))
 		export(shell.env, cmd[0]);
 	else
-		ft_error("command not found", 127);
+		ft_error(*shell.env,"command not found", 127);
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <unistd.h>
 
-void executed_command(char **cmd) {
-	execvp(cmd[0], cmd);
-	perror("execvp"); // This will print an error if execvp fails
-	exit(EXIT_FAILURE);
-}
+// void executed_command(char **cmd) {
+// 	execvp(cmd[0], cmd);
+// 	perror("execvp"); // This will print an error if execvp fails
+// 	exit(EXIT_FAILURE);
+// }
 
 
-static void multi_execute_cmd(char ***cmds, int num_cmds)
-{
-	int	i;
+// static void multi_execute_cmd(char ***cmds, int num_cmds)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < num_cmds)
-	{
-		single_execute_cmd(cmds[i]);
-	}
-}
+// 	i = 0;
+// 	while (i < num_cmds)
+// 	{
+// 		single_execute_cmd(cmds[i]);
+// 	}
+// }
 
-static void single_execute_cmd(char **cmd)
-{
-	pid_t pid = fork();
+// static void single_execute_cmd(char **cmd)
+// {
+// 	pid_t pid = fork();
 
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{ // Child process
-		if (execvp(cmd[0], cmd) == -1)
-		{
-			perror("execvp");
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{ // Parent process
-		int status;
-		if (waitpid(pid, &status, 0) == -1)
-		{
-			perror("waitpid");
-			exit(EXIT_FAILURE);
-		}
-		// Optionally, you can check the exit status of the child process here
-	}
-}
+// 	if (pid == -1)
+// 	{
+// 		perror("fork");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	else if (pid == 0)
+// 	{ // Child process
+// 		if (execvp(cmd[0], cmd) == -1)
+// 		{
+// 			perror("execvp");
+// 			exit(EXIT_FAILURE);
+// 		}
+// 	}
+// 	else
+// 	{ // Parent process
+// 		int status;
+// 		if (waitpid(pid, &status, 0) == -1)
+// 		{
+// 			perror("waitpid");
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		// Optionally, you can check the exit status of the child process here
+// 	}
+// }
 
-void execute_command(t_mini *mini)
-{
-	int	i;
+// void execute_command(t_mini *mini)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!parser(mini))
-	{
-		free_cmds(mini);
-		return;
-	}
-	while (i < (char)mini->input)
-	{
-		single_execute_cmd(mini->cmds);
-		i++;
-	}
-	multi_excute_cmd(mini->cmds, mini->input);
-}
+// 	i = 0;
+// 	if (!parser(mini))
+// 	{
+// 		free_cmds(mini);
+// 		return;
+// 	}
+// 	while (i < (char)mini->input)
+// 	{
+// 		single_execute_cmd(mini->cmds);
+// 		i++;
+// 	}
+// 	multi_excute_cmd(mini->cmds, mini->input);
+// }

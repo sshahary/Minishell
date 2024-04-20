@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:01:15 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 01:57:00 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ void	export(char **envp, const char *variable);
 //extras
 
 int		ft_equal(char *str);
-int		ft_error(char *str, int status);
+void	ft_error(char *str, char *exe, int status);
+
 
 
 #endif
