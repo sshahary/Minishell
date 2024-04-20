@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:50:48 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/04 18:17:39 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:05:19 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(const char *s)
 	int	len;
 
 	len = 0;
+	if (!s)
+		return (0);
 	while (s[len])
 	{
 		len++;

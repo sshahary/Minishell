@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/13 11:13:29 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:40:12 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ typedef struct s_lexer
 	int		squote;
 }	t_lexer;
 
+typedef struct s_expander
+{
+	char	*input;
+	int		i;
+}	t_expander;
+
 // Lexer
 int		lexer(t_mini *mini);
 t_token	*lexer_handle_pipe(t_lexer	*lexer);
@@ -93,12 +99,14 @@ void	free_cmds(t_mini *mini);
 void	print_error_msg(t_type type);
 char	*redirection_to_string(t_token *tokens);
 
-// Expander
-int		expander(t_mini *mini);
-int	check_and_expand(char **str, t_mini *mini);
-char	*get_env(const char *name, char **env);
+// // Expander
+// int		expander(t_mini *mini);
+// int		check_and_expand(char **str_ptr);
+// char	*get_env(const char *name, char **env);
+// char	*join_strings(char **array);
+// void	*ft_realloc(void *ptr, int new_size);
 
-int	tokens_size(t_token *tokens);
+// int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
 //execution
