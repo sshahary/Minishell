@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/20 06:05:39 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:57:43 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,39 +114,26 @@ char	*find_command_path(char *name, char **env)
 	return (name);
 }
 
-int	pipex(char *name, char **env, char **args, char *exe)
+int	pipex(t_mini *mini, char *exe)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(exe, args, env) == -1)
-			ft_error("permission denied", name, 1);
-		else
-		{
-			// Child process succeeded in executing command
-		}
+		printf("exe = %s\n", exe);
+		printf("cmds->comand %s\n", mini->cmds->commad);
+		printf("");
+		if (execve(exe, mini->cmds->args, mini->env) == -1)
+			ft_error("permission denied", mini->cmds->commad, 1);
 	}
 	else if (pid < 0)
-		ft_error("failed to fork", name, 1);
+		ft_error("failed to fork", mini->cmds->commad, 1);
 	else
-		wait(&pid);
-	return (1);
+		waitpid(pid, &status, 0);
+		// if (WIFEXITED(status)) // checks if the 	CHILD process terminated normally
+			mini->exit_code = WEXITSTATUS(status);
+
+	return (mini->exit_code);
 }
-
-char	**execute(char *name, char **args, char **env)
-{
-	int	i;
-
-	i = 0;
-	if (!args || !*args || !**args)
-		return (env);
-	builtin(args);
-	if (access(args[0], F_OK) != -1)
-		pipex(name, env, args, args[0]);
-	else
-		find_command_path(name, args);
-	return (env);
-}
-

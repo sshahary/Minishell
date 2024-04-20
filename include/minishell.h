@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 06:11:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:56:53 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,18 +101,18 @@ char	*get_env(const char *name, char **env);
 int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
-//execution
+//Execution
 
-
-void	run_pipeline(char *commands);
-char	**execute(char *name, char **args, char **env);
+char	*find_command_path(char *name, char **env);
+int		pipex(t_mini *mini, char *exe);
+char	**execute(t_mini *mini);
 
 
 //BuiltIns
 
 int		pwd();
 int		cd(char *path);
-void	echo(int argc, char **argv);
+void	echo(char **argv);
 int		env(char **envp, int fd);
 void	unset(char **envp, const char *name);
 void	export(char **envp, const char *variable);
