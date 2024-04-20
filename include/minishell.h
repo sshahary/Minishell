@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 01:57:00 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/20 06:11:41 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,10 @@ int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
 //execution
-#define MAX_COMMAND_LENGTH 100
 
-typedef struct s_command
-{
-	t_mini	shell;
-}	t_command;
 
 void	run_pipeline(char *commands);
-void	execute(t_command cmd, char **envp);
+char	**execute(char *name, char **args, char **env);
 
 
 //BuiltIns
