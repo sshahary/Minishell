@@ -12,7 +12,7 @@
 
 #include "../../../include/minishell.h"
 
-void	export_variable(char **envp, const char *variable)
+void	export(char **envp, const char *variable)
 {
 	int		key_length;
 	char	*key;

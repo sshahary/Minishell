@@ -18,6 +18,10 @@ SRCS	:=	src/main.c \
 			src/parser/parser_utils_1.c \
 			src/parser/parser_utils_2.c \
 			src/parser/expander.c \
+			src/execute/builtins/echo.c \
+			src/execute/handlers/pipe.c \
+			src/execute/error.c \
+			src/execute/execute.c \
 
 
 # Objects

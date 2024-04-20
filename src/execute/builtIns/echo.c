@@ -13,26 +13,38 @@
 
 #include "../../../include/minishell.h"
 
-void	echo(int argc, char *argv[])
+static	int		args_count(char **args)
+{
+	int		size;
+
+	size = 0;
+	while (args[size])
+		size++;
+	return (size);
+}
+
+void	echo(char **argv)
 {
 	int	i;
 	int	newline;
 
-	newline = 1;
-	if (argc > 1 && ft_strncmp(argv[1], "-n", 2) == 0)
-	{
-		newline = 0;
-		argc--;
-		argv++;
-	}
+	newline = 0;
 	i = 1;
-	while (i < argc)
+	if (args_count(argv) > 1)
 	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
+	 	while (argv[i] && ft_strncmp(argv[1], "-n", 2) == 0)
+		{
+			newline = 1;
+			i++;
+		}
+		while (argv[i])
+		{
+			ft_putstr_fd(argv[i], 1);
+			if (argv[i + 1] && argv[i][0] != '\0')
+				write(1, " ", 1);
+			i++;
+		}
 	}
-	if (newline)
+	if (newline == 0)
 		printf("\n");
 }

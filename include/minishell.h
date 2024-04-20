@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 15:40:12 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:35:42 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,19 +109,27 @@ char	*redirection_to_string(t_token *tokens);
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
-//execution
-#define MAX_COMMAND_LENGTH 100
+//Execution
 
-typedef struct s_command
-{
-    char command[MAX_COMMAND_LENGTH];
-    char *arguments[MAX_COMMAND_LENGTH]; // You can adjust the size as needed
-    int num_arguments;
-    char *environment_variables[100]; // Example for environment variables
-    int num_environment_variables;
-}	t_command;
-int			ft_error(char *str);
-void		run_pipeline(char *commands);
+char	*find_command_path(char *name, char **env);
+int		pipex(t_mini *mini, char *exe);
+char	**execute(t_mini *mini);
+
+
+//BuiltIns
+
+int		pwd();
+int		cd(char *path);
+void	echo(char **argv);
+int		env(char **envp, int fd);
+void	unset(char **envp, const char *name);
+void	export(char **envp, const char *variable);
+
+//extras
+
+int		ft_equal(char *str);
+void	ft_error(char *str, char *exe, int status);
+
 
 
 #endif
