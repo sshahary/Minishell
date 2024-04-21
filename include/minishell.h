@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 13:42:10 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:08:44 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	export(char **envp, const char *variable);
 
 int		ft_equal(char *str);
 void	ft_error(char *str, char *exe, int status);
+char	*strjoinslash(const char *s1, const char *s2);
 
 
 
