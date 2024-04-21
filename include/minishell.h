@@ -3,18 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/21 12:18:42 by sshahary         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/20 16:35:42 by rpambhar         ###   ########.fr       */
->>>>>>> 9a5dc53570ffc118e8461fee94000a49a0ef1370
+/*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
+/*   Updated: 2024/04/21 16:39:28 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <stdio.h>

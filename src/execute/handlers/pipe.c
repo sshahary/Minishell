@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/21 12:33:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:23:41 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-void	ft_pfree(void **str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-void	strclr(char *str)
-{
-	if (str != NULL)
-	{
-		while (*str != '\0')
-		{
-			*str = '\0';
-			str++;
-		}
-	}
-}
-
-char	*strnew(size_t size)
-{
-	char	*str;
-	if (size == 0)
-		return (NULL);
-
-	str = (char *)ft_calloc(size + 1, sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	return (str);
-}
 
 char	*find_command_path(char *name, char **env)
 {
