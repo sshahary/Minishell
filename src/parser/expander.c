@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:19 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 01:51:49 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:04:13 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,104 @@ int	expander(t_mini *mini)
 	return (1);
 }
 
-int	check_and_expand(char **str, t_mini *mini)
+int	check_and_expand(char **s, t_mini *mini)
 {
-	int	i;
-	int	sp;
-	char	*value;
+	char	*expanded_str;
+	int		i;
+	char	*str;
 
+	expanded_str = NULL;
+	str = *s;
 	i = 0;
-	sp = 0;
-	while ((*str) && (*str)[i])
+	while (str[i])
 	{
-		if ((*str)[i] == '$' && ((*str)[i + 1] != '?' || (*str)[i + 1] != '$'))
+		if (str[i] == '\'')
+			handle_quotes(str, &i, &expanded_str);
+		if (str[i] == '\"')
+			handle_dquotes(str, &i, &expanded_str, mini);
+		if (str[i] == '$' && str[i + 1])
+			handle_expansion(str, &i, &expanded_str, mini);
+		else
 		{
-			sp = i + 1;
-			break ;
+			expanded_str = ft_strnjoin(expanded_str, &str[i], 1);
+			i++;
 		}
-		i++;
 	}
-	value = get_env(&(*str)[sp], mini->env);
-	if (value)
+	free(str);
+	*s = expanded_str;
+	return (1);
+}
+
+int	handle_expansion(char *str, int *i, char **ex_str, t_mini *mini)
+{
+	int	sp;
+	int	ep;
+	char	*expansion;
+
+	(*i)++;
+	sp = (*i);
+	if (str[*i] && str[*i] == '$')
 	{
-		free(*str);
-		(*str) = ft_strdup(value);
-		if (!(*str))
-			return (0);
+		(*i)++;
+		expansion = ft_itoa((int)getpid());
+		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+		free(expansion);
 	}
+	else if (str[*i] && str[*i] == '?')
+	{
+		(*i)++;
+		expansion = ft_itoa(mini->exit_code);
+		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+		free(expansion);
+	}
+	else
+	{
+		while (str[*i] && ft_isalnum(str[*i])) // also it can be _ . -
+		{
+			(*i)++;
+			ep = *i;
+		}
+		char *temp = ft_substr(str, sp, ep - sp);
+		expansion = get_env(temp, mini->env);
+		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+		free(temp);
+	}
+	return (1);
+}
+
+int	handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\"')
+	{
+		if (str[*i] == '$')
+			handle_expansion(str, i, ex_str, mini);
+		else
+		{
+			*ex_str = ft_strnjoin(*ex_str, &str[*i], 1);
+			(*i)++;
+		}
+	}
+	(*i)++;
+	return (1);
+}
+
+int	handle_quotes(char *str, int *i, char **ex_str)
+{
+	int	sp;
+	int	ep;
+
+	(*i)++;
+	sp = *i;
+	while (str[*i] && str[*i] != '\'')
+	{
+		(*i)++;
+		ep = *i;
+	}
+	(*i)++;
+	*ex_str = ft_strnjoin(*ex_str, &str[sp], ep - sp);
+	if (!(*ex_str))
+		return (0);
 	return (1);
 }
 

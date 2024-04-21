@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 16:35:42 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:42:10 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,15 @@ void	free_cmds(t_mini *mini);
 void	print_error_msg(t_type type);
 char	*redirection_to_string(t_token *tokens);
 
-// // Expander
-// int		expander(t_mini *mini);
-// int		check_and_expand(char **str_ptr);
-// char	*get_env(const char *name, char **env);
-// char	*join_strings(char **array);
-// void	*ft_realloc(void *ptr, int new_size);
+// Expander
+int		expander(t_mini *mini);
+int		check_and_expand(char **s, t_mini *mini);
+char	*get_env(const char *name, char **env);
+int		handle_quotes(char *str, int *i, char **ex_str);
+int		handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini);
+int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
+void	print_cmds(t_mini *mini);
+char	*ft_strnjoin(char *s1, char *s2, int n);
 
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
