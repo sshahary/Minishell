@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/20 14:57:43 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:33:41 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,6 @@ char	*strnew(size_t size)
 	return (str);
 }
 
-char	*striok(char *str, const char *delim)
-{
-	static char	*next_token = NULL;
-	char		*token;
-
-	// If str is not NULL, start from str
-	if (str != NULL)
-		next_token = str;
-
-	// Skip leading delimiters
-	while (*next_token && ft_strchr(delim, *next_token))
-		next_token++;
-
-	// If no more tokens, return NULL
-	if (*next_token == '\0')
-		return NULL;
-
-	// Find the end of the token
-	token = next_token;
-	while (*next_token && !ft_strchr(delim, *next_token))
-		next_token++;
-
-	// If not at the end of the string, terminate the token
-	if (*next_token != '\0')
-		*next_token++ = '\0';
-
-	return (token);
-}
-
 char	*find_command_path(char *name, char **env)
 {
 	int		i;
@@ -101,7 +72,7 @@ char	*find_command_path(char *name, char **env)
 	i = 0;
 	while (path && path[i])
 	{
-		str = ft_strjoin(path[i], name);
+		str = strjoinslash(path[i], name);
 		if (!(access(str, F_OK)))
 		{
 			ft_pfree((void **)path);

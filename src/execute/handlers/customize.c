@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   customize.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 12:10:05 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 12:20:43 by sshahary         ###   ########.fr       */
+/*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
+/*   Updated: 2024/04/21 12:18:17 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*strjoinslash(const char *s1, const char *s2)
 {
-	size_t	len;
-	size_t	i;
-	char	*str;
+	size_t	len_s1;
+	size_t	len_s2;
+	char	*result;
 
-	len = ft_strlen(s1) + ft_strlen(s2);
-	i = 0;
-	str = (char *) malloc(len + 1);
-	if (str == NULL)
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	result = (char *)malloc(len_s1 + len_s2 + 2);
+	if (!result)
 		return (NULL);
-	while (i < len)
-	{
-		if (i < ft_strlen(s1))
-			*(str + i) = *(s1 + i);
-		else
-			*(str + i) = *(s2 + (i - ft_strlen(s1)));
-		i++;
-	}
-	*(str + i) = '\0';
-	return (str);
+	ft_memcpy(result, s1, len_s1);
+	if (len_s1 == 0 || s1[len_s1 - 1] != '/')
+		result[len_s1++] = '/';
+	ft_memcpy(result + len_s1, s2, len_s2 + 1);
+	return (result);
 }
