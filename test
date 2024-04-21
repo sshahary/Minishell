@@ -1,0 +1,10 @@
+echo $USER
+echo $USER
+echo $$
+echo $?
+echo $$$
+echo $USER$
+echo$USER
+echo$USE
+echo "$USER"
+echo '$USER'
