@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 12:10:05 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 16:43:48 by sshahary         ###   ########.fr       */
+/*   Created: 2024/04/21 09:46:18 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/04/21 13:52:41 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strnjoin(char *s1, char *s2, int n)
 {
 	char	*str;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	if (!s1 && !s2)
 		return (NULL);
-	str = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	while (s1 && s1[i] != 0)
+	str = (char *)malloc((ft_strlen(s1) + n + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s1 && s1[i] != '\0')
 	{
 		str[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (s2 && s2[j] != 0)
+	while (s2 && s2[j] != '\0' && j < n)
 	{
 		str[i + j] = s2[j];
 		j++;
 	}
-	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	str[i + j] = '\0';
 	if (s1)
 		free(s1);
 	return (str);

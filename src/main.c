@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/20 16:36:40 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:57:51 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 	(void)argc;
 	(void)argv;
-	// atexit(check_leaks);
+	atexit(check_leaks);
 
 	mini.env = env;
 	rl_bind_key('\t', rl_complete);
@@ -40,8 +40,8 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-		// print_cmds(&mini);
-		execute(&mini);
+		print_cmds(&mini);
+		// execute(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}
