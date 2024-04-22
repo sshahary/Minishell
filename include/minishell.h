@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/21 16:42:10 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/22 04:34:17 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+
+
+# define FALSE			0
+# define TRUE			1
+
+# define ERR			-1
+# define SUCCESS 		1
+
+# define STDIN 			0
+# define STDOUT 		1
+# define STDERR 		2
 
 typedef enum s_type
 {
@@ -45,6 +56,7 @@ typedef struct s_token
 typedef struct s_cmds
 {
 	char		*commad;
+	char		**commands;
 	char		**args;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
@@ -57,6 +69,10 @@ typedef struct s_mini
 	t_token		*tokens;
 	t_cmds		*cmds;
 	int			exit_code;
+	int			fds[2];
+	int			flag;
+	int			preflag;
+	t_lst		*list;
 }	t_mini;
 
 typedef struct s_lexer
@@ -114,8 +130,10 @@ void	print_cmds(t_mini *mini);
 
 //Execution
 
+//Pipex
+void	child_process(t_mini *mini);
 char	*find_command_path(char *name, char **env);
-int		pipex(t_mini *mini, char *exe);
+int		pipex(t_mini *mini);
 char	**execute(t_mini *mini);
 
 
@@ -133,6 +151,7 @@ void	export(char **envp, const char *variable);
 int		ft_equal(char *str);
 void	ft_error(char *str, char *exe, int status);
 char	*strjoinslash(const char *s1, const char *s2);
+void	ft_pfree(void **str);
 
 
 

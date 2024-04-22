@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/21 13:23:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/22 04:37:45 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*find_command_path(char *name, char **env)
 	char	*pathstr;
 
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
+	while (env[i] && ft_strcmp(env[i], "PATH="))
 		i++;
 	if (!(env[i]))
 		return (name);
@@ -46,26 +46,48 @@ char	*find_command_path(char *name, char **env)
 	return (name);
 }
 
-int	pipex(t_mini *mini, char *exe)
+int			pipex(t_mini *mini)
 {
 	pid_t	pid;
+	int		res;
 	int		status;
+	char	*path;
 
+	res = EXIT_SUCCESS;
+	path = find_command_path(mini->cmds->commands[0], mini->env);
+	mini->cmds->next = mini->list->content;
+	if (mini->flag == 1)
+	{
+		mini->cmds->next = mini->list->next->content;
+		mini->preflag = 1;
+		pipe(mini->fds);
+	}
 	pid = fork();
 	if (pid == 0)
-	{
-		printf("exe = %s\n", exe);
-		printf("cmds->comand %s\n", mini->cmds->commad);
-		printf("");
-		if (execve(exe, mini->cmds->args, mini->env) == -1)
-			ft_error("permission denied", mini->cmds->commad, 1);
-	}
-	else if (pid < 0)
-		ft_error("failed to fork", mini->cmds->commad, 1);
-	else
-		waitpid(pid, &status, 0);
-		// if (WIFEXITED(status)) // checks if the 	CHILD process terminated normally
-			mini->exit_code = WEXITSTATUS(status);
+		child_process(mini);
+	waitpid(pid, &status, 0);
+	if (mini->flag == 1)
+		close(mini->fds[1]);
+	if (mini->fds[0] != 0)
+		close(mini->fds[0]);
+	return (res);
+}
 
-	return (mini->exit_code);
+int main(void) {
+    // Create a mock t_mini structure
+    t_mini mini;
+    // Initialize mini.cmds, mini.list, mini.env (consider using mock data)
+    mini.flag = 0; // Test without pipe initially
+
+    // Test case 1: Simple execution (no pipe)
+    printf("Test 1: Simple execution\n");
+    pipex(&mini);
+
+    // Test case 2: Execution with pipe (modify mini.flag and list accordingly)
+    printf("Test 2: Execution with pipe\n");
+    mini.flag = 1;
+    // Update mini.list to simulate piped commands
+    pipex(&mini);
+
+    return (0);
 }

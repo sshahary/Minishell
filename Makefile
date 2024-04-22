@@ -21,6 +21,7 @@ SRCS	:=	src/main.c \
 			src/parser/expander_utils.c \
 			src/execute/builtins/echo.c \
 			src/execute/handlers/pipe.c \
+			src/execute/handlers/customize.c \
 			src/execute/error.c \
 			src/execute/execute.c \
 
