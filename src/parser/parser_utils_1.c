@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/12 10:56:02 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:46:52 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_error_msg(t_type type)
 
 void	free_cmds(t_mini *mini)
 {
-	int	i;
+	int		i;
 	t_cmds	*temp;
 
 	while (mini->cmds)

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 14:08:44 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:42:02 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ typedef struct s_token
 
 typedef struct s_cmds
 {
-	char		*commad;
-	char		**args;
+	char			*commad;
+	char			**args;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
+	int				fd_in;
+	int				fd_out;
 }	t_cmds;
 
 typedef struct s_mini
@@ -106,6 +108,7 @@ char	*get_env(const char *name, char **env);
 int		handle_quotes(char *str, int *i, char **ex_str);
 int		handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini);
 int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
+int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
 

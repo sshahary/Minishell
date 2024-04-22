@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:46:18 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 13:52:41 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:46:15 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,89 @@ char	*ft_strnjoin(char *s1, char *s2, int n)
 	if (s1)
 		free(s1);
 	return (str);
+}
+
+int	handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m)
+{
+	char	*expansion;
+
+	if (str[*i] && str[*i] == '$')
+	{
+		(*i)++;
+		expansion = ft_itoa((int)getpid());
+		if (!expansion)
+			return (0);
+		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+		if (!(*ex_str))
+			return (0);
+		free(expansion);
+	}
+	else if (str[*i] && str[*i] == '?')
+	{
+		(*i)++;
+		expansion = ft_itoa(m->exit_code);
+		if (!expansion)
+			return (0);
+		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+		if (!ex_str)
+			return (0);
+		free(expansion);
+	}
+	return (1);
+}
+
+int	handle_quotes(char *str, int *i, char **ex_str)
+{
+	int	sp;
+	int	ep;
+
+	(*i)++;
+	sp = *i;
+	while (str[*i] && str[*i] != '\'')
+	{
+		(*i)++;
+		ep = *i;
+	}
+	(*i)++;
+	*ex_str = ft_strnjoin(*ex_str, &str[sp], ep - sp);
+	if (!(*ex_str))
+		return (0);
+	return (1);
+}
+
+void	print_cmds(t_mini *mini)
+{
+	int		i;
+	t_cmds	*temp;
+
+	temp = mini->cmds;
+	while (temp)
+	{
+		i = 0;
+		printf("Command: %s\n", temp->commad);
+		while (temp->args && temp->args[i])
+		{
+			printf("\tArg%d: <%s>\n", i, temp->args[i]);
+			i++;
+		}
+		temp = temp->next;
+	}
+}
+
+char	*get_env(const char *name, char **env)
+{
+	int	name_len;
+	int	i;
+
+	name_len = ft_strlen(name);
+	i = 0;
+	while (env && env[i])
+	{
+		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		{
+			return (&(env[i][name_len + 1]));
+		}
+		i++;
+	}
+	return (NULL);
 }
