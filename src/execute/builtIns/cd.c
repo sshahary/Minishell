@@ -15,7 +15,7 @@
 
 static int	cdhome(char *path, char **cmds, char **env)
 {
-	t_mini	*mini;
+	t_mini	*mini = NULL;
 
 	if (cmds[1][1] == '~')
 	{
@@ -55,7 +55,7 @@ void	cd(char **args, char **env)
 {
 	char	*path;
 	int		res;
-	t_mini	*mini;
+	t_mini	*mini = NULL;
 
 	path = 0;
 	res = 0;

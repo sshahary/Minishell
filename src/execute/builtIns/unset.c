@@ -54,6 +54,7 @@ int		unsetenv(char *str, char ***env)
 		return (-1);
 	i = -1;
 	while ((*env)[++i] != NULL)
+	{
 		if (checkequal(str, (*env)[i]))
 		{
 			free((*env)[i]);
@@ -62,6 +63,7 @@ int		unsetenv(char *str, char ***env)
 			(*env)[j - 1] = NULL;
 			return (1);
 		}
+	}
 	return (1);
 }
 

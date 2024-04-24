@@ -12,11 +12,11 @@
 
 #include "../../../include/minishell.h"
 
-int	pwd()
+void	pwd(void)
 {
 	char	*pwd;
 	int		ret;
-	t_mini	*mini;
+	t_mini	*mini = NULL;
 
 	ret = EXIT_SUCCESS;
 	pwd = getcwd(0, MAX_PATH_LENGTH);

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 04:29:15 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:04:35 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,12 +144,13 @@ int		pipex(t_mini *mini);
 
 //BuiltIns
 
-int		pwd();
+void		pwd(void);
 void	cd(char **cmds, char **env);
 void	echo(char **args, char **env);
 void	env(char **env);
 void	unset(char **cmds, t_mini *mini);
 void	export(char **cmds, t_mini *mini);
+void	mini_exit(char **cmds, t_mini *mini);
 
 //Extras
 
@@ -159,6 +160,7 @@ void	ft_pfree(void **str);
 int		remove_char(char *str, char c);
 int		checkexport(char *path, char ***env);
 char	*ft_strtok(char *str, char sep);
+int		str_is_digit(char *str);
 
 //Errors
 void	check_error(char *name, char *str, char *args);

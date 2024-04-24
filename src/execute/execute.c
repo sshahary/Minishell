@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 01:33:33 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:05:32 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			builtin(t_mini	*mini)
 	else if (!ft_strcmp(builtin, "unset"))
 		unset(mini, mini->cmds->commad);
 	else if (!ft_strcmp(builtin, "exit"))
-		exit(mini, mini->cmds->commad);
+		mini_exit(mini, mini->cmds->commad);
 	else
 		return (0);
 	return (1);

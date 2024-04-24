@@ -19,7 +19,13 @@ SRCS	:=	src/main.c \
 			src/parser/parser_utils_2.c \
 			src/parser/expander.c \
 			src/parser/expander_utils.c \
+			src/execute/builtins/cd.c \
 			src/execute/builtins/echo.c \
+			src/execute/builtins/pwd.c \
+			src/execute/builtins/env.c \
+			src/execute/builtins/exit.c \
+			src/execute/builtins/unset.c \
+			src/execute/builtins/export.c \
 			src/execute/handlers/pipe.c \
 			src/execute/handlers/customize.c \
 			src/execute/error.c \

@@ -16,7 +16,7 @@
 
 void		exit_code(void)
 {
-	t_mini	*mini;
+	t_mini	*mini = NULL;
 
 	ft_putstr_fd(ft_itoa(mini->exit_code), 1);
 }
@@ -25,7 +25,7 @@ void		echoenv(char **cmds, char **envs, int i)
 {
 	char	*value;
 	if (cmds[1][0] == '$' && cmds[1][1] == '?')
-		print_exit_status();
+		exit_code();
 	value = find_command_path(&(cmds[i][1]), envs);
 	ft_putstr_fd(value, STDIN_FILENO);
 }
@@ -34,12 +34,12 @@ static	int		args_n(char **args)
 {
 	int	i;
 
-	if (ft_strncmp(args, "-n", 2) != 0)
+	if (ft_strncmp(*args, "-n", 2) != 0)
 		return (0);
 	i = 2;
 	while (args[i])
 	{
-		if (args[i] != 'n')
+		if (args[i] != (char *)'n')
 			return (0);
 		i++;
 	}
@@ -53,7 +53,7 @@ void	echo(char **args, char **env)
 
 	i = 1;
 	res = 0;
-	while (args_n(args[i]))
+	while (args_n(&args[i]))
 	{
 		res = -1;
 		i++;
@@ -63,7 +63,7 @@ void	echo(char **args, char **env)
 		if (args[i][0] == '\'')
 			res = remove_char(args[i], '\'');
 		if (args[i][0] == '$' && res != 1)
-			echoenvv(args, env, i);
+			echoenv(args, env, i);
 		else
 			ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1] != NULL)

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 03:49:39 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 05:49:17 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,18 @@ char	*ft_strtok(char *str, char sep)
 		tok++;
 	}
 	return (p);
+}
+
+int	str_is_digit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

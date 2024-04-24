@@ -15,7 +15,7 @@
 void	env(char **env)
 {
 	int		i;
-	t_mini	*mini;
+	t_mini	*mini = NULL;
 
 	i = 0;
 	while (env[i])
