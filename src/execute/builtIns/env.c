@@ -12,42 +12,25 @@
 
 #include "../../../include/minishell.h"
 
-int	ft_equal(char *str)
+void	env(char **env)
 {
-	while (*str)
-	{
-		if (*str == '=')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-int	env(char **envp, int fd)
-{
-	int	i;
+	int		i;
+	t_mini	*mini;
 
 	i = 0;
-	while (envp[i])
+	while (env[i])
 	{
-		if (ft_equal(envp[i]))
-		{
-			ft_putstr_fd(envp[i], fd);
-			ft_putchar('\n', fd);
-		}
+		write(STDOUT_FILENO, env[i], ft_strlen(env[i]));
+		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	return (1);
+	mini->exit_code = 0;
 }
 
 // int	main(int argc, char **argv, char **envp)
 // {
-// 	int fd = 1;
-// 	while(1)
-// 	{
-// 		env(envp, fd);
-// 	}
-// dprintf(2,"test\n");
+// 	env(envp);
+// 	dprintf(2,"test\n");
 
 // 	return (0);
 // }

@@ -47,11 +47,11 @@ void		setoldpwd(char **env)
 	old = ft_strjoin("OLDPWD=", find_command_path("PWD", env));
 	check_export(cur, &env);
 	check_export(old, &env);
-	free(cur);
-	free(old);			//check for free later
+	// free(cur);
+	// free(old);			//check for free later
 }
 
-int	cd(char **cmds, char **env)
+void	cd(char **args, char **env)
 {
 	char	*path;
 	int		res;
@@ -59,17 +59,17 @@ int	cd(char **cmds, char **env)
 
 	path = 0;
 	res = 0;
-	if (cmds[1] != NULL && cmds[1][0] != '~' && cmds[1][0] != '$')
+	if (args[1] != NULL && args[1][0] != '~' && args[1][0] != '$')
 	{
-		path = cmds[1];
+		path = args[1];
 		if (chdir(path) == -1)
 			res = print_execute_err_2("cd", path, strerror(errno));
 		setoldpwd(env);
 	}
-	else if (cmds[1] == NULL || cmds[1][0] == '~')
-		cdhome(path, cmds, env);
-	else if (cmds[1][0] == '$')
-		cdenv(path, cmds, env);
+	else if (args[1] == NULL || args[1][0] == '~')
+		cdhome(path, args, env);
+	else if (args[1][0] == '$')
+		cdenv(path, args, env);
 	if (res == -1)
 		mini->exit_code = 1;
 	else

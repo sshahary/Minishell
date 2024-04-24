@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 04:35:14 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 02:55:02 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ char	*strjoinslash(const char *s1, const char *s2)
 		result[len_s1++] = '/';
 	ft_memcpy(result + len_s1, s2, len_s2 + 1);
 	return (result);
+}
+
+int	remove_char(char *str, char c)
+{
+	int	new_index = 0;
+	int	i = 0;
+
+	while (str[i])
+	{
+		if (str[i] != c)
+			str[new_index++] = str[i];
+		i++;
+	}
+	str[new_index] = '\0'; // Null-terminate the string
+	return (1);
 }
 
 // static char	*strnew(size_t size)

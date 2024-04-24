@@ -13,38 +13,63 @@
 
 #include "../../../include/minishell.h"
 
-static	int		args_count(char **args)
-{
-	int		size;
 
-	size = 0;
-	while (args[size])
-		size++;
-	return (size);
+void		exit_code(void)
+{
+	t_mini	*mini;
+
+	ft_putstr_fd(ft_itoa(mini->exit_code), 1);
 }
 
-void	echo(char **argv)
+void		echoenv(char **cmds, char **envs, int i)
+{
+	char	*value;
+	if (cmds[1][0] == '$' && cmds[1][1] == '?')
+		print_exit_status();
+	value = find_command_path(&(cmds[i][1]), envs);
+	ft_putstr_fd(value, STDIN_FILENO);
+}
+
+static	int		args_n(char **args)
 {
 	int	i;
-	int	newline;
 
-	newline = 0;
-	i = 1;
-	if (args_count(argv) > 1)
+	if (ft_strncmp(args, "-n", 2) != 0)
+		return (0);
+	i = 2;
+	while (args[i])
 	{
-	 	while (argv[i] && ft_strncmp(argv[1], "-n", 2) == 0)
-		{
-			newline = 1;
-			i++;
-		}
-		while (argv[i])
-		{
-			ft_putstr_fd(argv[i], 1);
-			if (argv[i + 1] && argv[i][0] != '\0')
-				write(1, " ", 1);
-			i++;
-		}
+		if (args[i] != 'n')
+			return (0);
+		i++;
 	}
-	if (newline == 0)
-		printf("\n");
+	return (1);
+}
+
+void	echo(char **args, char **env)
+{
+	int	i;
+	int	res;
+
+	i = 1;
+	res = 0;
+	while (args_n(args[i]))
+	{
+		res = -1;
+		i++;
+	}
+	while (args[i])
+	{
+		if (args[i][0] == '\'')
+			res = remove_char(args[i], '\'');
+		if (args[i][0] == '$' && res != 1)
+			echoenvv(args, env, i);
+		else
+			ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1] != NULL)
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		i++;
+	}
+	if (res != -1)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 }

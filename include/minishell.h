@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 02:12:59 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 03:05:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,17 @@ int		pipex(t_mini *mini);
 //BuiltIns
 
 int		pwd();
-int		cd(char **cmds, char **env);
-void	echo(char **argv);
-int		env(char **envp, int fd);
+void	cd(char **cmds, char **env);
+void	echo(char **args, char **env);
+void	env(char **env);
 void	unset(char **envp, const char *name);
 void	export(char **envp, const char *variable);
 
 //extras
 
-int		ft_equal(char *str);
 char	*strjoinslash(const char *s1, const char *s2);
 void	ft_pfree(void **str);
+int		remove_char(char *str, char c);
 
 //error
 void	check_error(char *name, char *str, char *args);
