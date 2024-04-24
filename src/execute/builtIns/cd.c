@@ -13,7 +13,7 @@
 #include "../../../include/minishell.h"
 
 
-int			cdhome(char *path, char **cmds, char **env)
+static int	cdhome(char *path, char **cmds, char **env)
 {
 	t_mini	*mini;
 
@@ -24,11 +24,11 @@ int			cdhome(char *path, char **cmds, char **env)
 	}
 	path = find_command_path("HOME", env);
 	if (chdir(path) == -1)
-		print_execute_err_1("cd", "HOME not set");
+		ft_execute_err_1("cd", "HOME not set");
 	return (1);
 }
 
-int			cdenv(char *path, char **cmds, char **env)
+static int			cdenv(char *path, char **cmds, char **env)
 {
 	path = find_command_path(&(cmds[1][1]), env);
 	if (chdir(path) == -1)
@@ -36,7 +36,7 @@ int			cdenv(char *path, char **cmds, char **env)
 	return (1);
 }
 
-void		setoldpwd(char **env)
+static void		setoldpwd(char **env)
 {
 	char	*cur;
 	char	*old;
@@ -45,8 +45,8 @@ void		setoldpwd(char **env)
 	tmp = malloc(sizeof(char) * MAX_PATH_LENGTH);
 	cur = ft_strjoin("PWD=", getcwd(tmp, MAX_PATH_LENGTH));
 	old = ft_strjoin("OLDPWD=", find_command_path("PWD", env));
-	check_export(cur, &env);
-	check_export(old, &env);
+	checkexport(cur, &env);
+	checkexport(old, &env);
 	// free(cur);
 	// free(old);			//check for free later
 }
@@ -63,7 +63,7 @@ void	cd(char **args, char **env)
 	{
 		path = args[1];
 		if (chdir(path) == -1)
-			res = print_execute_err_2("cd", path, strerror(errno));
+			res = ft_execute_err_2("cd", path, strerror(errno));
 		setoldpwd(env);
 	}
 	else if (args[1] == NULL || args[1][0] == '~')

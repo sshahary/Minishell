@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 03:05:01 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 04:29:15 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,16 +148,19 @@ int		pwd();
 void	cd(char **cmds, char **env);
 void	echo(char **args, char **env);
 void	env(char **env);
-void	unset(char **envp, const char *name);
-void	export(char **envp, const char *variable);
+void	unset(char **cmds, t_mini *mini);
+void	export(char **cmds, t_mini *mini);
 
-//extras
+//Extras
 
 char	*strjoinslash(const char *s1, const char *s2);
+int		ft_dstrlen(char **str);
 void	ft_pfree(void **str);
 int		remove_char(char *str, char c);
+int		checkexport(char *path, char ***env);
+char	*ft_strtok(char *str, char sep);
 
-//error
+//Errors
 void	check_error(char *name, char *str, char *args);
 void	ft_exit(char *msg);
 void	ft_iderr(char *str1, char *str2);

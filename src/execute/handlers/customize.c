@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 02:55:02 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 03:49:39 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,17 @@ void	ft_pfree(void **str)
 	free(str);
 }
 
-// size_t		ft_pstrlen(char **str)
-// {
-// 	int		i;
+int	ft_dstrlen(char **str)
+{
+	int		i;
 
-// 	i = 0;
-// 	while (str[i] != NULL)
-// 		i += 1;
-// 	return (i);
-// }
+	i = 0;
+	while (str[i] != NULL)
+		i += 1;
+	return (i);
+}
 
-char	*ft_strtok(char *str, char sepa)
+char	*ft_strtok(char *str, char sep)
 {
 	static char	*tok = NULL;
 	char		*p;
@@ -129,12 +129,12 @@ char	*ft_strtok(char *str, char sepa)
 		tok = ft_strdup(str);
 	while (*tok != '\0')
 	{
-		if (i == 0 && *tok != sepa)
+		if (i == 0 && *tok != sep)
 		{
 			i = 1;
 			p = tok;
 		}
-		else if (i == 1 && *tok == sepa)
+		else if (i == 1 && *tok == sep)
 		{
 			*tok = '\0';
 			tok += 1;
