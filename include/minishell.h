@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 04:34:17 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 02:12:59 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <string.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -56,7 +59,6 @@ typedef struct s_token
 typedef struct s_cmds
 {
 	char		*commad;
-	char		**commands;
 	char		**args;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
@@ -73,6 +75,7 @@ typedef struct s_mini
 	int			flag;
 	int			preflag;
 	t_lst		*list;
+	int			redir;
 }	t_mini;
 
 typedef struct s_lexer
@@ -128,19 +131,21 @@ char	*ft_strnjoin(char *s1, char *s2, int n);
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
+#define MAX_PATH_LENGTH 1024
+
 //Execution
+void	execute(t_mini *mini);
 
 //Pipex
 void	child_process(t_mini *mini);
 char	*find_command_path(char *name, char **env);
 int		pipex(t_mini *mini);
-char	**execute(t_mini *mini);
 
 
 //BuiltIns
 
 int		pwd();
-int		cd(char *path);
+int		cd(char **cmds, char **env);
 void	echo(char **argv);
 int		env(char **envp, int fd);
 void	unset(char **envp, const char *name);
@@ -149,10 +154,15 @@ void	export(char **envp, const char *variable);
 //extras
 
 int		ft_equal(char *str);
-void	ft_error(char *str, char *exe, int status);
 char	*strjoinslash(const char *s1, const char *s2);
 void	ft_pfree(void **str);
 
+//error
+void	check_error(char *name, char *str, char *args);
+void	ft_exit(char *msg);
+void	ft_iderr(char *str1, char *str2);
+int		ft_execute_err_1(char *str, char *msg);
+int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
 
 
 #endif

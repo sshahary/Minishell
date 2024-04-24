@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 04:37:45 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:09:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			pipex(t_mini *mini)
 	char	*path;
 
 	res = EXIT_SUCCESS;
-	path = find_command_path(mini->cmds->commands[0], mini->env);
+	path = find_command_path(mini->cmds->args[0], mini->env);
 	mini->cmds->next = mini->list->content;
 	if (mini->flag == 1)
 	{
@@ -71,23 +71,4 @@ int			pipex(t_mini *mini)
 	if (mini->fds[0] != 0)
 		close(mini->fds[0]);
 	return (res);
-}
-
-int main(void) {
-    // Create a mock t_mini structure
-    t_mini mini;
-    // Initialize mini.cmds, mini.list, mini.env (consider using mock data)
-    mini.flag = 0; // Test without pipe initially
-
-    // Test case 1: Simple execution (no pipe)
-    printf("Test 1: Simple execution\n");
-    pipex(&mini);
-
-    // Test case 2: Execution with pipe (modify mini.flag and list accordingly)
-    printf("Test 2: Execution with pipe\n");
-    mini.flag = 1;
-    // Update mini.list to simulate piped commands
-    pipex(&mini);
-
-    return (0);
 }

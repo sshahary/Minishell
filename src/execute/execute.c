@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 04:07:54 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/24 01:33:33 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,42 +35,84 @@
 // 		ft_error(*(mini->env),"command not found", 127);
 // }
 
-int			exec_builtin(t_mini	*mini)
+
+static int			check_builtin(char **cmdline)
 {
 	char	*builtin;
 
-	builtin = mini->cmds->commands[0];
+	builtin = cmdline[0];
+	if (!ft_strcmp(builtin, "cd") || !ft_strcmp(builtin, "echo")
+	|| !ft_strcmp(builtin, "pwd") || !ft_strcmp(builtin, "env")
+	|| !ft_strcmp(builtin, "export") || !ft_strcmp(builtin, "export")
+	|| !ft_strcmp(builtin, "unset") || !ft_strcmp(builtin, "exit"))
+		return (1);
+	return (0);
+}
+
+int			builtin(t_mini	*mini)
+{
+	char	*builtin;
+
+	builtin = mini->cmds->commad;
 	if (!ft_strcmp(builtin, "cd"))
-		ft_cd(mini->cmds->commands, mini->env);
+		cd(mini->cmds->commad, mini->env);
 	else if (!ft_strcmp(builtin, "echo"))
-		ft_echo(mini->cmds->commands, mini->env);
+		echo(mini->cmds->commad, mini->env);
 	else if (!ft_strcmp(builtin, "pwd"))
-		ft_pwd();
+		pwd();
 	else if (!ft_strcmp(builtin, "env"))
-		ft_env(mini->env);
+		env(mini->env);
 	else if (!ft_strcmp(builtin, "export"))
-		ft_export(mini, mini->cmds->commands);
+		export(mini, mini->cmds->commad);
 	else if (!ft_strcmp(builtin, "unset"))
-		ft_unset(mini, mini->cmds->commands);
+		unset(mini, mini->cmds->commad);
 	else if (!ft_strcmp(builtin, "exit"))
-		ft_exit(mini, mini->cmds->commands);
+		exit(mini, mini->cmds->commad);
 	else
 		return (0);
 	return (1);
 }
 
 
-char	**execute(t_mini *mini)
-{
-	int	i;
+// char	**execute(t_mini *mini)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!mini->cmds->args)
-		return (mini->env);
-	builtin(mini);
-	if (access(mini->cmds->args[0], F_OK) != -1)
-		pipex(mini, mini->cmds->args[0]);
-	else
-		find_command_path(mini->cmds->commad, mini->cmds->args);
-	return (mini->env);
+// 	i = 0;
+// 	if (!mini->cmds->args)
+// 		return (mini->env);
+// 	builtin(mini);
+// 	if (access(mini->cmds->args[0], F_OK) != -1)
+// 		pipex(mini);
+// 	else
+// 		find_command_path(mini->cmds->commad, mini->cmds->args);
+// 	return (mini->env);
+// }
+
+static void	free_cmdline(void *ptr)
+{
+	free(ptr);
+}
+
+void		execute(t_mini *mini)
+{
+	mini->list = mini->list->next;
+	while (mini->list != NULL)
+	{
+		mini->cmds = mini->list->content;
+		if (mini->cmds->args[0])
+		{
+			// if (mini->redir == 1 && mini->flag == 0)
+			// {
+			// 	exec_redir(mini, mini->cmds->commands);
+			// 	break ;
+			// }
+			if ((check_builtin(mini->cmds->args) == TRUE) && mini->flag == 0)
+				builtin(mini);
+			else
+				pipex(mini);
+		}
+		mini->list = mini->list->next;
+	}
+	ft_lstclear(mini, free_cmdline);
 }

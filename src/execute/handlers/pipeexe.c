@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 03:23:24 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 04:36:18 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:09:35 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	child_process(t_mini *mini)
 	char	*path;
 
 	res = EXIT_SUCCESS;
-	path = find_command_path(mini->cmds->commands[0], mini->env);
+	path = find_command_path(mini->cmds->args[0], mini->env);
 	if (mini->flag == 1)
 	{
 		dup2(mini->fds[1], STDOUT_FILENO);
@@ -32,7 +32,7 @@ void	child_process(t_mini *mini)
 	// if (check_builtin(mini->cmds->commands) == TRUE)
 	// 	exec_builtin(mini, mini->cmds->commands);
 	else
-		(res = execve(path, mini->cmds->commands, mini->env));
+		(res = execve(path, mini->cmds->args, mini->env));
 	// if (res == -1)
 	// 	print_execute_err_1(mini->cmds->commands[0], "command not found");
 	exit(res);
