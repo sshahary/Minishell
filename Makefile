@@ -27,6 +27,7 @@ SRCS	:=	src/main.c \
 			src/execute/builtins/unset.c \
 			src/execute/builtins/export.c \
 			src/execute/handlers/pipe.c \
+			src/execute/handlers/pipeexe.c \
 			src/execute/handlers/customize.c \
 			src/execute/error.c \
 			src/execute/execute.c \

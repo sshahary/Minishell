@@ -13,20 +13,20 @@
 #include "../../../include/minishell.h"
 
 
-void	printexport(char **env)
+static void	printexport(t_mini *mini)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (mini->env[i])
 	{
-		ft_putstr_fd(env[i], STDIN_FILENO);
+		ft_putstr_fd(mini->env[i], STDIN_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
 }
 
-void	addexport(char *path, char **new, int i)
+static void	addexport(char *path, char **new, int i)
 {
 	new[i] = ft_strdup(path);
 	new[i + 1] = NULL;
@@ -70,7 +70,8 @@ int		isvalidnum(char *str)
 	return (1);
 }
 
-void	export(char **cmds, t_mini *mini)
+// void	export(char **cmds, t_mini *mini)
+void	export(t_mini *mini)
 {
 	int		i;
 	int		res;
@@ -78,52 +79,56 @@ void	export(char **cmds, t_mini *mini)
 
 	res = 0;
 	i = 0;
-	tmp = cmds;
+	tmp = mini->cmds->args;
 	if (mini->preflag == 1)
 		return;
-	if (ft_dstrlen(cmds) == 1)
-		printexport(mini->env);
+	if (ft_dstrlen(mini->cmds->args) == 1)
+		printexport(mini);
 	else
 	{
-		remove_char(cmds[1], '\'');
-		while (cmds[++i])
+		remove_char(mini->cmds->args[1], '\'');
+		while (mini->cmds->args[++i])
 		{
 			if (isvalidnum(ft_strtok(tmp[i], '=')) == 0)
 			{
 				ft_iderr("export", tmp[i]);
 				mini->exit_code = 1;
 			}
-			remove_char(cmds[i], '$');
-			res = checkexport(cmds[i], &(mini->env));
+			remove_char(mini->cmds->args[i], '$');
+			res = checkexport(mini->cmds->args[i], &(mini->env));
 		}
 	}
 	if (res != 1)
 		mini->exit_code = 1;
 }
 
-// int main(int ac, char **args, char **env) {
+// void	export(t_mini *mini)
+// {
+// 	int		i;
+// 	int		res;
+// 	char 	**tmp;
 
-//    (void)ac;
-//    (void)args;
-//    	 // Initialize your t_mini struct
-//     t_mini mini;
-//     mini.preflag = 0; // Example value, set your preferred flag value here
-//     mini.env = env;
-//     mini.exit_code = 0; // Initialize exit code
+// 	res = 0;
+// 	i = 0;
+// 	tmp = mini->env;
+// 	if (mini->preflag == 1)
+// 		return;
 
-//     // Example command line arguments
-//     char *cmds[] = {
-//         "export",
-//         "VAR=value",
-//         NULL
-//     };
+// 	if (ft_dstrlen(mini->env) == 1) 
+// 		printexport(mini);
+// 	else {
+// 		while (mini->env[++i])
+// 		{
+// 			if (isvalidnum(ft_strtok(tmp[i], '=')) == 0)
+// 			{
+// 				ft_iderr("export", tmp[i]);
+// 				mini->exit_code = 1;
+// 			}
+// 			remove_char(mini->env[i], '$');
+// 			res = checkexport(mini->env[i], &(mini->env));
+// 		}
+// 	}
 
-//     // Call the export function
-//     export(cmds, &mini);
-
-//     // Print updated environment
-//     printf("Updated Environment:\n");
-//     printexport(mini.env);
-
-//     return 0;
+// 	if (res != 1)
+// 		mini->exit_code = 1;
 // }

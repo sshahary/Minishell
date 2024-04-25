@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 15:04:35 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:46:06 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ void	print_cmds(t_mini *mini);
 #define MAX_PATH_LENGTH 1024
 
 //Execution
-void	execute(t_mini *mini);
+// void	execute(t_mini *mini);
+char	**execute(t_mini *mini);
+int		check_builtin(char **args);
+int		builtin(t_mini	*mini);
 
 //Pipex
 void	child_process(t_mini *mini);
@@ -144,13 +147,13 @@ int		pipex(t_mini *mini);
 
 //BuiltIns
 
-void		pwd(void);
-void	cd(char **cmds, char **env);
-void	echo(char **args, char **env);
-void	env(char **env);
-void	unset(char **cmds, t_mini *mini);
-void	export(char **cmds, t_mini *mini);
-void	mini_exit(char **cmds, t_mini *mini);
+void	pwd(t_mini *mini);
+void	cd(t_mini *mini);
+void	echo(t_mini *mini);
+void	env(t_mini *mini);
+void	export(t_mini *mini);
+void	unset(t_mini *mini);
+void	mini_exit(t_mini *mini);
 
 //Extras
 
@@ -161,6 +164,7 @@ int		remove_char(char *str, char c);
 int		checkexport(char *path, char ***env);
 char	*ft_strtok(char *str, char sep);
 int		str_is_digit(char *str);
+int		isvalidnum(char *str);
 
 //Errors
 void	check_error(char *name, char *str, char *args);

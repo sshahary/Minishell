@@ -42,7 +42,7 @@ int		checkequal(char *str, char *env)
 	return (0);
 }
 
-int		unsetenv(char *str, char ***env)
+int		envunset(char *str, char ***env)
 {
 	int	i;
 	int	j;
@@ -67,7 +67,7 @@ int		unsetenv(char *str, char ***env)
 	return (1);
 }
 
-void	unset(char **cmds, t_mini *mini)
+void	unset(t_mini *mini)
 {
 	int	res;
 	int	i;
@@ -76,11 +76,39 @@ void	unset(char **cmds, t_mini *mini)
 	res = 0;
 	if (mini->preflag == 1)
 		return ;
-	while (cmds[++i])
+	while (mini->cmds->args[++i])
 	{
-		remove_char(cmds[i], '\'');
-		res = isvalidenv(cmds[i]) && unsetenv(cmds[i], &(mini->env));
+		remove_char(mini->cmds->args[i], '\'');
+		res = isvalidenv(mini->cmds->args[i]) && envunset(mini->cmds->args[i], &(mini->env));
 	}
 	if (res != 1)
 		mini->exit_code = 1;
 }
+
+// int main() {
+// 	// Create a sample environment
+// 	char *env[] = {"VAR1=value1", "VAR2=value2", "VAR3=value3", NULL};
+	
+// 	// Create a sample t_mini struct
+// 	t_mini mini;
+// 	mini.preflag = 0;
+// 	mini.exit_code = 0;
+// 	mini.env = env;
+
+// 	// Create a sample command
+// 	t_cmds cmd;
+// 	char *args[] = {"VAR1", "VAR2", NULL}; // Pass environment variables to unset
+// 	cmd.args = args;
+// 	mini.cmds = &cmd;
+
+// 	// Call unset function
+// 	unset(&mini);
+
+// 	// Print the updated environment
+// 	printf("Updated Environment:\n");
+// 	for (int i = 0; env[i] != NULL; i++) {
+// 		printf("%s\n", env[i]);
+// 	}
+
+// 	return 0;
+// }

@@ -12,21 +12,22 @@
 
 #include "../../../include/minishell.h"
 
-void	pwd(void)
+void	pwd(t_mini *mini)
 {
 	char	*pwd;
-	int		ret;
-	t_mini	*mini = NULL;
+	int		res;
 
-	ret = EXIT_SUCCESS;
+	res = 0;
 	pwd = getcwd(0, MAX_PATH_LENGTH);
 	ft_putendl_fd(pwd, 1);
 	free(pwd);
 	mini->exit_code = 0;
 }
 
-// int	main(void)
+// int		main(void)
 // {
-// 	int	fd = 1;
-// 	pwd(fd);
+// 	t_mini	mini;
+
+// 	pwd(&mini);
+// 	return (0);
 // }

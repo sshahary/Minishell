@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/22 12:09:01 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:07:46 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			pipex(t_mini *mini)
 	int		status;
 	char	*path;
 
-	res = EXIT_SUCCESS;
+	res = 0;
 	path = find_command_path(mini->cmds->args[0], mini->env);
 	mini->cmds->next = mini->list->content;
 	if (mini->flag == 1)
