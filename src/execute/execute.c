@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/25 16:58:50 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:01:45 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,24 @@ int	builtin(t_mini	*mini)
 }
 
 
-char	**execute(t_mini *mini)
-{
-	int	i;
+// char	**execute(t_mini *mini)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!mini->cmds->args)
-		return (mini->env);
-	// if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
-	builtin(mini);
-	// else
-	// 	pipex(mini);
-	if (access(mini->cmds->args[0], F_OK) != -1)
-		pipex(mini);
-	else
-		find_command_path(mini->cmds->commad, mini->cmds->args);
-	// builtin(mini);
-	return (mini->env);
-}
+// 	i = 0;
+// 	if (!mini->cmds->args)
+// 		return (mini->env);
+// 	// if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
+// 	builtin(mini);
+// 	// else
+// 	// 	pipex(mini);
+// 	if (access(mini->cmds->args[0], F_OK) != -1)
+// 		pipex(mini);
+// 	else
+// 		find_command_path(mini->cmds->commad, mini->cmds->args);
+// 	// builtin(mini);
+// 	return (mini->env);
+// }
 
 // static void	free_cmdline(void *ptr)
 // {
@@ -81,23 +81,34 @@ char	**execute(t_mini *mini)
 
 // void		execute(t_mini *mini)
 // {
-// 	mini->list = mini->list->next;
-// 	while (mini->list != NULL)
+// 	mini->cmds = mini->cmds->next;
+// 	while (mini->cmds != NULL)
 // 	{
-// 		mini->cmds = mini->list->content;
+// 		mini->cmds = mini->cmds->args;
 // 		if (mini->cmds->args[0])
 // 		{
-// 			// if (mini->redir == 1 && mini->flag == 0)
-// 			// {
-// 			// 	redir(mini, mini->cmds->args);
-// 			// 	break ;
-// 			// }
 // 			if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
 // 				builtin(mini);
 // 			else
 // 				pipex(mini);
 // 		}
-// 		mini->list = mini->list->next;
+// 		mini->cmds = mini->cmds->next;
 // 	}
-// 	ft_lstclear(&mini->list, free_cmdline);
+// 	// ft_lstclear(mini->env, free_cmdline);
 // }
+
+void	execute(t_mini *mini)
+{
+	int		i;
+	char	**len;
+
+	len = mini->cmds->args;
+	i = 0;
+	if (mini->cmds->args[0])
+	{
+		if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
+			builtin(mini);
+		else
+			pipex(mini);
+	}
+	}

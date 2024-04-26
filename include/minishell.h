@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 11:32:31 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:52:16 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ void	print_cmds(t_mini *mini);
 #define MAX_PATH_LENGTH 1024
 
 //Execution
-// void	execute(t_mini *mini);
-char	**execute(t_mini *mini);
+void	execute(t_mini *mini);
+// char	**execute(t_mini *mini);
 int		check_builtin(char **args);
 int		builtin(t_mini	*mini);
 
@@ -168,6 +168,7 @@ int		checkexport(char *path, char ***env);
 char	*ft_strtok(char *str, char sep);
 int		str_is_digit(char *str);
 int		isvalidnum(char *str);
+char	*get_path_value(char *name, char **env);
 
 //Errors
 void	check_error(char *name, char *str, char *args);

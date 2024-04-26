@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   customize.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/22 09:17:21 by rpambhar         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/25 12:09:58 by sshahary         ###   ########.fr       */
->>>>>>> fd187f723f43294ad024081255da789ba14a3e1c
+/*   Updated: 2024/04/26 17:54:02 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../../include/minishell.h"
 
@@ -47,6 +44,21 @@ int	remove_char(char *str, char c)
 	}
 	str[new_index] = '\0'; // Null-terminate the string
 	return (1);
+}
+
+char	*get_path_value(char *name, char **env)
+{
+	int	i;
+
+	i = 0;
+
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], name, ft_strlen(name)))
+			return (env[i] + ft_strlen(name) + 1);
+		i++;
+	}
+	return ("");
 }
 
 // static char	*strnew(size_t size)

@@ -42,6 +42,7 @@ all: $(LIBFT) $(NAME)
 $(LIBFT):
 	@echo "Making Libft..."
 	@make -sC $(LIBFT_PATH)
+	@make bonus -sC $(LIBFT_PATH)
 
 %.o: %c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)

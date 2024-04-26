@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/25 20:07:46 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:56:25 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 char	*find_command_path(char *name, char **env)
 {
+	// struct	stat s;
 	int		i;
 	char	*str;
 	char	**path;
@@ -45,6 +46,35 @@ char	*find_command_path(char *name, char **env)
 	ft_pfree((void **)path);
 	return (name);
 }
+
+// char	*find_command_path(char *name, char **env)
+// {
+// 	int		i;
+// 	char	*str;
+// 	char	**path;
+// 	char	*pathstr;
+
+// 	i = 0;
+// 	while (env[i] && ft_strcmp(env[i], "PATH="))
+// 		i++;
+// 	if (!(env[i]))
+// 		return (name);
+// 	path = ft_split(pathstr, ':');
+// 	i = 0;
+// 	while (path && path[i])
+// 	{
+// 		str = strjoinslash(path[i], name);
+// 		if (!(access(str, F_OK)))
+// 		{
+// 			ft_pfree((void **)path);
+// 			return (str);
+// 		}
+// 		free(str);
+// 		i++;
+// 	}
+// 	ft_pfree((void **)path);
+// 	return (name);
+// }
 
 int			pipex(t_mini *mini)
 {
