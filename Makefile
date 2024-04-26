@@ -19,6 +19,8 @@ SRCS	:=	src/main.c \
 			src/parser/parser_utils_2.c \
 			src/parser/expander.c \
 			src/parser/expander_utils.c \
+			src/parser/set_fd.c \
+			src/parser/heredoc.c \
 			src/execute/builtins/cd.c \
 			src/execute/builtins/echo.c \
 			src/execute/builtins/pwd.c \

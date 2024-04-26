@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 18:00:34 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:04:02 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	parser(t_mini *mini)
 		free_tokens(mini->tokens);
 		return (0);
 	}
+	set_fd(mini);
 	free_tokens(mini->tokens);
 	return (1);
 }
@@ -89,6 +90,8 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 		new_cmd->commad = ft_strdup((*tokens)->value);
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
+	new_cmd->fd_in = STDIN_FILENO;
+	new_cmd->fd_in = STDOUT_FILENO;
 	new_cmd->prev = (*prev_cmd);
 	if ((*prev_cmd) != NULL)
 		(*prev_cmd)->next = new_cmd;
