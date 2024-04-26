@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 14:39:50 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:53:17 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,9 @@ char	*ft_strnjoin(char *s1, char *s2, int n);
 void	set_fd(t_mini *mini);
 void	set_fd_and_remove(char **args, t_mini *mini, t_cmds *cmd);
 int		check_if_file_exits(char *path);
-void	get_and_set_fd(char *re, char *path, t_cmds *cmd);
-void	remove_two_elements(char **array, int index);
-void	removeElementAtIndex(char ***array_ptr, int index);
+void	get_and_set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini);
+void	remove_element(char ***array_ptr, int index);
+void	heredoc(int fd, char *del, t_mini *mini);
 
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
