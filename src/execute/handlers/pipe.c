@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/21 12:33:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:07:46 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-void	ft_pfree(void **str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-void	strclr(char *str)
-{
-	if (str != NULL)
-	{
-		while (*str != '\0')
-		{
-			*str = '\0';
-			str++;
-		}
-	}
-}
-
-char	*strnew(size_t size)
-{
-	char	*str;
-	if (size == 0)
-		return (NULL);
-
-	str = (char *)ft_calloc(size + 1, sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	return (str);
-}
-
 char	*find_command_path(char *name, char **env)
 {
 	int		i;
@@ -64,7 +25,7 @@ char	*find_command_path(char *name, char **env)
 	char	*pathstr;
 
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
+	while (env[i] && ft_strcmp(env[i], "PATH="))
 		i++;
 	if (!(env[i]))
 		return (name);
@@ -85,26 +46,29 @@ char	*find_command_path(char *name, char **env)
 	return (name);
 }
 
-int	pipex(t_mini *mini, char *exe)
+int			pipex(t_mini *mini)
 {
 	pid_t	pid;
+	int		res;
 	int		status;
+	char	*path;
 
+	res = 0;
+	path = find_command_path(mini->cmds->args[0], mini->env);
+	mini->cmds->next = mini->list->content;
+	if (mini->flag == 1)
+	{
+		mini->cmds->next = mini->list->next->content;
+		mini->preflag = 1;
+		pipe(mini->fds);
+	}
 	pid = fork();
 	if (pid == 0)
-	{
-		printf("exe = %s\n", exe);
-		printf("cmds->comand %s\n", mini->cmds->commad);
-		printf("");
-		if (execve(exe, mini->cmds->args, mini->env) == -1)
-			ft_error("permission denied", mini->cmds->commad, 1);
-	}
-	else if (pid < 0)
-		ft_error("failed to fork", mini->cmds->commad, 1);
-	else
-		waitpid(pid, &status, 0);
-		// if (WIFEXITED(status)) // checks if the 	CHILD process terminated normally
-			mini->exit_code = WEXITSTATUS(status);
-
-	return (mini->exit_code);
+		child_process(mini);
+	waitpid(pid, &status, 0);
+	if (mini->flag == 1)
+		close(mini->fds[1]);
+	if (mini->fds[0] != 0)
+		close(mini->fds[0]);
+	return (res);
 }

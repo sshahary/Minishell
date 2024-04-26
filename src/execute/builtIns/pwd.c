@@ -12,22 +12,22 @@
 
 #include "../../../include/minishell.h"
 
-int	pwd()
+void	pwd(t_mini *mini)
 {
-	char *cwd = getcwd(NULL, 0); // Allocate memory for the current working directory
-	if (cwd == NULL)
-		return (0); // Return 0 to indicate failure
-	
-	// Write the current working directory to the specified file descriptor
-	write(1, cwd, strlen(cwd));
-	write(1, "\n", 1);
+	char	*pwd;
+	int		res;
 
-	free(cwd); // Free the memory allocated by getcwd
-	return 1; // Return 1 to indicate success
+	res = 0;
+	pwd = getcwd(0, MAX_PATH_LENGTH);
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
+	mini->exit_code = 0;
 }
 
-// int	main(void)
+// int		main(void)
 // {
-// 	int	fd = 1;
-// 	pwd(fd);
+// 	t_mini	mini;
+
+// 	pwd(&mini);
+// 	return (0);
 // }

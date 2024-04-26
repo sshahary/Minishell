@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 17:33:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/22 09:42:02 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
+/*   Updated: 2024/04/26 11:32:31 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,23 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <string.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+
+
+# define FALSE			0
+# define TRUE			1
+
+# define ERR			-1
+# define SUCCESS 		1
+
+# define STDIN 			0
+# define STDOUT 		1
+# define STDERR 		2
 
 typedef enum s_type
 {
@@ -59,6 +73,11 @@ typedef struct s_mini
 	t_token		*tokens;
 	t_cmds		*cmds;
 	int			exit_code;
+	int			fds[2];
+	int			flag;
+	int			preflag;
+	t_lst		*list;
+	int			redir;
 }	t_mini;
 
 typedef struct s_lexer
@@ -115,28 +134,47 @@ char	*ft_strnjoin(char *s1, char *s2, int n);
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
-//Execution
+#define MAX_PATH_LENGTH 1024
 
-char	*find_command_path(char *name, char **env);
-int		pipex(t_mini *mini, char *exe);
+//Execution
+// void	execute(t_mini *mini);
 char	**execute(t_mini *mini);
+int		check_builtin(char **args);
+int		builtin(t_mini	*mini);
+
+//Pipex
+void	child_process(t_mini *mini);
+char	*find_command_path(char *name, char **env);
+int		pipex(t_mini *mini);
 
 
 //BuiltIns
 
-int		pwd();
-int		cd(char *path);
-void	echo(char **argv);
-int		env(char **envp, int fd);
-void	unset(char **envp, const char *name);
-void	export(char **envp, const char *variable);
+void	pwd(t_mini *mini);
+void	cd(t_mini *mini);
+void	echo(t_mini *mini);
+void	env(t_mini *mini);
+void	export(t_mini *mini);
+void	unset(t_mini *mini);
+void	mini_exit(t_mini *mini);
 
-//extras
+//Extras
 
-int		ft_equal(char *str);
-void	ft_error(char *str, char *exe, int status);
 char	*strjoinslash(const char *s1, const char *s2);
+int		ft_dstrlen(char **str);
+void	ft_pfree(void **str);
+int		remove_char(char *str, char c);
+int		checkexport(char *path, char ***env);
+char	*ft_strtok(char *str, char sep);
+int		str_is_digit(char *str);
+int		isvalidnum(char *str);
 
+//Errors
+void	check_error(char *name, char *str, char *args);
+void	ft_exit(char *msg);
+void	ft_iderr(char *str1, char *str2);
+int		ft_execute_err_1(char *str, char *msg);
+int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
 
 
 #endif

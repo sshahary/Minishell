@@ -12,31 +12,103 @@
 
 #include "../../../include/minishell.h"
 
-void	unset(char **envp, const char *name)
+int	isvalidenv(char *name)
 {
 	int	i;
-	int	envp_len;
 
-	envp_len = 0;
-	// Calculate the length of envp
-	while (envp[envp_len] != NULL)
-		envp_len++;
-	// Search for the variable name and remove it
 	i = 0;
-	while (i < envp_len)
+	while (name[i])
 	{
-		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0 && envp[i][ft_strlen(name)] == '=')
-		{
-			// Move subsequent environment variables to fill the gap
-			while (envp[i] != NULL)
-			{
-				envp[i] = envp[i + 1];
-				i++;
-			}
-			// Null-terminate the last element to mark the end of the array
-			envp[i - 1] = NULL;
-			return;
-		}
+		if (ft_isalnum(name[i]) || name[i] == '_')
+			;
+		else
+			return (0);
 		i++;
 	}
+	if (!i)
+		return (0);
+	return (1);
 }
+
+int		checkequal(char *str, char *env)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && env[i] && (str[i] == env[i]) && (env[i] != '='))
+		i++;
+	if ((str[i] == '\0') && (env[i] == '='))
+		return (1);
+	return (0);
+}
+
+int		envunset(char *str, char ***env)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (((*env)[j]) != NULL)
+		j++;
+	if (j < 1)
+		return (-1);
+	i = -1;
+	while ((*env)[++i] != NULL)
+	{
+		if (checkequal(str, (*env)[i]))
+		{
+			free((*env)[i]);
+			(*env)[i] = ft_strdup((*env)[j - 1]);
+			free((*env)[j - 1]);
+			(*env)[j - 1] = NULL;
+			return (1);
+		}
+	}
+	return (1);
+}
+
+void	unset(t_mini *mini)
+{
+	int	res;
+	int	i;
+
+	i = 0;
+	res = 0;
+	if (mini->preflag == 1)
+		return ;
+	while (mini->cmds->args[++i])
+	{
+		remove_char(mini->cmds->args[i], '\'');
+		res = isvalidenv(mini->cmds->args[i]) && envunset(mini->cmds->args[i], &(mini->env));
+	}
+	if (res != 1)
+		mini->exit_code = 1;
+}
+
+// int main() {
+// 	// Create a sample environment
+// 	char *env[] = {"VAR1=value1", "VAR2=value2", "VAR3=value3", NULL};
+	
+// 	// Create a sample t_mini struct
+// 	t_mini mini;
+// 	mini.preflag = 0;
+// 	mini.exit_code = 0;
+// 	mini.env = env;
+
+// 	// Create a sample command
+// 	t_cmds cmd;
+// 	char *args[] = {"VAR1", "VAR2", NULL}; // Pass environment variables to unset
+// 	cmd.args = args;
+// 	mini.cmds = &cmd;
+
+// 	// Call unset function
+// 	unset(&mini);
+
+// 	// Print the updated environment
+// 	printf("Updated Environment:\n");
+// 	for (int i = 0; env[i] != NULL; i++) {
+// 		printf("%s\n", env[i]);
+// 	}
+
+// 	return 0;
+// }

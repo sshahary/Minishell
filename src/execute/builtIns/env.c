@@ -12,42 +12,27 @@
 
 #include "../../../include/minishell.h"
 
-int	ft_equal(char *str)
+// void	env(char **env)
+void	env(t_mini *mini)
 {
-	while (*str)
-	{
-		if (*str == '=')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-int	env(char **envp, int fd)
-{
-	int	i;
+	int		i;
 
 	i = 0;
-	while (envp[i])
+	while (mini->env[i])
 	{
-		if (ft_equal(envp[i]))
-		{
-			ft_putstr_fd(envp[i], fd);
-			ft_putchar('\n', fd);
-		}
+		write(STDOUT_FILENO, mini->env[i], ft_strlen(mini->env[i]));
+		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	return (1);
+	mini->exit_code = 0;
 }
 
-// int	main(int argc, char **argv, char **envp)
+// int		main(void)
 // {
-// 	int fd = 1;
-// 	while(1)
-// 	{
-// 		env(envp, fd);
-// 	}
-// dprintf(2,"test\n");
+// 	t_mini	mini;
+// 	char	*envp[] = {"USER=sshahavhgdbbbbbry", "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library", "TERM=xterm-256color", NULL};
 
+// 	mini.env = envp;
+// 	env(&mini);
 // 	return (0);
 // }
