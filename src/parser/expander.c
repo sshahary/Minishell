@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:19 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/22 09:45:48 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:36:54 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expander(t_mini *mini)
 	while (mini->cmds)
 	{
 		i = 0;
-		if (!check_and_expand(&mini->cmds->commad, mini))
+		if (mini->cmds->commad && !check_and_expand(&mini->cmds->commad, mini))
 			return (0);
 		while (mini->cmds->args && mini->cmds->args[i])
 		{

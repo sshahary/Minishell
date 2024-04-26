@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/21 09:51:13 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:34:50 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,8 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	new_cmd = malloc(sizeof(t_cmds));
 	if (new_cmd == NULL)
 		return (0);
-	new_cmd->commad = ft_strdup((*tokens)->value);
-	if (new_cmd->commad == NULL)
-		return (0);
+	if ((*tokens)->value)
+		new_cmd->commad = ft_strdup((*tokens)->value);
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
 	new_cmd->prev = (*prev_cmd);

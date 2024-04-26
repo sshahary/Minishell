@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/22 09:46:52 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:36:12 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_error_msg(t_type type)
 	else if (type == HEREDOC)
 		ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2);
 	else
-		ft_putstr_fd("minishell: syntax error\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 }
 
 void	free_cmds(t_mini *mini)

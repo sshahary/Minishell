@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:55 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/11 13:37:15 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:31:16 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int	check_syntax_errors(t_mini *mini)
 
 int	check_pipe_and_redirection_errors(t_token *t)
 {
-	if (t->type == 1 || t->type == 2 || t->type == 3 || t->type == 4 || \
-	t->type == 5)
+	if (t->type == 1)
 	{
 		if (t->prev == NULL || (t->next && t->next->type == END))
 		{
@@ -91,6 +90,14 @@ int	check_pipe_and_redirection_errors(t_token *t)
 		else if (t->next->type != WORD || t->prev->type != WORD)
 		{
 			print_error_msg(t->type);
+			return (0);
+		}
+	}
+	else if (t->type == 2 || t->type == 3 || t->type == 4 || t->type == 5)
+	{
+		if (t->next->type != WORD)
+		{
+			print_error_msg(END);
 			return (0);
 		}
 	}

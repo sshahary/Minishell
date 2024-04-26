@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/12 10:56:26 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:36:23 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ t_token	*get_token(t_lexer *lexer)
 		else if (lexer->input[lexer->position] == '>')
 			return (lexer_handle_redirection_out(lexer));
 		else if (!ft_isspace(lexer->input[lexer->position]))
+		{
 			return (lexer_handle_word(lexer));
+		}
 	}
 	return (lexer_handle_eof());
 }

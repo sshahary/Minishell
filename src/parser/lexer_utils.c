@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/22 09:46:25 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:34:24 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*lexer_handle_redirection_out(t_lexer	*lexer)
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	if (lexer->input[lexer->position++] == '>')
+	if (lexer->input[lexer->position] == '>')
 	{
 		lexer->position++;
 		token->type = REDIRECT_OUT_APPEND;
