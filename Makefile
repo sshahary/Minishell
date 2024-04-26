@@ -19,6 +19,7 @@ SRCS	:=	src/main.c \
 			src/parser/parser_utils_2.c \
 			src/parser/expander.c \
 			src/parser/expander_utils.c \
+			src/parser/set_fd.c \
 			src/execute/builtins/cd.c \
 			src/execute/builtins/echo.c \
 			src/execute/builtins/pwd.c \
@@ -42,6 +43,7 @@ all: $(LIBFT) $(NAME)
 $(LIBFT):
 	@echo "Making Libft..."
 	@make -sC $(LIBFT_PATH)
+	@make bonus -sC $(LIBFT_PATH)
 
 %.o: %c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)

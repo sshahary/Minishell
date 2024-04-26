@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 11:32:31 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:39:50 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+#include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -105,6 +106,7 @@ t_token	*lexer_handle_error();
 t_token	*lexer_handle_eof();
 void	lexer_handle_quotes(t_lexer *lexer, int *quotes);
 void	free_tokens(t_token *tokens);
+void remove_node(t_cmds **head_ref, t_cmds *node_to_remove);
 
 // Parser
 int		parser(t_mini *mini);
@@ -130,6 +132,15 @@ int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
 int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
+
+
+// Handling FD
+void	set_fd(t_mini *mini);
+void	set_fd_and_remove(char **args, t_mini *mini, t_cmds *cmd);
+int		check_if_file_exits(char *path);
+void	get_and_set_fd(char *re, char *path, t_cmds *cmd);
+void	remove_two_elements(char **array, int index);
+void	removeElementAtIndex(char ***array_ptr, int index);
 
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);

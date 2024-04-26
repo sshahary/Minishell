@@ -12,7 +12,6 @@
 
 #include "../../../include/minishell.h"
 
-
 // static int	cdhome(char *path, char **cmds, char **env)
 static int	cdhome(char *path, t_mini *mini)
 {
