@@ -58,6 +58,7 @@ void	cd(t_mini *mini)
 
 	path = 0;
 	res = 0;
+	printf("jdhudgudf0");
 	if (mini->cmds->args[1] != NULL && mini->cmds->args[1][0] != '~' && mini->cmds->args[1][0] != '$')
 	{
 		path = mini->cmds->args[1];

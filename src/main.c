@@ -6,15 +6,16 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 18:03:46 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:10:48 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minishell.h"
 
-void	check_leaks(void)
-{
-	system("leaks minishell");
-}
+// void	check_leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 static int	check_input(char *input);
 
@@ -23,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 	(void)argc;
 	(void)argv;
-	atexit(check_leaks);
+	// atexit(check_leaks);
 
 	mini.env = env;
 	rl_bind_key('\t', rl_complete);
@@ -39,8 +40,8 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-		print_cmds(&mini);
-		// execute(&mini);
+		// print_cmds(&mini);
+		execute(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}
@@ -49,11 +50,11 @@ int	main(int argc, char **argv, char **env)
 
 static int	check_input(char *input)
 {
-	if (ft_strcmp("exit", input) == 0)
-	{
-		free(input);
-		exit(EXIT_SUCCESS);
-	}
+	// if (ft_strcmp("exit", input) == 0)
+	// {
+	// 	free(input);
+	// 	exit(EXIT_SUCCESS);
+	// }
 	if (ft_strcmp("clear", input) == 0)
 	{
 		free(input);

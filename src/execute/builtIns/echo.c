@@ -25,7 +25,7 @@ static void		echoenv(t_mini *mini, int i)
 	if (mini->cmds->args[1][0] == '$' && mini->cmds->args[1][1] == '?')
 		exit_code(mini);
 	value = find_command_path(&(mini->cmds->args[i][1]), mini->env);
-	ft_putstr_fd(value, STDIN_FILENO);
+	ft_putstr_fd(value, mini->cmds->fd_in);
 }
 
 static	int		args_n(t_mini *mini)
@@ -63,13 +63,13 @@ void	echo(t_mini *mini)
 		if (mini->cmds->args[i][0] == '$' && res != 1)
 			echoenv(mini, i);
 		else
-			ft_putstr_fd(mini->cmds->args[i], STDOUT_FILENO);
+			ft_putstr_fd(mini->cmds->args[i], mini->cmds->fd_out);
 		if (mini->cmds->args[i + 1] != NULL)
-			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putchar_fd(' ', mini->cmds->fd_out);
 		i++;
 	}
 	if (res != -1)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', mini->cmds->fd_out);
 }
 
 // int	main(void)

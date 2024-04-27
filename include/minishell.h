@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 18:03:03 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:38:14 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,11 @@ int		check_builtin(char **args);
 int		builtin(t_mini	*mini);
 
 //Pipex
+int		parent_process(t_mini *mini, pid_t pid);
 void	child_process(t_mini *mini);
 char	*find_command_path(char *name, char **env);
-int		pipex(t_mini *mini);
+// int		pipex(t_mini *mini);
+int	pipex(t_mini *mini);
 
 
 //BuiltIns

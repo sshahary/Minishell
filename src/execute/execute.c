@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 18:01:45 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:05:12 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	builtin(t_mini	*mini)
 
 // void		execute(t_mini *mini)
 // {
-// 	mini->cmds = mini->cmds->next;
+// 	mini->list = mini->cmds->next;
 // 	while (mini->cmds != NULL)
 // 	{
 // 		mini->cmds = mini->cmds->args;
@@ -97,18 +97,35 @@ int	builtin(t_mini	*mini)
 // 	// ft_lstclear(mini->env, free_cmdline);
 // }
 
+// void	execute(t_mini *mini)
+// {
+// 	int		i;
+// 	char	**len;
+
+// 	len = mini->cmds->args;
+// 	i = 0;
+// 	while 
+// 	if (mini->cmds->args[0])
+// 	{
+// 		if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
+// 			builtin(mini);
+// 		else
+// 			pipex(mini);
+// 	}
+// 	}
+
+
 void	execute(t_mini *mini)
 {
-	int		i;
-	char	**len;
+	// t_cmds	*cmds;
 
-	len = mini->cmds->args;
-	i = 0;
-	if (mini->cmds->args[0])
-	{
-		if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
+	// cmds = mini->cmds;
+	// while (cmds)
+	// {
+		if(check_builtin(mini->cmds->args))
 			builtin(mini);
 		else
 			pipex(mini);
-	}
-	}
+		// cmds = cmds->next;
+	// }
+}
