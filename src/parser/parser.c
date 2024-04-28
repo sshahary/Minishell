@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 18:56:03 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:55:35 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
 	new_cmd->fd_in = STDIN_FILENO;
-	new_cmd->fd_in = STDOUT_FILENO;
+	new_cmd->fd_out = STDOUT_FILENO;
 	new_cmd->prev = (*prev_cmd);
 	if ((*prev_cmd) != NULL)
 		(*prev_cmd)->next = new_cmd;
