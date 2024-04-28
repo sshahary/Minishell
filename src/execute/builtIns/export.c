@@ -80,8 +80,6 @@ void	export(t_mini *mini)
 	res = 0;
 	i = 0;
 	tmp = mini->cmds->args;
-	if (mini->preflag == 1)
-		return;
 	if (ft_dstrlen(mini->cmds->args) == 1)
 		printexport(mini);
 	else

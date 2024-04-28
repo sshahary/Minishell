@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/27 16:05:12 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/28 03:10:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,78 +54,18 @@ int	builtin(t_mini	*mini)
 	return (1);
 }
 
-
-// char	**execute(t_mini *mini)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!mini->cmds->args)
-// 		return (mini->env);
-// 	// if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
-// 	builtin(mini);
-// 	// else
-// 	// 	pipex(mini);
-// 	if (access(mini->cmds->args[0], F_OK) != -1)
-// 		pipex(mini);
-// 	else
-// 		find_command_path(mini->cmds->commad, mini->cmds->args);
-// 	// builtin(mini);
-// 	return (mini->env);
-// }
-
-// static void	free_cmdline(void *ptr)
-// {
-// 	free(ptr);
-// }
-
-// void		execute(t_mini *mini)
-// {
-// 	mini->list = mini->cmds->next;
-// 	while (mini->cmds != NULL)
-// 	{
-// 		mini->cmds = mini->cmds->args;
-// 		if (mini->cmds->args[0])
-// 		{
-// 			if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
-// 				builtin(mini);
-// 			else
-// 				pipex(mini);
-// 		}
-// 		mini->cmds = mini->cmds->next;
-// 	}
-// 	// ft_lstclear(mini->env, free_cmdline);
-// }
-
-// void	execute(t_mini *mini)
-// {
-// 	int		i;
-// 	char	**len;
-
-// 	len = mini->cmds->args;
-// 	i = 0;
-// 	while 
-// 	if (mini->cmds->args[0])
-// 	{
-// 		if ((check_builtin(mini->cmds->args) == 1) && mini->flag == 0)
-// 			builtin(mini);
-// 		else
-// 			pipex(mini);
-// 	}
-// 	}
-
-
 void	execute(t_mini *mini)
 {
-	// t_cmds	*cmds;
+	t_cmds	*cmds;
 
-	// cmds = mini->cmds;
-	// while (cmds)
-	// {
+	cmds = mini->cmds;
+	while (cmds)
+	{
 		if(check_builtin(mini->cmds->args))
 			builtin(mini);
 		else
-			pipex(mini);
-		// cmds = cmds->next;
-	// }
+			pipex(cmds, mini);
+		cmds = cmds->next;
+	}
 }
+

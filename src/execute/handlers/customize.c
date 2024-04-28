@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/26 18:03:36 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/28 02:33:21 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,29 @@ char	*get_path_value(char *name, char **env)
 		i++;
 	}
 	return ("");
+}
+
+char		*find_command_path(char *cmdline, char **envs)
+{
+	int			i;
+	char		*temp;
+	char		*new_path;
+	char		**paths;
+	struct stat	s;
+
+	temp = get_path_value("PATH", envs);
+	paths = ft_split(temp, ':');
+	i = -1;
+	while (paths[++i])
+	{
+		temp = ft_strjoin("/", cmdline);
+		new_path = ft_strjoin(paths[i], temp);
+		free(temp);
+		if (stat(new_path, &s) == 0)
+			return (new_path);
+		free(new_path);
+	}
+	return (ft_strdup(cmdline));
 }
 
 // static char	*strnew(size_t size)

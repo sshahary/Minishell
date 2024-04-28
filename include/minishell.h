@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/27 15:38:14 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/28 03:06:41 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define STDIN 			0
 # define STDOUT 		1
 # define STDERR 		2
+
 
 typedef enum s_type
 {
@@ -77,7 +78,6 @@ typedef struct s_mini
 	int			fds[2];
 	int			flag;
 	int			preflag;
-	t_lst		*list;
 	int			redir;
 }	t_mini;
 
@@ -155,10 +155,13 @@ int		builtin(t_mini	*mini);
 
 //Pipex
 int		parent_process(t_mini *mini, pid_t pid);
-void	child_process(t_mini *mini);
-char	*find_command_path(char *name, char **env);
+// void	child_process(t_mini *mini);
+void	child_process(t_cmds *cmd, t_mini *mini);
+char		*find_command_path(char *cmdline, char **envs);
+// char	*find_command_path(char *name, char **env);
 // int		pipex(t_mini *mini);
-int	pipex(t_mini *mini);
+// int	pipex(t_mini *mini);
+int		pipex(t_cmds *cmd, t_mini *mini);
 
 
 //BuiltIns

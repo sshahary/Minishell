@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/27 15:51:00 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/28 03:17:05 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-char	*find_command_path(char *name, char **env)
-{
-	// struct	stat s;
-	int		i;
-	char	*str;
-	char	**path;
-	char	*pathstr;
-
-	i = 0;
-	// printf("GET_ENV: %s\n", get_env("PATH", env));
-	while (env[i] && ft_strcmp(env[i], "PATH="))
-		i++;
-	if (!(env[i]))
-		return (name);
-	path = ft_split(pathstr, ':');
-	i = 0;
-	while (path && path[i])
-	{
-		str = strjoinslash(path[i], name);
-		if (!(access(str, F_OK)))
-		{
-			ft_pfree((void **)path);
-			return (str);
-		}
-		free(str);
-		i++;
-	}
-	ft_pfree((void **)path);
-	return (name);
-}
 
 // char	*find_command_path(char *name, char **env)
 // {
@@ -77,24 +47,44 @@ char	*find_command_path(char *name, char **env)
 // 	return (name);
 // }
 
-int			pipex(t_mini *mini)
+void		status_child(pid_t pid, t_mini *mini)
 {
-	pid_t	pid;
-	// int		res;
-	// int		status;
-	// char	*path;
-
-	// res = 0;
-	// path = find_command_path(mini->cmds->args[0], mini->env);
-	if (pipe(mini->fds) == -1)
-		ft_exit("creating of pipe failed");
-	pid = fork();
-	if (pid == 0)
-		child_process(mini);
-	if (pid > 0)
-		parent_process(mini, pid);
-	else
-		ft_exit("forking failed");
-	return (0);
+	if (WIFEXITED(pid))
+		mini->exit_code = WEXITSTATUS(pid);
+	if (WIFSIGNALED(pid))
+	{
+		mini->exit_code = WTERMSIG(pid);
+		if (mini->exit_code != 131)
+			mini->exit_code += 128;
+	}
 }
 
+int		pipex(t_cmds *cmd, t_mini *mini)
+{
+	pid_t	pid;
+	int		ret;
+	int		status;
+	t_cmds	*next_cmd;
+	char	*path;
+
+	ret = EXIT_SUCCESS;
+	path = find_command_path(cmd->args[0], mini->env);
+	next_cmd = cmd;
+	if (mini->flag == 1)
+	{
+		next_cmd->commad = cmd->next->commad;
+		mini->preflag = 1;
+		pipe(mini->fds);
+	}
+	pid = fork();
+	if (pid == 0)
+		child_process(cmd, mini);
+	waitpid(pid, &status, 0);
+	if (mini->flag == 1)
+		close(mini->fds[1]);
+	if (mini->fds[0] != 0)
+		close(mini->fds[0]);
+	status_child(pid, mini);
+	
+	return (ret);
+}
