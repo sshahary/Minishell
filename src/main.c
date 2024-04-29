@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		// print_cmds(&mini);
 		// execute(&mini);
-		// executor(&mini);
+		executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}

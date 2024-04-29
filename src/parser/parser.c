@@ -50,7 +50,7 @@ int	get_cmds(t_mini *mini)
 		return (0);
 	if (cmds == NULL)
 		return (1);
-	// reverse_cmds(&cmds);
+	reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);
 }

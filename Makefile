@@ -22,18 +22,7 @@ SRCS	:=	src/main.c \
 			src/parser/set_fd.c \
 			src/parser/heredoc.c \
 			src/my_executor/exec.c \
-			src/execute/builtins/cd.c \
-			src/execute/builtins/echo.c \
-			src/execute/builtins/pwd.c \
-			src/execute/builtins/env.c \
-			src/execute/builtins/exit.c \
-			src/execute/builtins/unset.c \
-			src/execute/builtins/export.c \
-			src/execute/handlers/pipe.c \
-			src/execute/handlers/pipeexe.c \
-			src/execute/handlers/customize.c \
-			src/execute/error.c \
-			src/execute/execute.c \
+			
 
 
 # Objects
