@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/28 03:06:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:50:10 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct s_cmds
 typedef struct s_mini
 {
 	char		*input;
-	char		**env;
 	t_token		*tokens;
+	char		**env;
 	t_cmds		*cmds;
 	int			exit_code;
 	int			fds[2];
@@ -132,6 +132,12 @@ int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
 int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
+
+// My executor
+void	executor(t_mini *mini);
+void	handle_single_cmd(t_mini *mini);
+char	*find_path(t_mini *mini, char *cmd);
+int		count_cmds(t_cmds *cmds);
 
 
 // Handling FD
