@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/29 12:49:01 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:16:36 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-		print_cmds(&mini);
+		// print_cmds(&mini);
 		// execute(&mini);
-		executor(&mini);
+		// executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}

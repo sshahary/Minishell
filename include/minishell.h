@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/29 12:50:10 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:50:23 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_mini
 	char		**env;
 	t_cmds		*cmds;
 	int			exit_code;
+	pid_t		*pids;
 	int			fds[2];
 	int			flag;
 	int			preflag;

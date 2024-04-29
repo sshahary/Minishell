@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/28 17:55:35 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:09:46 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	get_cmds(t_mini *mini)
 		return (0);
 	if (cmds == NULL)
 		return (1);
-	reverse_cmds(&cmds);
+	// reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);
 }
