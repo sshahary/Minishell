@@ -21,7 +21,10 @@ SRCS	:=	src/main.c \
 			src/parser/expander_utils.c \
 			src/parser/set_fd.c \
 			src/parser/heredoc.c \
-			src/my_executor/exec.c \
+			src/my_executor/executor.c \
+			src/my_executor/executor_utils.c \
+			src/my_executor/single_command.c \
+			src/my_executor/multiple_commands.c \
 			
 
 

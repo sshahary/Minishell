@@ -138,6 +138,12 @@ char	*ft_strnjoin(char *s1, char *s2, int n);
 // My executor
 void	executor(t_mini *mini);
 void	handle_single_cmd(t_mini *mini);
+void    handle_multiple_cmds(t_mini *mini);
+void	fork_process(t_mini *mini, int n_cmds, int **fds);
+void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd);
+void    close_fds(int **fds, int n_cmds);
+void	wait_pids(t_mini *mini, int n_cmds);
+int		initialize_fds(int ***fds, int n_cmds);
 char	*find_path(t_mini *mini, char *cmd);
 int		count_cmds(t_cmds *cmds);
 
