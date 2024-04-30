@@ -6,7 +6,11 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/04/28 04:52:51 by sshahary         ###   ########.fr       */
+=======
 /*   Updated: 2024/04/28 15:05:35 by rpambhar         ###   ########.fr       */
+>>>>>>> 13692c38e8888874dcabae998cde3075e6f121e6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +67,7 @@ int		pipex(t_cmds *cmd, t_mini *mini)
 {
 	pid_t	pid;
 	int		ret;
-	int		status;
+	// int		status;
 	t_cmds	*next_cmd;
 	char	*path;
 
@@ -79,7 +83,7 @@ int		pipex(t_cmds *cmd, t_mini *mini)
 	pid = fork();
 	if (pid == 0)
 		child_process(cmd, mini);
-	waitpid(pid, &status, 0);
+	waitpid(pid, &mini->exit_code, 0);
 	if (mini->flag == 1)
 		close(mini->fds[1]);
 	if (mini->fds[0] != 0)
