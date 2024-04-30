@@ -16,11 +16,16 @@
 static int	cdhome(char *path, t_mini *mini)
 {
 
-	if (mini->cmds->args[1] == NULL || mini->cmds->args[1][1] == '~')
-	{
-		ft_execute_err_2("cd", mini->cmds->args[1], "No such file or directory");
-		mini->exit_code = 1;
-	}
+	// if (mini->cmds->args[1] == NULL || mini->cmds->args[1][1] == '~')
+	// {
+	// 	// ft_execute_err_2("cd", mini->cmds->args[1], "No such file or directory");
+	// 	mini->exit_code = 1;
+	// }
+	// if (mini->cmds->args[1][1] != '~')
+	// {
+	// 	ft_execute_err_2("cd", mini->cmds->args[1], "No such file or directory");
+	// 	mini->exit_code = 1;
+	// }
 	path = get_path_value("HOME", mini->env);
 	if (chdir(path) == -1)
 		ft_execute_err_1("cd", "HOME not set");
