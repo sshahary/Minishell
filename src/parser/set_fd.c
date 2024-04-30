@@ -48,7 +48,7 @@ void	set_fd_and_remove(char **args, t_mini *mini, t_cmds *cmd)
 	i = 0;
 	while (args[i])
 	{
-		if (args[i][0] == '<' || args[i][0] == '>')
+		if ((args[i][0] == '<' || args[i][0] == '>') && args[i + 1])
 		{
 			if (!args[i + 1])
 			{

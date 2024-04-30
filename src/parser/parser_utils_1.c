@@ -69,8 +69,8 @@ void	print_error_msg(t_type type)
 	else if (type == HEREDOC)
 		ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2);
 	else
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n\
-		", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n"\
+		, 2);
 }
 
 void	free_cmds(t_mini *mini)

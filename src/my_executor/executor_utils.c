@@ -6,11 +6,11 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 13:39:14 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:15:40 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	count_cmds(t_cmds *cmds)
 {
@@ -40,8 +40,8 @@ char	*find_path(t_mini *mini, char *cmd)
 	while (all_path[i])
 	{
 		new_cmd = ft_strjoin(all_path[i], temp);
-		if (access(new_cmd, X_OK) == 0)
-			break;
+		if (access (new_cmd, X_OK) == 0)
+			break ;
 		i++;
 		free(new_cmd);
 	}
@@ -56,7 +56,7 @@ char	*find_path(t_mini *mini, char *cmd)
 
 int	initialize_fds(int ***fds, int n_cmds)
 {
-	int i = 0;
+    int i;
 
 	*fds = malloc(sizeof (int *) * n_cmds);
 	if (!(*fds))

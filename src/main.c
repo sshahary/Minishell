@@ -6,7 +6,11 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/30 13:35:00 by sshahary         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/28 04:24:44 by sshahary         ###   ########.fr       */
+>>>>>>> b2032a8cc0101eea5ebdfdf1c805d61ceb748b2e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +45,11 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
+<<<<<<< HEAD
 		// print_cmds(&mini);
 		// execute(&mini);
+=======
+>>>>>>> b2032a8cc0101eea5ebdfdf1c805d61ceb748b2e
 		// print_cmds(&mini);
 		// execute(&mini);
 		executor(&mini);
