@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/28 03:06:41 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:50:23 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -71,10 +72,11 @@ typedef struct s_cmds
 typedef struct s_mini
 {
 	char		*input;
-	char		**env;
 	t_token		*tokens;
+	char		**env;
 	t_cmds		*cmds;
 	int			exit_code;
+	pid_t		*pids;
 	int			fds[2];
 	int			flag;
 	int			preflag;
@@ -132,6 +134,18 @@ int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
 int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
+
+// My executor
+void	executor(t_mini *mini);
+void	handle_single_cmd(t_mini *mini);
+void    handle_multiple_cmds(t_mini *mini);
+void	fork_process(t_mini *mini, int n_cmds, int **fds);
+void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd);
+void    close_fds(int **fds, int n_cmds);
+void	wait_pids(t_mini *mini, int n_cmds);
+int		initialize_fds(int ***fds, int n_cmds);
+char	*find_path(t_mini *mini, char *cmd);
+int		count_cmds(t_cmds *cmds);
 
 
 // Handling FD

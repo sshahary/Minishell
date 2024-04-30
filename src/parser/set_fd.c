@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:49:27 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 15:57:38 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:18:02 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	set_fd_and_remove(char **args, t_mini *mini, t_cmds *cmd)
 	{
 		if (args[i][0] == '<' || args[i][0] == '>')
 		{
+			if (!args[i + 1])
+			{
+				remove_element(&cmd->args, i);
+				break ;
+			}
 			if (!strcmp(args[i], "<"))
 			{
 				if (!check_if_file_exits(args[i + 1]))

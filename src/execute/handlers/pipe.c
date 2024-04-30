@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/28 04:52:51 by sshahary         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/28 15:05:35 by rpambhar         ###   ########.fr       */
+>>>>>>> 13692c38e8888874dcabae998cde3075e6f121e6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +89,6 @@ int		pipex(t_cmds *cmd, t_mini *mini)
 	if (mini->fds[0] != 0)
 		close(mini->fds[0]);
 	status_child(pid, mini);
-	
+
 	return (ret);
 }
