@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/29 17:10:36 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:39:14 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ char	*find_path(t_mini *mini, char *cmd)
 
 int	initialize_fds(int ***fds, int n_cmds)
 {
-    int i;
+	int i = 0;
 
-    *fds = malloc(sizeof (int *) * n_cmds);
-    if (!(*fds))
-        return (0);
-    while (i < n_cmds)
-    {
-        (*fds)[i] = malloc(sizeof(int) * 2);
-        if (!(*fds)[i])
-            return (0);
-        pipe((*fds)[i]);
-        i++;
-    }
-    return (1);
+	*fds = malloc(sizeof (int *) * n_cmds);
+	if (!(*fds))
+		return (0);
+	while (i < n_cmds)
+	{
+		(*fds)[i] = malloc(sizeof(int) * 2);
+		if (!(*fds)[i])
+			return (0);
+		pipe((*fds)[i]);
+		i++;
+	}
+	return (1);
 }

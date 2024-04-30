@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/28 04:24:44 by sshahary         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/29 17:16:36 by rpambhar         ###   ########.fr       */
->>>>>>> 13692c38e8888874dcabae998cde3075e6f121e6
+/*   Updated: 2024/04/30 13:35:00 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -44,14 +41,11 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-<<<<<<< HEAD
-		print_cmds(&mini);
-		execute(&mini);
-=======
+		// print_cmds(&mini);
+		// execute(&mini);
 		// print_cmds(&mini);
 		// execute(&mini);
 		executor(&mini);
->>>>>>> 13692c38e8888874dcabae998cde3075e6f121e6
 		free(mini.input);
 		free_cmds(&mini);
 	}
