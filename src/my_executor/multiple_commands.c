@@ -55,8 +55,11 @@ void fork_process(t_mini *mini, int n_cmds, int **fds)
 
 void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd)
 {
+
 	if (i == 0)
+    {
 		dup2(fd[0], STDIN_FILENO);
+    }
 	else if (i == count_cmds(mini->cmds) - 1)
 		dup2(fd[1], STDOUT_FILENO);
 	else
