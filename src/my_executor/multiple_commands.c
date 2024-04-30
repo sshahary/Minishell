@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 17:09:11 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:58:21 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_multiple_cmds(t_mini *mini)
 
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
-		return ;
+		return;
 	mini->pids = malloc(sizeof(pid_t) * n_cmds);
 	if (!mini->pids)
 		return ;

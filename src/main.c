@@ -6,9 +6,10 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 19:54:48 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:57:44 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -41,8 +42,8 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		// print_cmds(&mini);
-		// execute(&mini);
-		executor(&mini);
+		execute(&mini);
+		// executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}

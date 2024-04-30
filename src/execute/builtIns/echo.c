@@ -28,16 +28,16 @@ static void		echoenv(t_mini *mini, int i)
 	ft_putstr_fd(value, mini->cmds->fd_in);
 }
 
-static	int		args_n(t_mini *mini)
+static	int		args_n(char *cmds)
 {
 	int	i;
 
-	if (ft_strncmp(*mini->cmds->args, "-n", 2) != 0)
+	if (ft_strncmp(cmds, "-n", 2) != 0)
 		return (0);
 	i = 2;
-	while (mini->cmds->args[i])
+	while (cmds[i])
 	{
-		if (mini->cmds->args[i] != (char *)'n')
+		if (cmds[i] != 'n')
 			return (0);
 		i++;
 	}
@@ -51,7 +51,7 @@ void	echo(t_mini *mini)
 
 	i = 1;
 	res = 0;
-	while (args_n(mini))
+	while (args_n(mini->cmds->args[i]))
 	{
 		res = -1;
 		i++;
