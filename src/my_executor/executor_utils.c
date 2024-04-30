@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 14:27:16 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:20:01 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	initialize_fds(int ***fds, int n_cmds)
 {
 	int	i;
 
+	i = 0;
 	*fds = malloc(sizeof (int *) * n_cmds);
 	if (!(*fds))
 		return (0);

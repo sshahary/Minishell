@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/29 16:50:23 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:08:54 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_token
 
 typedef struct s_cmds
 {
-	char			*commad;
 	char			**args;
 	struct s_cmds	*next;
 	struct s_cmds	*prev;
@@ -126,7 +125,8 @@ char	*redirection_to_string(t_token *tokens);
 
 // Expander
 int		expander(t_mini *mini);
-int		check_and_expand(char **s, t_mini *mini);
+int		loop_args(t_mini *mini, t_cmds *cmd);
+int		check_and_expand(t_mini *m, t_cmds *cmd, char **s, int *i);
 char	*get_env(const char *name, char **env);
 int		handle_quotes(char *str, int *i, char **ex_str);
 int		handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini);
@@ -134,6 +134,9 @@ int		handle_expansion(char *str, int *i, char **ex_str, t_mini *mini);
 int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
+void	merge_arrays(char ***array1, char **array2, int *i);
+int		handle_dollar(t_mini *m, t_cmds *cmd, int *n, int *i);
+void	append_array(char ***array, char *str);
 
 // My executor
 void	executor(t_mini *mini);

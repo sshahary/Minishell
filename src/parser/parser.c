@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 13:28:44 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:10:51 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	new_cmd = malloc(sizeof(t_cmds));
 	if (new_cmd == NULL)
 		return (0);
-	if ((*tokens)->value)
-		new_cmd->commad = ft_strdup((*tokens)->value);
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
 	new_cmd->fd_in = STDIN_FILENO;
@@ -110,6 +108,7 @@ int	get_args(t_token **tokens, t_cmds *cmd)
 
 	arg_count = 0;
 	temp = (*tokens);
+
 	while (temp->type != PIPE && temp->type != END)
 	{
 		arg_count++;

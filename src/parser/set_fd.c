@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:49:27 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/29 12:18:02 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:05:41 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 void	set_fd(t_mini *mini)
 {
 	t_cmds	*temp;
-	int		size;
+	// int		size;
 
 	temp = mini->cmds;
 	while (mini->cmds)
 	{
-		if (mini->cmds->commad == NULL)
-		{
-			set_fd_and_remove(mini->cmds->args, mini, mini->cmds);
-			size = 0;
-			while (mini->cmds->args[size])
-				size++;
-			if (size != 0)
-			{
-				mini->cmds->commad = ft_strdup(mini->cmds->args[0]);
-				remove_element(&mini->cmds->args, 0);
-			}
-			else
-				remove_node(&temp, mini->cmds);
-		}
-		else
+		// if (mini->cmds->commad == NULL)
+		// {
+		// 	set_fd_and_remove(mini->cmds->args, mini, mini->cmds);
+		// 	size = 0;
+		// 	while (mini->cmds->args[size])
+		// 		size++;
+		// 	if (size != 0)
+		// 	{
+		// 		mini->cmds->commad = ft_strdup(mini->cmds->args[0]);
+		// 		remove_element(&mini->cmds->args, 0);
+		// 	}
+		// 	else
+		// 		remove_node(&temp, mini->cmds);
+		// }
+		// else
 			set_fd_and_remove(mini->cmds->args, mini, mini->cmds);
 		mini->cmds = mini->cmds->next;
 	}

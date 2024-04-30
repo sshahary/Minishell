@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:18:29 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/28 02:02:16 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:04:18 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	remove_node(t_cmds **head_ref, t_cmds *node_to_remove)
 		node_to_remove->next->prev = node_to_remove->prev;
 	if (node_to_remove->prev != NULL)
 		node_to_remove->prev->next = node_to_remove->next;
-	free(node_to_remove->commad);
 	if (node_to_remove->args != NULL)
 	{
 		while (node_to_remove->args[i])
