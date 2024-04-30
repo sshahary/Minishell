@@ -97,7 +97,7 @@ int	handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini)
 	(*i)++;
 	while (str[*i] && str[*i] != '\"')
 	{
-		if (str[*i] == '$')
+		if (str[*i] == '$' && str[(*i) + 1] != '\"')
 			handle_expansion(str, i, ex_str, mini);
 		else
 		{
