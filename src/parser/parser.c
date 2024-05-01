@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 19:10:51 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:39:24 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	get_cmds(t_mini *mini)
 		return (0);
 	if (cmds == NULL)
 		return (1);
-	// reverse_cmds(&cmds);
+	reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);
 }
@@ -108,7 +108,6 @@ int	get_args(t_token **tokens, t_cmds *cmd)
 
 	arg_count = 0;
 	temp = (*tokens);
-
 	while (temp->type != PIPE && temp->type != END)
 	{
 		arg_count++;

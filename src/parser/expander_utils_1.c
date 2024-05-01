@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*   expander_utils_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 09:46:18 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 17:05:35 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/05/01 13:02:55 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/05/01 14:40:09 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	print_cmds(t_mini *mini)
 	while (temp)
 	{
 		i = 0;
+		printf("Command:\t FD_IN: %d  FD_OUT: %d\n", \
+		temp->fd_in, temp->fd_out);
 		while (temp->args && temp->args[i])
 		{
 			printf("\tArg%d: <%s>\n", i, temp->args[i]);

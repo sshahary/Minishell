@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:18:29 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 17:04:18 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:38:22 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	heredoc(int fd, char *del, t_mini *mini)
 		}
 		if (ft_strchr(line, '$'))
 		{
-			check_and_expand(&line, mini);
+			check_and_expand(&line, mini, 0);
 		}
 		ft_putendl_fd(line, fd);
 		free(line);
