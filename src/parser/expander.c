@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 14:36:01 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:10:47 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,35 +87,14 @@ int	check_and_expand(char **s, t_mini *mini, int *s_flag)
 
 int	handle_expansion(char *str, int *i, char **ex_str, t_mini *mini)
 {
-	int		sp;
-	int		ep;
-	char	*expansion;
-	char	*temp;
-
 	(*i)++;
-	sp = (*i);
 	if (str[*i] && (str[*i] == '$' || str[*i] == '?'))
 	{
 		if (!handle_pid_exitcode_expansion(str, i, ex_str, mini))
 			return (0);
 	}
 	else
-	{
-		while (str[*i] && ft_isalnum(str[*i]))
-		{
-			(*i)++;
-			ep = *i;
-		}
-		temp = ft_substr(str, sp, ep - sp);
-		expansion = get_env(temp, mini->env);
-		if (!expansion)
-		{
-			free(temp);
-			return (0);
-		}
-		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
-		free(temp);
-	}
+		expand_and_join(str, i, ex_str, mini);
 	return (1);
 }
 

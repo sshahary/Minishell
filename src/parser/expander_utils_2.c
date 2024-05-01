@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:40:11 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 14:40:22 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:11:06 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,28 @@ void	merge_arrays(char ***array1, char **array2, int *i)
 	new_array[size1 + size2] = NULL;
 	(*i) = (*i) + size2 - 1;
 	*array1 = new_array;
+}
+
+void	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini)
+{
+	int		ep;
+	char	*expansion;
+	char	*temp;
+	int		sp;
+
+	sp = (*i);
+	while (str[*i] && ft_isalnum(str[*i]))
+	{
+		(*i)++;
+		ep = *i;
+	}
+	temp = ft_substr(str, sp, ep - sp);
+	expansion = get_env(temp, mini->env);
+	if (!expansion)
+	{
+		free(temp);
+		return ;
+	}
+	*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
+	free(temp);
 }

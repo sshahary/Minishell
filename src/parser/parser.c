@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 14:39:24 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:52:03 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parser(t_mini *mini)
 		free_tokens(mini->tokens);
 		return (0);
 	}
-	set_fd(mini);
+	handle_redirection(mini);
 	free_tokens(mini->tokens);
 	return (1);
 }

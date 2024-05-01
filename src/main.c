@@ -6,17 +6,17 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 14:16:37 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:58:51 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
 
-void	check_leaks(void)
-{
-	system("leaks minishell");
-}
+// void	check_leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 static int	check_input(char *input);
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 	(void)argc;
 	(void)argv;
-	atexit(check_leaks);
+	// atexit(check_leaks);
 
 	mini.env = env;
 	rl_bind_key('\t', rl_complete);
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		print_cmds(&mini);
 		// execute(&mini);
-		// executor(&mini);
+		executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}
