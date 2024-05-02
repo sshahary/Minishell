@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 14:27:47 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:49:04 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_single_cmd(t_mini *mini)
 			dup2(mini->cmds->fd_in, STDIN_FILENO);
 		if (STDOUT_FILENO != mini->cmds->fd_out)
 			dup2(mini->cmds->fd_out, STDOUT_FILENO);
-		execve(find_path(mini, mini->cmds->commad), mini->cmds->args, \
+		execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
 		mini->env);
 	}
 	waitpid(pid, &status, 0);

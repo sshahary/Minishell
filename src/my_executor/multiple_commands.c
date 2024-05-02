@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 15:35:25 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:58:21 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd)
 		dup2(fd[0], STDIN_FILENO);
 		dup2(fd[1], STDOUT_FILENO);
 	}
-	execve(find_path(mini, cmd->commad), cmd->args, mini->env);
+	execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
 }
 
 void	close_fds(int **fds, int n_cmds)

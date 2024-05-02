@@ -1,6 +1,10 @@
 {
 	"files.associations": {
 		"minishell.h": "c",
-		"iterator": "c"
+		"iterator": "c",
+		"unistd.h": "c",
+		"__tuple": "c",
+		"array": "c",
+		"sstream": "c"
 	}
 }

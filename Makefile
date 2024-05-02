@@ -18,8 +18,9 @@ SRCS	:=	src/main.c \
 			src/parser/parser_utils_1.c \
 			src/parser/parser_utils_2.c \
 			src/parser/expander.c \
-			src/parser/expander_utils.c \
-			src/parser/set_fd.c \
+			src/parser/expander_utils_1.c \
+			src/parser/expander_utils_2.c \
+			src/parser/handle_redirections.c \
 			src/parser/heredoc.c \
 			src/my_executor/executor.c \
 			src/my_executor/executor_utils.c \

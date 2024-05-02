@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 15:55:44 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:04:30 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	free_cmds(t_mini *mini)
 	while (mini->cmds)
 	{
 		i = 0;
-		free(mini->cmds->commad);
 		while (mini->cmds->args && mini->cmds->args[i])
 		{
 			free(mini->cmds->args[i]);

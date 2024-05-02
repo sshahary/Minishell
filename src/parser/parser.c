@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 13:28:44 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:52:03 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parser(t_mini *mini)
 		free_tokens(mini->tokens);
 		return (0);
 	}
-	set_fd(mini);
+	handle_redirection(mini);
 	free_tokens(mini->tokens);
 	return (1);
 }
@@ -50,7 +50,7 @@ int	get_cmds(t_mini *mini)
 		return (0);
 	if (cmds == NULL)
 		return (1);
-	// reverse_cmds(&cmds);
+	reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);
 }
@@ -86,8 +86,6 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	new_cmd = malloc(sizeof(t_cmds));
 	if (new_cmd == NULL)
 		return (0);
-	if ((*tokens)->value)
-		new_cmd->commad = ft_strdup((*tokens)->value);
 	new_cmd->args = NULL;
 	new_cmd->next = NULL;
 	new_cmd->fd_in = STDIN_FILENO;

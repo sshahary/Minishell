@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/30 15:33:10 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:08:15 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		pipex(t_cmds *cmd, t_mini *mini)
 	next_cmd = cmd;
 	if (mini->flag == 1)
 	{
-		next_cmd->commad = cmd->next->commad;
+		next_cmd = cmd->next;
 		mini->preflag = 1;
 		pipe(mini->fds);
 	}
