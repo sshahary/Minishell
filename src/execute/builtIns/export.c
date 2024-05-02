@@ -43,8 +43,9 @@ int	checkexport(char *path, char ***env)
 	i = -1;
 	while ((*env)[++i] != NULL)
 	{
-		if (!ft_strncmp((*env)[i], path, ft_strlen(path)))
+		if (!(ft_strncmp((*env)[i], path, ft_strlen(path))))
 		{
+			// printf("env: %s\t path: %s\n", *env[i], path);
 			(*env)[i] = ft_strdup(path);
 			return (1);
 		}
@@ -58,6 +59,7 @@ int	checkexport(char *path, char ***env)
 	*env = new;
 	return (1);
 }
+
 
 int		isvalidnum(char *str)
 {
@@ -88,7 +90,7 @@ void	export(t_mini *mini)
 	else
 	{
 		remove_char(mini->cmds->args[1], '\'');
-		while (mini->cmds->args[++i])
+		while (mini->cmds->args[i++])
 		{
 			if (isvalidnum(ft_strtok(tmp[i], '=')) == 0)
 			{

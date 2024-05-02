@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/01 11:08:29 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:41:11 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	builtin(t_mini	*mini)
 
 	builtin = mini->cmds->args[0];
 	if (!ft_strcmp(builtin, "echo"))
-		echo(mini);
+		echo(mini->cmds->args);
 	else if (!ft_strcmp(builtin, "cd"))
 		cd(mini);
 	else if (!ft_strcmp(builtin, "env"))

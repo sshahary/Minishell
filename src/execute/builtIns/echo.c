@@ -14,62 +14,99 @@
 #include "../../../include/minishell.h"
 
 
-static void		exit_code(t_mini *mini)
+// static void		exit_code(t_mini *mini)
+// {
+// 	ft_putstr_fd(ft_itoa(mini->exit_code), 1);
+// }
+
+// static void		echoenv(t_mini *mini, int i)
+// {
+// 	char	*value;
+// 	if (mini->cmds->args[1][0] == '$' && mini->cmds->args[1][1] == '?')
+// 		exit_code(mini);
+// 	value = find_command_path(&(mini->cmds->args[i][1]), mini->env);
+// 	ft_putstr_fd(value, mini->cmds->fd_in);
+// }
+
+// static	int		args_n(char *cmds)
+// {
+// 	int	i;
+
+// 	if (ft_strncmp(cmds, "-n", 2) != 0)
+// 		return (0);
+// 	i = 2;
+// 	while (cmds[i])
+// 	{
+// 		if (cmds[i] != 'n')
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+// void	echo(t_mini *mini)
+// {
+// 	int	i;
+// 	int	res;
+
+// 	i = 1;
+// 	res = 0;
+// 	while (args_n(mini->cmds->args[i]))
+// 	{
+// 		res = -1;
+// 		i++;
+// 	}
+// 	while (mini->cmds->args[i])
+// 	{
+// 		if (mini->cmds->args[i][0] == '\'')
+// 			res = remove_char(mini->cmds->args[i], '\'');
+// 		if (mini->cmds->args[i][0] == '$' && res != 1)
+// 			echoenv(mini, i);
+// 		else
+// 			ft_putstr_fd(mini->cmds->args[i], mini->cmds->fd_out);
+// 			if (mini->cmds->args[i + 1] != NULL)
+// 			ft_putchar_fd(' ', mini->cmds->fd_out);
+// 		i++;
+// 	}
+// 	if (res != -1)
+// 		ft_putchar_fd('\n', mini->cmds->fd_out);
+// }
+
+
+static	int		args_count(char **args)
 {
-	ft_putstr_fd(ft_itoa(mini->exit_code), 1);
+	int		size;
+
+	size = 0;
+	while (args[size])
+		size++;
+	return (size);
 }
 
-static void		echoenv(t_mini *mini, int i)
-{
-	char	*value;
-	if (mini->cmds->args[1][0] == '$' && mini->cmds->args[1][1] == '?')
-		exit_code(mini);
-	value = find_command_path(&(mini->cmds->args[i][1]), mini->env);
-	ft_putstr_fd(value, mini->cmds->fd_in);
-}
-
-static	int		args_n(char *cmds)
+void	echo(char **argv)
 {
 	int	i;
+	int	newline;
 
-	if (ft_strncmp(cmds, "-n", 2) != 0)
-		return (0);
-	i = 2;
-	while (cmds[i])
-	{
-		if (cmds[i] != 'n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	echo(t_mini *mini)
-{
-	int	i;
-	int	res;
-
+	newline = 0;
 	i = 1;
-	res = 0;
-	while (args_n(mini->cmds->args[i]))
+	if (args_count(argv) > 1)
 	{
-		res = -1;
-		i++;
+	 	while (argv[i] && ft_strncmp(argv[1], "-n", 2) == 0)
+		{
+			newline = 1;
+			i++;
+		}
+		while (argv[i])
+		{
+			ft_putstr_fd(argv[i], 1);
+			if (argv[i + 1] && argv[i][0] != '\0')
+				write(1, " ", 1);
+			i++;
+		}
 	}
-	while (mini->cmds->args[i])
-	{
-		if (mini->cmds->args[i][0] == '\'')
-			res = remove_char(mini->cmds->args[i], '\'');
-		if (mini->cmds->args[i][0] == '$' && res != 1)
-			echoenv(mini, i);
-		else
-			ft_putstr_fd(mini->cmds->args[i], mini->cmds->fd_out);
-			if (mini->cmds->args[i + 1] != NULL)
-			ft_putchar_fd(' ', mini->cmds->fd_out);
-		i++;
-	}
-	if (res != -1)
-		ft_putchar_fd('\n', mini->cmds->fd_out);
+	if (newline == 0)
+		printf("\n");
 }
 
 // int	main(void)

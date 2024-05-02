@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/01 17:10:17 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:30:43 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,8 @@ int		pipex(t_cmds *cmd, t_mini *mini);
 
 void	pwd(t_mini *mini);
 void	cd(t_mini *mini);
-void	echo(t_mini *mini);
+// void	echo(t_mini *mini);
+void	echo(char **argv);
 void	env(t_mini *mini);
 void	export(t_mini *mini);
 void	unset(t_mini *mini);

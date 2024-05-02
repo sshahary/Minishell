@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 15:58:51 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:20:16 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-		print_cmds(&mini);
-		// execute(&mini);
-		executor(&mini);
+		// print_cmds(&mini);
+		execute(&mini);
+		// executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
 	}
