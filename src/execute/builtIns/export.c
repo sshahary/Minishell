@@ -20,6 +20,7 @@ static void	printexport(t_mini *mini)
 	i = 0;
 	while (mini->env[i])
 	{
+		// if (mini->env[i] ==  mini)
 		ft_putstr_fd(mini->env[i], STDIN_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
@@ -41,11 +42,13 @@ int	checkexport(char *path, char ***env)
 		return (-1);
 	i = -1;
 	while ((*env)[++i] != NULL)
+	{
 		if (!ft_strncmp((*env)[i], path, ft_strlen(path)))
 		{
 			(*env)[i] = ft_strdup(path);
 			return (1);
 		}
+	}
 	if (!(new = malloc(sizeof(char*) * (i + 2))))
 		return (-1);
 	i = -1;

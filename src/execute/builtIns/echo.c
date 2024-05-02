@@ -64,7 +64,7 @@ void	echo(t_mini *mini)
 			echoenv(mini, i);
 		else
 			ft_putstr_fd(mini->cmds->args[i], mini->cmds->fd_out);
-		if (mini->cmds->args[i + 1] != NULL)
+			if (mini->cmds->args[i + 1] != NULL)
 			ft_putchar_fd(' ', mini->cmds->fd_out);
 		i++;
 	}
