@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 16:49:04 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:19:21 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	handle_single_cmd(t_mini *mini)
 	int	pid;
 	int	status;
 
+	if (builtin_check_and_run(mini, mini->cmds))
+		return ;
 	pid = fork();
 	if (!pid)
 	{

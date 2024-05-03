@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 19:58:21 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:20:58 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	fork_process(t_mini *mini, int n_cmds, int **fds)
 		}
 		else if (mini->pids[i] == 0)
 		{
+			if (builtin_check_and_run(mini, cmds))
+				continue ;
 			execute_pipe_cmd(mini, i, cmds, fds[i]);
 			exit(EXIT_SUCCESS);
 		}
