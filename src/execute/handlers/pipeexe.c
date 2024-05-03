@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 03:23:24 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/28 04:45:33 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:06:57 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	child_process(t_cmds *cmd, t_mini *mini)
 		close(mini->fds[0]);
 	}
 	if (check_builtin(cmd->args) == 1)
-		builtin(mini);
+		builtin(mini, cmd);
 	else
 		(ret = execve(path, cmd->args, mini->env));
 	if (ret == -1)

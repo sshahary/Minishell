@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 14:19:21 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:51:22 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_single_cmd(t_mini *mini)
 
 	if (builtin_check_and_run(mini, mini->cmds))
 		return ;
+	// builtin(mini, mini->cmds);
 	pid = fork();
 	if (!pid)
 	{

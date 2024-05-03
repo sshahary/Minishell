@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/03 10:35:29 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:29:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	wait_pids(t_mini *mini, int n_cmds);
 int		initialize_fds(int ***fds, int n_cmds);
 char	*find_path(t_mini *mini, char *cmd);
 int		count_cmds(t_cmds *cmds);
+int		builtin_check_and_run(t_mini *mini, t_cmds *cmd);
+
 
 
 
@@ -160,7 +162,7 @@ void	print_cmds(t_mini *mini);
 void	execute(t_mini *mini);
 // char	**execute(t_mini *mini);
 int		check_builtin(char **args);
-int		builtin(t_mini	*mini);
+int	builtin(t_mini	*mini, t_cmds *cmds);
 
 //Pipex
 int		parent_process(t_mini *mini, pid_t pid);
@@ -176,13 +178,18 @@ int		pipex(t_cmds *cmd, t_mini *mini);
 //BuiltIns
 
 void	pwd(t_mini *mini);
-void	cd(t_mini *mini);
-// void	echo(t_mini *mini);
-void	echo(char **argv);
+// void	cd(t_mini *mini);
+void	cd(t_mini *mini, t_cmds *cmds);
+// void	echo(char **argv);
+void	echo(t_cmds *cmds);
+// void	echo(t_mini *mini, t_cmds *cmds);
 void	env(t_mini *mini);
-void	export(t_mini *mini);
-void	unset(t_mini *mini);
-void	mini_exit(t_mini *mini);
+// void	export(t_mini *mini);
+void	export(t_mini *mini, t_cmds *cmds);
+// void	unset(t_mini *mini);
+void	unset(t_mini *mini, t_cmds *cmds);
+// void	mini_exit(t_mini *mini);
+void	mini_exit(t_mini *mini, t_cmds *cmds);
 
 //Extras
 

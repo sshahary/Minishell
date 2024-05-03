@@ -53,6 +53,7 @@ int	checkexport(char *path, char ***env)
 {
 	int		i;
 	char	**new;
+
 	if (path[0] == '=' || path[0] == '\0' || ft_strlen(path) == 1)
 		return (-1);
 	i = -1;
@@ -92,48 +93,30 @@ int		isvalidnum(char *str)
 	return (1);
 }
 
-// static void updateexport(char *name, char *value, char **env)
-// {
-// 	int i = 0;
-// 	char *variable = ft_strjoin(name, "=");
-// 	char *new_entry = ft_strjoin(variable, value);
-// 	free(variable);
-
-// 	while (env[i] != NULL)
-// 	{
-// 		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0)
-// 		{
-// 			free(env[i]);
-// 			env[i] = new_entry;
-// 			return;
-// 		}
-// 		i++;
-// 	}
-// }
 // void	export(char **cmds, t_mini *mini)
-void	export(t_mini *mini)
+void	export(t_mini *mini, t_cmds *cmds)
 {
 	int		i;
 	int		res;
 	char 	**tmp;
 
 	res = 0;
-	i = 0;
-	tmp = mini->cmds->args;
-	if (ft_dstrlen(mini->cmds->args) == 1)
+	i = -1;
+	tmp = cmds->args;
+	if (ft_dstrlen(cmds->args) == 1)
 		printexport(mini);
 	else
 	{
-		remove_char(mini->cmds->args[1], '\'');
-		while (mini->cmds->args[++i])
+		remove_char(cmds->args[1], '\'');
+		while (cmds->args[++i])
 		{
 			if (isvalidnum(ft_strtok(tmp[i], '=')) == 0)
 			{
 				ft_iderr("export", tmp[i]);
 				mini->exit_code = 1;
 			}
-			remove_char(mini->cmds->args[i], '$');
-			res = checkexport(mini->cmds->args[i], &(mini->env));
+			remove_char(cmds->args[i], '$');
+			res = checkexport(cmds->args[i], &(mini->env));
 		}
 	}
 	if (res != 1)

@@ -33,11 +33,11 @@ static int	cdhome(char *path, t_mini *mini)
 }
 
 // static int			cdenv(char *path, char **cmds, char **env)
-static int			cdenv(char *path, t_mini *mini)
+static int			cdenv(char *path, t_mini *mini, t_cmds *cmds)
 {
-	if (mini->cmds->args[1] == NULL)
+	if (cmds->args[1] == NULL)
 		return (1);
-	path = get_path_value(&(mini->cmds->args[1][1]), mini->env);
+	path = get_path_value(&(cmds->args[1][1]), mini->env);
 	if (chdir(path) == -1)
 		chdir(get_path_value("HOME", mini->env));
 	return (1);
@@ -61,24 +61,24 @@ static void		setoldpwd(t_mini *mini)
 }
 
 // void	cd(char **args, char **env)
-void	cd(t_mini *mini)
+void	cd(t_mini *mini, t_cmds *cmds)
 {
 	char	*path;
 	int		res;
 
 	path = 0;
 	res = 0;
-	if (mini->cmds->args[1] != NULL && mini->cmds->args[1][0] != '~' && mini->cmds->args[1][0] != '$')
+	if (cmds->args[1] != NULL && mini->cmds->args[1][0] != '~' && cmds->args[1][0] != '$')
 	{
-		path = mini->cmds->args[1];
+		path = cmds->args[1];
 		if (chdir(path) == -1)
 			res = ft_execute_err_2("cd", path, strerror(errno));
 		setoldpwd(mini);
 	}
-	else if (mini->cmds->args[1] == NULL || mini->cmds->args[1][0] == '~')
+	else if (cmds->args[1] == NULL || cmds->args[1][0] == '~')
 		cdhome(path, mini);
-	else if (mini->cmds->args[1][0] == '$')
-		cdenv(path, mini);
+	else if (cmds->args[1][0] == '$')
+		cdenv(path, mini, cmds);
 	if (res == -1)
 		mini->exit_code = 1;
 	else
