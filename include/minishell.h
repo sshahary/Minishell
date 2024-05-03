@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/02 10:30:43 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:35:29 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,6 @@ typedef struct s_lexer
 	int		squote;
 }	t_lexer;
 
-typedef struct s_expander
-{
-	char	*input;
-	int		i;
-}	t_expander;
-
 // Lexer
 int		lexer(t_mini *mini);
 t_token	*lexer_handle_pipe(t_lexer	*lexer);
@@ -133,7 +127,7 @@ int		handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m);
 void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
 void	merge_arrays(char ***array1, char **array2, int *i);
-void	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini);
+int		expand_and_join(char *str, int *i, char **ex_str, t_mini *mini);
 
 // Handling Redirections
 void	handle_redirection(t_mini *mini);

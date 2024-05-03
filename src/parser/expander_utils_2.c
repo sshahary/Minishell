@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:40:11 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 17:11:06 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:33:34 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	merge_arrays(char ***array1, char **array2, int *i)
 	*array1 = new_array;
 }
 
-void	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini)
+int	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini)
 {
 	int		ep;
 	char	*expansion;
@@ -73,8 +73,9 @@ void	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini)
 	if (!expansion)
 	{
 		free(temp);
-		return ;
+		return (0);
 	}
 	*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
 	free(temp);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 17:10:47 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:33:17 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	check_and_expand(char **s, t_mini *mini, int *s_flag)
 	char	*expanded_str;
 	int		i;
 	char	*str;
+	(void) s_flag;
 
 	expanded_str = NULL;
 	str = *s;
@@ -94,7 +95,10 @@ int	handle_expansion(char *str, int *i, char **ex_str, t_mini *mini)
 			return (0);
 	}
 	else
-		expand_and_join(str, i, ex_str, mini);
+	{
+		if (!expand_and_join(str, i, ex_str, mini))
+			return (0);
+	}
 	return (1);
 }
 
