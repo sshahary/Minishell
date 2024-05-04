@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 05:39:09 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 14:54:05 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:46:29 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	mini_exit(t_mini *mini, t_cmds *cmds)
 	int	i;
 
 	i = 0;
-	if (mini->preflag == 1)
-		return ;
 	while (cmds->args[i] != NULL)
 		i++;
 	if (i == 1)
@@ -40,7 +38,8 @@ void	mini_exit(t_mini *mini, t_cmds *cmds)
 	}
 	else
 	{
-		ft_execute_err_2("exit", cmds->args[1], "numeric argument required");
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_execute_err_2(": exit", cmds->args[1], "numeric argument required");
 		mini->exit_code = 255;
 		exit(mini->exit_code & 255);
 	}

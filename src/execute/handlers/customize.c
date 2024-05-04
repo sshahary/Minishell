@@ -6,30 +6,12 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/28 02:33:21 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 18:16:26 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../../include/minishell.h"
-
-char	*strjoinslash(const char *s1, const char *s2)
-{
-	size_t	len_s1;
-	size_t	len_s2;
-	char	*result;
-
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	result = (char *)malloc(len_s1 + len_s2 + 2);
-	if (!result)
-		return (NULL);
-	ft_memcpy(result, s1, len_s1);
-	if (len_s1 == 0 || s1[len_s1 - 1] != '/')
-		result[len_s1++] = '/';
-	ft_memcpy(result + len_s1, s2, len_s2 + 1);
-	return (result);
-}
 
 int	remove_char(char *str, char c)
 {
@@ -45,91 +27,6 @@ int	remove_char(char *str, char c)
 	str[new_index] = '\0'; // Null-terminate the string
 	return (1);
 }
-
-char	*get_path_value(char *name, char **env)
-{
-	int	i;
-
-	i = 0;
-
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], name, ft_strlen(name)))
-			return (env[i] + ft_strlen(name) + 1);
-		i++;
-	}
-	return ("");
-}
-
-char		*find_command_path(char *cmdline, char **envs)
-{
-	int			i;
-	char		*temp;
-	char		*new_path;
-	char		**paths;
-	struct stat	s;
-
-	temp = get_path_value("PATH", envs);
-	paths = ft_split(temp, ':');
-	i = -1;
-	while (paths[++i])
-	{
-		temp = ft_strjoin("/", cmdline);
-		new_path = ft_strjoin(paths[i], temp);
-		free(temp);
-		if (stat(new_path, &s) == 0)
-			return (new_path);
-		free(new_path);
-	}
-	return (ft_strdup(cmdline));
-}
-
-// static char	*strnew(size_t size)
-// {
-// 	char	*str;
-// 	if (size == 0)
-// 		return (NULL);
-
-// 	str = (char *)ft_calloc(size + 1, sizeof(char));
-// 	if (str == NULL)
-// 		return (NULL);
-// 	return (str);
-// }
-
-// void	strclr(char *str)
-// {
-// 	if (str != NULL)
-// 	{
-// 		while (*str != '\0')
-// 		{
-// 			*str = '\0';
-// 			str++;
-// 		}
-// 	}
-// }
-
-// void	my_strcpy(char *dest, const char *src)
-// {
-// 	if (!(src) || !(*src))
-// 		return ;
-// 	while (*src != '\0')
-// 	{
-// 		*dest = *src;
-// 		dest++;
-// 		src++;
-// 	}
-// 	*dest = '\0';
-// }
-
-// int main() {
-// 	char *source = 0;
-// 	char destination[20];
-
-// 	my_strcpy(destination, source);
-// 	printf("Copied string: %s\n", destination);
-
-// 	return 0;
-// }
 
 void	ft_pfree(void **str)
 {

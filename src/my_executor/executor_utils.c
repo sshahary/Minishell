@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/04 14:31:54 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:38:53 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*find_path(t_mini *mini, char *cmd)
 
 int	initialize_fds(int ***fds, int n_cmds)
 {
-    int i;
+	int	i;
 
 	i = 0;
 	*fds = malloc(sizeof (int *) * n_cmds);

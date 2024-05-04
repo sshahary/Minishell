@@ -12,7 +12,6 @@
 
 #include "../../../include/minishell.h"
 
-// void	env(char **env)
 void	env(t_mini *mini, t_cmds *cmds)
 {
 	int		i;
@@ -38,13 +37,3 @@ void	env(t_mini *mini, t_cmds *cmds)
 	}
 	mini->exit_code = 0;
 }
-
-// int		main(void)
-// {
-// 	t_mini	mini;
-// 	char	*envp[] = {"USER=sshahavhgdbbbbbry", "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library", "TERM=xterm-256color", NULL};
-
-// 	mini.env = envp;
-// 	env(&mini);
-// 	return (0);
-// }

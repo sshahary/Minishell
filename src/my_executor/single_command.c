@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/04 14:54:13 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 17:55:14 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void	handle_single_cmd(t_mini *mini)
 		ft_execute_err_1(mini->cmds->args[0], "command not found");
 	waitpid(pid, &status, 0);
 	mini->exit_code = WEXITSTATUS(status);
-	// exit(res);
 }

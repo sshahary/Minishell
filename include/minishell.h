@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 15:19:10 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:27:26 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	executor(t_mini *mini);
 void	handle_single_cmd(t_mini *mini);
 void	handle_multiple_cmds(t_mini *mini);
 void	fork_process(t_mini *mini, int n_cmds, int **fds);
-void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd);
+void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
 void	close_fds(int **fds, int n_cmds);
 void	wait_pids(t_mini *mini, int n_cmds);
 int		initialize_fds(int ***fds, int n_cmds);

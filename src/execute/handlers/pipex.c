@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multiple_commands.c                                :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/04 19:12:37 by sshahary         ###   ########.fr       */
+/*   Created: 2024/04/22 03:23:24 by sshahary          #+#    #+#             */
+/*   Updated: 2024/05/04 19:35:37 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 void	handle_multiple_cmds(t_mini *mini)
 {
 	int	n_cmds;
 	int	**fds;
+
+	int fd1 = dup(STDIN_FILENO);
+	int fd2 = dup(STDOUT_FILENO);
 
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
@@ -25,6 +28,9 @@ void	handle_multiple_cmds(t_mini *mini)
 		return ;
 	fork_process(mini, n_cmds, fds);
 	close_fds(fds, n_cmds);
+	dup2(fd1, STDIN_FILENO);
+	dup2(fd2, STDOUT_FILENO);
+	
 	wait_pids(mini, n_cmds);
 }
 
@@ -43,38 +49,37 @@ void	fork_process(t_mini *mini, int n_cmds, int **fds)
 			ft_putendl_fd("Fork Error", 2);
 			exit(EXIT_FAILURE);
 		}
-		else if (mini->pids[i] == 0)
+		if (mini->pids[i] == 0)
 		{
 			if (builtin_check_and_run(mini, cmds))
-				continue ;
-			execute_pipe_cmd(mini, i, cmds, fds[i]);
-			exit(EXIT_SUCCESS);
+			{
+				exit(EXIT_SUCCESS);
+			}
+			execute_pipe_cmd(mini, i, cmds, fds);
 		}
-		cmds = cmds->next;
+		if (cmds->next)
+			cmds = cmds->next;
 		i++;
-	}
+	} 
 }
 
-void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd)
+void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd)
 {
-	int	res;
-
-	res = 0;
 	if (i == 0)
 	{
-		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[i][1], STDOUT_FILENO);
 	}
 	else if (i == count_cmds(mini->cmds) - 1)
-		dup2(fd[1], STDOUT_FILENO);
+	{
+		dup2(fd[i - 1][0], STDIN_FILENO);
+	}
 	else
 	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
+		dup2(fd[i - 1][0], STDIN_FILENO);
+		dup2(fd[i][1], STDOUT_FILENO);
 	}
-	res = execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
-	if (res == -1)
-		ft_execute_err_1(cmd->args[0], "command not found");
-	exit(res);
+	close_fds(fd, count_cmds(mini->cmds));
+	execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
 }
 
 void	close_fds(int **fds, int n_cmds)
@@ -103,7 +108,7 @@ void	wait_pids(t_mini *mini, int n_cmds)
 			ft_putendl_fd("Waitpid Error", 2);
 			exit(EXIT_FAILURE);
 		}
+		mini->exit_code = WEXITSTATUS(status);
 		i++;
 	}
-	mini->exit_code = WEXITSTATUS(status);
 }

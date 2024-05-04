@@ -13,15 +13,15 @@
 #include "../../../include/minishell.h"
 
 
-static void	printexport(t_mini *mini)
+static void	printexport(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (mini->env[i])
+	while (env[i])
 	{
 		ft_putstr_fd("declare -x ", STDIN_FILENO);
-		ft_putstr_fd(mini->env[i], STDIN_FILENO);
+		ft_putstr_fd(env[i], STDIN_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
@@ -104,9 +104,10 @@ void	export(t_mini *mini, t_cmds *cmds)
 	i = -1;
 	tmp = cmds->args;
 	if (ft_dstrlen(cmds->args) == 1)
-		printexport(mini);
+		printexport(mini->env);
 	else
 	{
+		printf("\n%s\n", cmds->args[1]);
 		remove_char(cmds->args[1], '\'');
 		while (cmds->args[++i])
 		{
@@ -115,7 +116,7 @@ void	export(t_mini *mini, t_cmds *cmds)
 				ft_iderr("export", tmp[i]);
 				mini->exit_code = 1;
 			}
-			remove_char(cmds->args[i], '$');
+			// remove_char(cmds->args[i + 1], '$');
 			res = checkexport(cmds->args[i], &(mini->env));
 		}
 	}

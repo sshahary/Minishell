@@ -22,11 +22,6 @@ SRCS	:=	src/main.c \
 			src/parser/expander_utils_2.c \
 			src/parser/handle_redirections.c \
 			src/parser/heredoc.c \
-			src/my_executor/executor.c \
-			src/my_executor/executor_utils.c \
-			src/my_executor/single_command.c \
-			src/my_executor/multiple_commands.c \
-			src/my_executor/builtin_check_and_run.c \
 			src/execute/builtins/cd.c \
 			src/execute/builtins/echo.c \
 			src/execute/builtins/pwd.c \
@@ -38,7 +33,12 @@ SRCS	:=	src/main.c \
 			src/execute/error.c \
 			src/execute/execute.c \
 			src/execute/handlers/pipe.c \
-			# src/execute/handlers/pipeexe.c \
+			src/execute/handlers/pipex.c \
+			# src/my_executor/executor.c \
+			# src/my_executor/executor_utils.c \
+			# src/my_executor/single_command.c \
+			# src/my_executor/multiple_commands.c \
+			# src/my_executor/builtin_check_and_run.c \
 
 
 # Objects
