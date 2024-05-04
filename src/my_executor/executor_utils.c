@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 19:58:14 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:31:54 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*find_path(t_mini *mini, char *cmd)
 	free(temp);
 	if (!all_path[i])
 	{
-		printf("command not found\n");
+		ft_execute_err_2(all_path[i], cmd, "command not found");
 		exit(127);
 	}
 	return (new_cmd);

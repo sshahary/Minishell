@@ -6,36 +6,21 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:26:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/04/24 01:42:21 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:18:57 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	check_error(char *name, char *str, char *args)
+void	check_error(char *name, char *str, char *msg)
 {
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (args[i])
-	{
-		if (args[i] == '/')
-			flag += 1;
-		i++;
-	}
-	if (flag > 0 && !str)
-	{
-		ft_putstr_fd(name, 2);
-		ft_putendl_fd(": no such file or directory", 2);
-	}
-	else if (!str)
-	{
-		ft_putstr_fd(name, 2);
-		ft_putendl_fd(": command not found", 2);
-	}
+	ft_putstr_fd(name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 	return ;
+
 }
 
 void	ft_exit(char *msg)
@@ -70,7 +55,7 @@ int		ft_execute_err_1(char *str, char *msg)
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg)
 {
 	ft_putstr_fd("minishell", STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
+	// ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(exe1, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(exe2, STDERR_FILENO);

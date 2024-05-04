@@ -48,6 +48,8 @@ void	echo(t_cmds *cmds)
 	}
 	if (newline == 0)
 		ft_putchar_fd('\n', cmds->fd_out);
+	if (cmds->success_flag == 1)
+		exit(EXIT_SUCCESS);
 }
 
 // int	main(void)

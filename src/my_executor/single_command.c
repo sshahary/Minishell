@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 17:51:22 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:54:13 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	handle_single_cmd(t_mini *mini)
 {
 	int	pid;
 	int	status;
+	int	res;
 
 	if (builtin_check_and_run(mini, mini->cmds))
 		return ;
-	// builtin(mini, mini->cmds);
+	res = 0;
 	pid = fork();
 	if (!pid)
 	{
@@ -27,9 +28,12 @@ void	handle_single_cmd(t_mini *mini)
 			dup2(mini->cmds->fd_in, STDIN_FILENO);
 		if (STDOUT_FILENO != mini->cmds->fd_out)
 			dup2(mini->cmds->fd_out, STDOUT_FILENO);
-		execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
+		res = execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
 		mini->env);
 	}
+	if (res == -1)
+		ft_execute_err_1(mini->cmds->args[0], "command not found");
 	waitpid(pid, &status, 0);
 	mini->exit_code = WEXITSTATUS(status);
+	// exit(res);
 }

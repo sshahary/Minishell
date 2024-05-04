@@ -13,10 +13,22 @@
 #include "../../../include/minishell.h"
 
 // void	env(char **env)
-void	env(t_mini *mini)
+void	env(t_mini *mini, t_cmds *cmds)
 {
 	int		i;
 
+	i = 1;
+	while (cmds->args[i++])
+	{
+		if (cmds->args[1])
+		{
+			if (cmds->args[i])
+				check_error(cmds->args[0], cmds->args[1], "no such file or directory");
+			else
+				check_error(cmds->args[0], cmds->args[1], "command not found");
+			return ;
+		}
+	}
 	i = 0;
 	while (mini->env[i])
 	{

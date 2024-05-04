@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:36:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/03 16:25:54 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:39:28 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	check_builtin(char **args)
 	return (0);
 }
 
-int	builtin(t_mini	*mini, t_cmds *cmds)
-{
-	char	*builtin;
+// int	builtin(t_mini	*mini, t_cmds *cmds)
+// {
+// 	char	*builtin;
 
-	builtin = mini->cmds->args[0];
-	if (!ft_strcmp(builtin, "echo"))
-		echo(cmds->args);
+// 	builtin = cmds->args[0];
+// 	if (!ft_strcmp(builtin, "env"))
+// 		env(mini);
 	// else if (!ft_strcmp(builtin, "cd"))
 	// 	cd(mini);
 	// else if (!ft_strcmp(builtin, "env"))
@@ -49,23 +49,14 @@ int	builtin(t_mini	*mini, t_cmds *cmds)
 	// 	unset(mini);
 	// else if (!ft_strcmp(builtin, "exit"))
 	// 	mini_exit(mini);
-	else
-		return (0);
-	return (1);
-}
+// 	else
+// 		return (0);
+// 	return (1);
+// }
 
 void	execute(t_mini *mini)
 {
-	t_cmds	*cmds;
-
-	cmds = mini->cmds;
-	while (cmds)
-	{
-		if(check_builtin(mini->cmds->args))
-			builtin(mini, cmds);
-		else
-			executor(mini);
-		cmds = cmds->next;
-	}
+	
+	executor(mini);
 }
 

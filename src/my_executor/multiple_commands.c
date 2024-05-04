@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 12:20:50 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 14:20:58 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:54:16 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void	fork_process(t_mini *mini, int n_cmds, int **fds)
 
 void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd)
 {
+	int	res;
+
+	res = 0;
 	if (i == 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -68,7 +71,10 @@ void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd)
 		dup2(fd[0], STDIN_FILENO);
 		dup2(fd[1], STDOUT_FILENO);
 	}
-	execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
+	res = execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
+	if (res == -1)
+		ft_execute_err_1(cmd->args[0], "command not found");
+	exit(res);
 }
 
 void	close_fds(int **fds, int n_cmds)

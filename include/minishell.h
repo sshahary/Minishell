@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/03 18:29:01 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:19:10 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_cmds
 	struct s_cmds	*prev;
 	int				fd_in;
 	int				fd_out;
+	int				success_flag;
 }	t_cmds;
 
 typedef struct s_mini
@@ -183,7 +184,7 @@ void	cd(t_mini *mini, t_cmds *cmds);
 // void	echo(char **argv);
 void	echo(t_cmds *cmds);
 // void	echo(t_mini *mini, t_cmds *cmds);
-void	env(t_mini *mini);
+void	env(t_mini *mini, t_cmds *cmds);
 // void	export(t_mini *mini);
 void	export(t_mini *mini, t_cmds *cmds);
 // void	unset(t_mini *mini);
@@ -204,7 +205,7 @@ int		isvalidnum(char *str);
 char	*get_path_value(char *name, char **env);
 
 //Errors
-void	check_error(char *name, char *str, char *args);
+void	check_error(char *name, char *str, char *msg);
 void	ft_exit(char *msg);
 void	ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);

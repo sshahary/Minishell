@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 18:32:27 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:28:48 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		}
 		// print_cmds(&mini);
-		// execute(&mini);
 		executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
