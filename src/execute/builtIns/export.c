@@ -54,7 +54,7 @@ int	checkexport(char *path, char ***env)
 	int		i;
 	char	**new;
 
-	if (path[0] == '=' || path[0] == '\0' || ft_strlen(path) == 1)
+	if (path[0] == '=' || path[0] == '\0' )//|| ft_strlen(path) == 1)
 		return (-1);
 	i = -1;
 	while ((*env)[++i] != NULL)
@@ -101,13 +101,12 @@ void	export(t_mini *mini, t_cmds *cmds)
 	char 	**tmp;
 
 	res = 0;
-	i = -1;
+	i = 0;
 	tmp = cmds->args;
 	if (ft_dstrlen(cmds->args) == 1)
 		printexport(mini->env);
 	else
 	{
-		printf("\n%s\n", cmds->args[1]);
 		remove_char(cmds->args[1], '\'');
 		while (cmds->args[++i])
 		{
@@ -116,7 +115,7 @@ void	export(t_mini *mini, t_cmds *cmds)
 				ft_iderr("export", tmp[i]);
 				mini->exit_code = 1;
 			}
-			// remove_char(cmds->args[i + 1], '$');
+			remove_char(cmds->args[i + 1], '$');
 			res = checkexport(cmds->args[i], &(mini->env));
 		}
 	}

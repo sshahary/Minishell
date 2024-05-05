@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 19:27:26 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/05 09:55:47 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct s_mini
 	int			flag;
 	int			preflag;
 	int			redir;
+	int			original_fd_in;
+	int			original_fd_out;
 }	t_mini;
 
 typedef struct s_lexer
@@ -182,7 +184,7 @@ void	pwd(t_mini *mini);
 // void	cd(t_mini *mini);
 void	cd(t_mini *mini, t_cmds *cmds);
 // void	echo(char **argv);
-void	echo(t_cmds *cmds);
+void	echo(t_cmds *cmds, t_mini mini);
 // void	echo(t_mini *mini, t_cmds *cmds);
 void	env(t_mini *mini, t_cmds *cmds);
 // void	export(t_mini *mini);

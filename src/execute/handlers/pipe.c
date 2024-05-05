@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 18:10:45 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/05 10:29:32 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ char	*find_path(t_mini *mini, char *cmd)
 	char	*new_cmd;
 	int		i;
 
+	printf("cmd = %s\n", cmd);
+	if (access (cmd, X_OK) == 0)
+	{
+		if (execve(cmd,mini->cmds->args, mini->env) == -1)
+		{
+			//TODO
+		}	
+	}
 	i = 0;
 	path = get_env("PATH", mini->env);
 	all_path = ft_split(path, ':');

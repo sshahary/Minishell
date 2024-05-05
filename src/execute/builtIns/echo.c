@@ -24,11 +24,11 @@ static	int		args_count(char **args)
 	return (size);
 }
 
-void	echo(t_cmds *cmds)
+void	echo(t_cmds *cmds, t_mini mini)
 {
 	int	i;
 	int	newline;
-
+	(void)mini;
 	newline = 0;
 	i = 1;
 	if (args_count(cmds->args) > 1)
@@ -48,8 +48,6 @@ void	echo(t_cmds *cmds)
 	}
 	if (newline == 0)
 		ft_putchar_fd('\n', cmds->fd_out);
-	if (cmds->success_flag == 1)
-		exit(EXIT_SUCCESS);
 }
 
 // int	main(void)
