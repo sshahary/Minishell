@@ -17,8 +17,11 @@ int	isvalidenv(char *name)
 	int	i;
 
 	i = 0;
+	if (name[0] >= '0' && name[0] <= '9')
+		return (0);
 	while (name[i])
 	{
+
 		if (ft_isalnum(name[i]) || name[i] == '_')
 			;
 		else
@@ -72,14 +75,15 @@ void	unset(t_mini *mini, t_cmds *cmds)
 	int	res;
 	int	i;
 
+	(void)cmds;
+
 	i = 0;
 	res = 0;
-	if (mini->preflag == 1)
-		return ;
-	while (cmds->args[++i])
+	while (mini->cmds->args[++i])
 	{
-		remove_char(cmds->args[i], '\'');
-		res = isvalidenv(cmds->args[i]) && envunset(cmds->args[i], &(mini->env));
+		// printf("\n%s\n",cmds->args[i]);
+		remove_char(mini->cmds->args[i], '\'');
+		res = isvalidenv(mini->cmds->args[i]) && envunset(mini->cmds->args[i], &(mini->env));
 	}
 	if (res != 1)
 		mini->exit_code = 1;

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/05 09:55:47 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:16:50 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ typedef struct s_mini
 	int			exit_code;
 	pid_t		*pids;
 	int			fds[2];
-	int			flag;
-	int			preflag;
-	int			redir;
-	int			original_fd_in;
-	int			original_fd_out;
 }	t_mini;
 
 typedef struct s_lexer
@@ -193,6 +188,7 @@ void	export(t_mini *mini, t_cmds *cmds);
 void	unset(t_mini *mini, t_cmds *cmds);
 // void	mini_exit(t_mini *mini);
 void	mini_exit(t_mini *mini, t_cmds *cmds);
+int	isvalidenv(char *name);
 
 //Extras
 
@@ -209,7 +205,7 @@ char	*get_path_value(char *name, char **env);
 //Errors
 void	check_error(char *name, char *str, char *msg);
 void	ft_exit(char *msg);
-void	ft_iderr(char *str1, char *str2);
+int		ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
 

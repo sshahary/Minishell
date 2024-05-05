@@ -54,18 +54,14 @@ int	checkexport(char *path, char ***env)
 	int		i;
 	char	**new;
 
-	if (path[0] == '=' || path[0] == '\0' )//|| ft_strlen(path) == 1)
+	if (path[0] == '=' || path[0] == '\0')
 		return (-1);
 	i = -1;
 	while ((*env)[++i] != NULL)
 	{
-		// printf("Checking env[%d]: %s\n", i, (*env)[i]);
 		if (!ft_strncmp((*env)[i], path, str_index_of(path, '=')))
 		{
-			// printf("Found matching path: %s\n", (*env)[i]);
-			// printf("Replacing with: %s\n", path);
 			(*env)[i] = ft_strdup(path);
-			// printf("Updated env[%d]: %s\n", i, (*env)[i]);
 			return (1);
 		}
 	}
@@ -84,39 +80,69 @@ int		isvalidnum(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[0] >= '0' && str[0] <= '9')
 			return (0);
-		i++;
+		if ((str[i] >= '0' && str[i] <= '9') || (str[i] >= 'a' && str[i] <= 'z')
+			|| (str[i] >= 'A' && str[i] <= 'Z'))
+			return (0);
+	i++;
 	}
 	return (1);
 }
 
-// void	export(char **cmds, t_mini *mini)
+// void	export(t_mini *mini, t_cmds *cmds)
+// {
+// 	int		i;
+// 	int		res;
+// 	char 	**tmp;
+
+// 	res = 0;
+// 	i = 0;
+// 	tmp = cmds->args;
+// 	if (ft_dstrlen(cmds->args) == 1)
+// 		printexport(mini->env);
+// 	else
+// 	{
+// 		while (cmds->args[++i])
+// 		{
+// 			remove_char(cmds->args[i], '\'');
+// 			if ((isvalidnum(ft_strtok(cmds->args[i], '=')) == 0))
+// 			{
+// 				ft_iderr("export", tmp[i]);
+// 				mini->exit_code = 1;
+// 			}
+// 			remove_char(cmds->args[i], '$');
+// 			res = checkexport(cmds->args[i], &(mini->env));
+// 		}
+// 	}
+// 	if (res != 1)
+// 		mini->exit_code = 1;
+// }
+
 void	export(t_mini *mini, t_cmds *cmds)
 {
-	int		i;
-	int		res;
-	char 	**tmp;
+	int i;
+	int res;
 
 	res = 0;
 	i = 0;
-	tmp = cmds->args;
 	if (ft_dstrlen(cmds->args) == 1)
 		printexport(mini->env);
-	else
-	{
-		remove_char(cmds->args[1], '\'');
-		while (cmds->args[++i])
-		{
-			if (isvalidnum(ft_strtok(tmp[i], '=')) == 0)
+	else {
+		while (cmds->args[++i]) {
+			remove_char(cmds->args[i], '\'');
+			if (isvalidenv(ft_strtok(cmds->args[i], '=')) == 0)
 			{
-				ft_iderr("export", tmp[i]);
+				ft_iderr("export", cmds->args[i]);
 				mini->exit_code = 1;
 			}
-			remove_char(cmds->args[i + 1], '$');
-			res = checkexport(cmds->args[i], &(mini->env));
+			else
+			{
+				remove_char(cmds->args[i], '_');
+				res = checkexport(cmds->args[i], &(mini->env));
+			}
 		}
 	}
 	if (res != 1)

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:26:58 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 17:37:09 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/05 11:51:04 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_exit(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_iderr(char *str1, char *str2)
+int	ft_iderr(char *str1, char *str2)
 {
 	ft_putstr_fd("minishell", STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
@@ -39,6 +39,7 @@ void	ft_iderr(char *str1, char *str2)
 	ft_putstr_fd(": `", STDERR_FILENO);
 	ft_putstr_fd(str2, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	return (-1) ;
 }
 
 

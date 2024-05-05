@@ -13,7 +13,6 @@
 
 #include "../../../include/minishell.h"
 
-
 static	int		args_count(char **args)
 {
 	int		size;

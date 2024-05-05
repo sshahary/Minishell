@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/05 09:53:51 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/05 14:33:22 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	main(int argc, char **argv, char **env)
 	// atexit(check_leaks);
 
 	mini.env = env;
-	mini.original_fd_in = dup(0);
-	mini.original_fd_out = dup(1);
 	rl_bind_key('\t', rl_complete);
 	using_history();
 	while (1)
