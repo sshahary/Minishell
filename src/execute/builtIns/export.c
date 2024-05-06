@@ -13,20 +13,6 @@
 #include "../../../include/minishell.h"
 
 
-// static void	printexport(char **env)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		ft_putstr_fd("declare -x ", STDIN_FILENO);
-// 		ft_putstr_fd(env[i], STDIN_FILENO);
-// 		write(STDOUT_FILENO, "\n", 1);
-// 		i++;
-// 	}
-// }
-
 static void	printexport(char **env)
 {
 	int	i;
@@ -34,7 +20,8 @@ static void	printexport(char **env)
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd(env[i], STDOUT_FILENO);
+		ft_putstr_fd("declare -x ", STDIN_FILENO);
+		ft_putstr_fd(env[i], STDIN_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}

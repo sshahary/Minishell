@@ -40,7 +40,7 @@ int		checkequal(char *str, char *env)
 	i = 0;
 	while (str[i] && env[i] && (str[i] == env[i]) && (env[i] != '='))
 		i++;
-	if ((str[i] == '\0') && (env[i] == '='))
+	if ((str[i] == '\0') && (env[i] == '=' || env[i] == '\0'))
 		return (1);
 	return (0);
 }
@@ -67,51 +67,29 @@ int		envunset(char *str, char ***env)
 			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }
 
-
-void	unset(t_mini *mini, t_cmds *cmds)
+void unset(t_mini *mini, t_cmds *cmds)
 {
-	int	res;
-	int	i;
+	int res;
+	int i;
 
-	i = 0;
 	res = 0;
+	i = 1;
 	while (cmds->args[i])
 	{
-		remove_char(cmds->args[i], '\'');
-		res = isvalidenv(cmds->args[i]) && envunset(cmds->args[i], &(mini->env));
+		if (isvalidenv(cmds->args[i]))
+		{
+			if (envunset(cmds->args[i], &(mini->env)))
+				return ;
+			else
+				res = 1;
+		}
+		else
+			res = 1;
 		i++;
 	}
-	if (res != 1)
+	if (res != 0)
 		mini->exit_code = 1;
 }
-
-// int main() {
-// 	// Create a sample environment
-// 	char *env[] = {"VAR1=value1", "VAR2=value2", "VAR3=value3", NULL};
-	
-// 	// Create a sample t_mini struct
-// 	t_mini mini;
-// 	mini.preflag = 0;
-// 	mini.exit_code = 0;
-// 	mini.env = env;
-
-// 	// Create a sample command
-// 	t_cmds cmd;
-// 	char *args[] = {"VAR1", "VAR2", NULL}; // Pass environment variables to unset
-// 	cmd.args = args;
-// 	mini.cmds = &cmd;
-
-// 	// Call unset function
-// 	unset(&mini);
-
-// 	// Print the updated environment
-// 	printf("Updated Environment:\n");
-// 	for (int i = 0; env[i] != NULL; i++) {
-// 		printf("%s\n", env[i]);
-// 	}
-
-// 	return 0;
-// }
