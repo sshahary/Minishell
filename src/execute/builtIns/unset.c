@@ -70,20 +70,19 @@ int		envunset(char *str, char ***env)
 	return (1);
 }
 
+
 void	unset(t_mini *mini, t_cmds *cmds)
 {
 	int	res;
 	int	i;
 
-	(void)cmds;
-
 	i = 0;
 	res = 0;
-	while (mini->cmds->args[++i])
+	while (cmds->args[i])
 	{
-		// printf("\n%s\n",cmds->args[i]);
-		remove_char(mini->cmds->args[i], '\'');
-		res = isvalidenv(mini->cmds->args[i]) && envunset(mini->cmds->args[i], &(mini->env));
+		remove_char(cmds->args[i], '\'');
+		res = isvalidenv(cmds->args[i]) && envunset(cmds->args[i], &(mini->env));
+		i++;
 	}
 	if (res != 1)
 		mini->exit_code = 1;

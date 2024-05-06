@@ -13,6 +13,20 @@
 #include "../../../include/minishell.h"
 
 
+// static void	printexport(char **env)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		ft_putstr_fd("declare -x ", STDIN_FILENO);
+// 		ft_putstr_fd(env[i], STDIN_FILENO);
+// 		write(STDOUT_FILENO, "\n", 1);
+// 		i++;
+// 	}
+// }
+
 static void	printexport(char **env)
 {
 	int	i;
@@ -20,8 +34,7 @@ static void	printexport(char **env)
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd("declare -x ", STDIN_FILENO);
-		ft_putstr_fd(env[i], STDIN_FILENO);
+		ft_putstr_fd(env[i], STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
@@ -91,35 +104,6 @@ int		isvalidnum(char *str)
 	}
 	return (1);
 }
-
-// void	export(t_mini *mini, t_cmds *cmds)
-// {
-// 	int		i;
-// 	int		res;
-// 	char 	**tmp;
-
-// 	res = 0;
-// 	i = 0;
-// 	tmp = cmds->args;
-// 	if (ft_dstrlen(cmds->args) == 1)
-// 		printexport(mini->env);
-// 	else
-// 	{
-// 		while (cmds->args[++i])
-// 		{
-// 			remove_char(cmds->args[i], '\'');
-// 			if ((isvalidnum(ft_strtok(cmds->args[i], '=')) == 0))
-// 			{
-// 				ft_iderr("export", tmp[i]);
-// 				mini->exit_code = 1;
-// 			}
-// 			remove_char(cmds->args[i], '$');
-// 			res = checkexport(cmds->args[i], &(mini->env));
-// 		}
-// 	}
-// 	if (res != 1)
-// 		mini->exit_code = 1;
-// }
 
 void	export(t_mini *mini, t_cmds *cmds)
 {

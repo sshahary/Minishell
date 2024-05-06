@@ -31,8 +31,11 @@ void	env(t_mini *mini, t_cmds *cmds)
 	i = 0;
 	while (mini->env[i])
 	{
-		write(STDOUT_FILENO, mini->env[i], ft_strlen(mini->env[i]));
-		write(STDOUT_FILENO, "\n", 1);
+		if (strchr(mini->env[i], '=') != NULL)
+		{
+			write(STDOUT_FILENO, mini->env[i], ft_strlen(mini->env[i]));
+			write(STDOUT_FILENO, "\n", 1);
+		}
 		i++;
 	}
 	mini->exit_code = 0;

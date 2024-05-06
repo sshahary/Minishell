@@ -28,6 +28,7 @@ void	echo(t_cmds *cmds, t_mini mini)
 	int	i;
 	int	newline;
 	(void)mini;
+
 	newline = 0;
 	i = 1;
 	if (args_count(cmds->args) > 1)
@@ -47,6 +48,7 @@ void	echo(t_cmds *cmds, t_mini mini)
 	}
 	if (newline == 0)
 		ft_putchar_fd('\n', cmds->fd_out);
+	
 }
 
 // int	main(void)
