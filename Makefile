@@ -29,12 +29,14 @@ SRCS	:=	src/main.c \
 			src/execute/builtins/exit.c \
 			src/execute/builtins/unset.c \
 			src/execute/builtins/export.c \
-			src/execute/handlers/utils.c \
+			src/execute/handlers/builtinsutils.c \
 			src/execute/error.c \
 			src/execute/execute.c \
-			src/execute/handlers/pipe.c \
-			src/execute/handlers/pipex.c \
+			src/execute/handlers/pipeutils.c \
 			src/execute/handlers/singlehandler.c \
+			src/execute/handlers/multihandler.c \
+			src/execute/handlers/multihandlersutils.c \
+
 
 
 # Objects

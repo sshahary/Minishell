@@ -22,7 +22,8 @@ void	env(t_mini *mini, t_cmds *cmds)
 		if (cmds->args[1])
 		{
 			if (cmds->args[i])
-				check_error(cmds->args[0], cmds->args[1], "no such file or directory");
+				check_error(cmds->args[0], cmds->args[1], "no such \
+					file or directory");
 			else
 				check_error(cmds->args[0], cmds->args[1], "command not found");
 			return ;

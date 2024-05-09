@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 16:36:02 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:12:54 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-#include <fcntl.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -27,17 +27,7 @@
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
 
-
-# define FALSE			0
-# define TRUE			1
-
-# define ERR			-1
-# define SUCCESS 		1
-
-# define STDIN 			0
-# define STDOUT 		1
-# define STDERR 		2
-
+# define MAX_PATH_LENGTH 1024
 
 typedef enum s_type
 {
@@ -66,7 +56,6 @@ typedef struct s_cmds
 	struct s_cmds	*prev;
 	int				fd_in;
 	int				fd_out;
-	int				success_flag;
 }	t_cmds;
 
 typedef struct s_mini
@@ -134,67 +123,37 @@ void	heredoc(int fd, char *del, t_mini *mini);
 void	remove_element(char ***array_ptr, int index);
 void	remove_cmd_node(t_mini *mini, t_cmds *node_to_remove);
 
-
-// My executor
-void	executor(t_mini *mini);
-void	handle_single_cmd(t_mini *mini);
-void	handle_multiple_cmds(t_mini *mini);
-void	fork_process(t_mini *mini, int n_cmds, int **fds);
-void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
-// void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd);
-void	close_fds(int **fds, int n_cmds);
-void	wait_pids(t_mini *mini, int n_cmds);
-int		initialize_fds(int ***fds, int n_cmds);
-char	*find_path(t_mini *mini, char *cmd);
-int		count_cmds(t_cmds *cmds);
-int		builtin_check_and_run(t_mini *mini, t_cmds *cmd);
-
-
-
-
-
 // int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
-#define MAX_PATH_LENGTH 1024
-
 //Execution
-void	execute(t_mini *mini);
-// char	**execute(t_mini *mini);
-int		check_builtin(char **args);
-int	builtin(t_mini	*mini, t_cmds *cmds);
+void	executor(t_mini *mini);
+int		builtin_check_and_run(t_mini *mini, t_cmds *cmd);
+int		count_cmds(t_cmds *cmds);
+char	*find_path(t_mini *mini, char *cmd);
 
-//Pipex
-int		parent_process(t_mini *mini, pid_t pid);
-// void	child_process(t_mini *mini);
-void	child_process(t_cmds *cmd, t_mini *mini);
-char		*find_command_path(char *cmdline, char **envs);
-// char	*find_command_path(char *name, char **env);
-// int		pipex(t_mini *mini);
-// int	pipex(t_mini *mini);
-int		pipex(t_cmds *cmd, t_mini *mini);
-
+//Handler
+void	handle_single_cmd(t_mini *mini);
+void	handle_multiple_cmds(t_mini *mini);
+int		initialize_fds(int ***fds, int n_cmds);
+void	fork_process(t_mini *mini, int n_cmds, int **fds);
+void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds, int *fd);
+void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
+void	setup_child_process(t_mini *mini, t_cmds *cmds, int fd_1, int fd_2);
+void	close_fds(int **fds, int n_cmds);
+void	wait_pids(t_mini *mini, int n_cmds);
 
 //BuiltIns
-
-void	pwd(t_mini *mini);
-// void	cd(t_mini *mini);
-void	cd(t_mini *mini, t_cmds *cmds);
-// void	echo(char **argv);
 void	echo(t_cmds *cmds, t_mini *mini);
-// void	echo(t_mini *mini, t_cmds *cmds);
+void	pwd(t_mini *mini);
+void	cd(t_mini *mini, t_cmds *cmds);
 void	env(t_mini *mini, t_cmds *cmds);
-// void	export(t_mini *mini);
 void	export(t_mini *mini, t_cmds *cmds);
-// void	unset(t_mini *mini);
 void	unset(t_mini *mini, t_cmds *cmds);
-// void	mini_exit(t_mini *mini);
 void	mini_exit(t_mini *mini, t_cmds *cmds);
-int	isvalidenv(char *name);
+int		isvalidenv(char *name);
 
 //Extras
-
-char	*strjoinslash(const char *s1, const char *s2);
 int		ft_dstrlen(char **str);
 void	ft_pfree(void **str);
 int		remove_char(char *str, char c);
@@ -202,7 +161,6 @@ int		checkexport(char *path, char ***env);
 char	*ft_strtok(char *str, char sep);
 int		str_is_digit(char *str);
 int		isvalidnum(char *str);
-char	*get_path_value(char *name, char **env);
 
 //Errors
 void	check_error(char *name, char *str, char *msg);
@@ -210,8 +168,7 @@ void	ft_exit(char *msg);
 int		ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
-
-void execute_redirection(int fd_in, int fd_out);
+int		path_err(char *exe1, char *exe2, char *msg);
 
 
 #endif

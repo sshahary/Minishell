@@ -21,11 +21,3 @@ void	pwd(t_mini *mini)
 	free(pwd);
 	mini->exit_code = 0;
 }
-
-// int		main(void)
-// {
-// 	t_mini	mini;
-
-// 	pwd(&mini);
-// 	return (0);
-// }

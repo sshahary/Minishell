@@ -12,7 +12,6 @@
 
 #include "../../../include/minishell.h"
 
-
 static void	printexport(char **env)
 {
 	int	i;
@@ -33,8 +32,6 @@ static void	addexport(char *path, char **new, int i)
 	new[i + 1] = NULL;
 }
 
-// Get the index of first occurrance of character c
-// Return NULL if not found
 static int	str_index_of(char *s, char c)
 {
 	int	i;
@@ -65,7 +62,8 @@ int	checkexport(char *path, char ***env)
 			return (1);
 		}
 	}
-	if (!(new = malloc(sizeof(char*) * (i + 2))))
+	new = malloc(sizeof(char *) * (i + 2));
+	if (!(new))
 		return (-1);
 	i = -1;
 	while ((*env)[++i])
@@ -75,34 +73,19 @@ int	checkexport(char *path, char ***env)
 	return (1);
 }
 
-int		isvalidnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[0] >= '0' && str[0] <= '9')
-			return (0);
-		if ((str[i] >= '0' && str[i] <= '9') || (str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i] <= 'Z'))
-			return (0);
-	i++;
-	}
-	return (1);
-}
-
 void	export(t_mini *mini, t_cmds *cmds)
 {
-	int i;
-	int res;
+	int	i;
+	int	res;
 
 	res = 0;
 	i = 0;
 	if (ft_dstrlen(cmds->args) == 1)
 		printexport(mini->env);
-	else {
-		while (cmds->args[++i]) {
+	else
+	{
+		while (cmds->args[++i])
+		{
 			remove_char(cmds->args[i], '\'');
 			if (isvalidenv(ft_strtok(cmds->args[i], '=')) == 0)
 			{

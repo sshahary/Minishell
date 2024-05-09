@@ -21,7 +21,6 @@ int	isvalidenv(char *name)
 		return (0);
 	while (name[i])
 	{
-
 		if (ft_isalnum(name[i]) || name[i] == '_')
 			;
 		else
@@ -33,7 +32,7 @@ int	isvalidenv(char *name)
 	return (1);
 }
 
-int		checkequal(char *str, char *env)
+int	checkequal(char *str, char *env)
 {
 	int	i;
 
@@ -45,7 +44,7 @@ int		checkequal(char *str, char *env)
 	return (0);
 }
 
-int		envunset(char *str, char ***env)
+int	envunset(char *str, char ***env)
 {
 	int	i;
 	int	j;
@@ -70,10 +69,10 @@ int		envunset(char *str, char ***env)
 	return (0);
 }
 
-void unset(t_mini *mini, t_cmds *cmds)
+void	unset(t_mini *mini, t_cmds *cmds)
 {
-	int res;
-	int i;
+	int	res;
+	int	i;
 
 	res = 0;
 	i = 1;

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   customize.c                                        :+:      :+:    :+:   */
+/*   builtinsutils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:17:32 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/04 18:16:26 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:24:34 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../../include/minishell.h"
 
 int	remove_char(char *str, char c)
 {
-	int	new_index = 0;
-	int	i = 0;
+	int	new_index;
+	int	i;
 
+	new_index = 0;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] != c)
 			str[new_index++] = str[i];
 		i++;
 	}
-	str[new_index] = '\0'; // Null-terminate the string
+	str[new_index] = '\0';
 	return (1);
 }
 

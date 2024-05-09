@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:10:05 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/27 23:23:05 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:12:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	// if (s1)
-	// 	free(s1);
 	return (str);
 }

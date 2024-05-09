@@ -14,24 +14,13 @@
 
 static int	cdhome(char *path, t_mini *mini)
 {
-
-	// if (mini->cmds->args[1] == NULL || mini->cmds->args[1][1] == '~')
-	// {
-	// 	// ft_execute_err_2("cd", mini->cmds->args[1], "No such file or directory");
-	// 	mini->exit_code = 1;
-	// }
-	// if (mini->cmds->args[1][1] != '~')
-	// {
-	// 	ft_execute_err_2("cd", mini->cmds->args[1], "No such file or directory");
-	// 	mini->exit_code = 1;
-	// }
 	path = get_env("HOME", mini->env);
 	if (chdir(path) == -1)
 		ft_execute_err_1("cd", "HOME not set");
 	return (1);
 }
 
-static int			cdenv(char *path, t_mini *mini, t_cmds *cmds)
+static int	cdenv(char *path, t_mini *mini, t_cmds *cmds)
 {
 	if (cmds->args[1] == NULL)
 		return (1);
@@ -41,7 +30,7 @@ static int			cdenv(char *path, t_mini *mini, t_cmds *cmds)
 	return (1);
 }
 
-static void		setoldpwd(t_mini *mini)
+static void	setoldpwd(t_mini *mini)
 {
 	char	*current;
 	char	*old;
@@ -53,10 +42,9 @@ static void		setoldpwd(t_mini *mini)
 	checkexport(current, &mini->env);
 	checkexport(old, &mini->env);
 	free(current);
-	free(old);			//check for free later
+	free(old);
 }
 
-// void	cd(char **args, char **env)
 void	cd(t_mini *mini, t_cmds *cmds)
 {
 	char	*path;
@@ -64,7 +52,8 @@ void	cd(t_mini *mini, t_cmds *cmds)
 
 	path = 0;
 	res = 0;
-	if (cmds->args[1] != NULL && mini->cmds->args[1][0] != '~' && cmds->args[1][0] != '$')
+	if (cmds->args[1] != NULL && mini->cmds->args[1][0] != '~'
+		&& cmds->args[1][0] != '$')
 	{
 		path = cmds->args[1];
 		if (chdir(path) == -1)
