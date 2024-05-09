@@ -40,14 +40,15 @@ void	echo(t_cmds *cmds, t_mini *mini)
 		}
 		while (cmds->args[i])
 		{
-			ft_putstr_fd(cmds->args[i], mini->cmds->fd_out);
+			// ft_putstr_fd(cmds->args[i], 1);
+			printf("%s", cmds->args[i]);
 			if (cmds->args[i + 1] && cmds->args[i][0] != '\0')
-				write(mini->cmds->fd_out, " ", 1);
+				printf(" ");
 			i++;
 		}
 	}
 	if (newline == 0)
-		ft_putchar_fd('\n', mini->cmds->fd_out);
+		printf("\n");
 	mini->exit_code = 0;
 }
 

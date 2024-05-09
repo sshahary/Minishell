@@ -29,16 +29,12 @@ SRCS	:=	src/main.c \
 			src/execute/builtins/exit.c \
 			src/execute/builtins/unset.c \
 			src/execute/builtins/export.c \
-			src/execute/handlers/customize.c \
+			src/execute/handlers/utils.c \
 			src/execute/error.c \
 			src/execute/execute.c \
 			src/execute/handlers/pipe.c \
 			src/execute/handlers/pipex.c \
-			# src/my_executor/executor.c \
-			# src/my_executor/executor_utils.c \
-			# src/my_executor/single_command.c \
-			# src/my_executor/multiple_commands.c \
-			# src/my_executor/builtin_check_and_run.c \
+			src/execute/handlers/singlehandler.c \
 
 
 # Objects

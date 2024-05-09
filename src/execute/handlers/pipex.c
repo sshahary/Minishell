@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:25:28 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 14:04:40 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:28:54 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void handle_multiple_cmds(t_mini *mini)
 {
 	int n_cmds;
 	int **fds;
-	// int fd1 = dup(STDIN_FILENO);
-	// int fd2 = dup(STDOUT_FILENO);
+
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
 		return;
@@ -26,45 +25,53 @@ void handle_multiple_cmds(t_mini *mini)
 		return;
 	fork_process(mini, n_cmds, fds);
 	close_fds(fds, n_cmds);
-	// dup2(fd1, STDIN_FILENO);
-	// dup2(fd2, STDOUT_FILENO);
-	// close(fd1);
-	// close(fd2);
 	wait_pids(mini, n_cmds);
 }
 
 void fork_process(t_mini *mini, int n_cmds, int **fds)
 {
+	int fd_1;
+	int fd_2;
 	t_cmds *cmds;
 	int i;
+	int fd1;
+	int fd2;
 
 	i = 0;
 	cmds = mini->cmds;
 	while (i < n_cmds)
 	{
+		fd_1 = cmds->fd_in;
+		fd_2 = cmds->fd_out;
 		mini->pids[i] = fork();
 		if (mini->pids[i] == -1)
 		{
 			ft_putendl_fd("Fork Error", 2);
 			exit(EXIT_FAILURE);
 		}
-
-// sleep (9999999);
-		// if (STDIN_FILENO != mini->cmds->fd_in)
-		// 	dup2(mini->cmds->fd_in, STDIN_FILENO);
-		// if (STDOUT_FILENO != mini->cmds->fd_out)
-		// 	dup2(mini->cmds->fd_out, STDOUT_FILENO);
 		if (mini->pids[i] == 0)
 		{
-			
-			// dprintf (2, "fd in = %d\n", mini->cmds->fd_in);
-			// dprintf (2, "fd out = %d\n", mini->cmds->fd_out);
 			execute_pipe_cmd( mini, i, cmds, fds);
+			fd1 = dup(STDIN_FILENO);
+			fd2 = dup(STDOUT_FILENO);
+
+			if (STDIN_FILENO != mini->cmds->fd_in)
+			{
+				dup2(fd_1, STDIN_FILENO);
+				close (cmds->fd_in);
+			}
+			if (STDOUT_FILENO != mini->cmds->fd_out)
+			{
+				dup2(fd_2, STDOUT_FILENO);
+				close (cmds->fd_out);
+			}
 			if (builtin_check_and_run(mini, cmds))
 				exit(EXIT_SUCCESS);
-			// sleep(54444);
 			execve(find_path(mini, cmds->args[0]), cmds->args, mini->env);
 		}
+
+		dup2(fd1, STDIN_FILENO);
+		dup2(fd2, STDOUT_FILENO);
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;

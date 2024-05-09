@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/08 23:45:20 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:33:31 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,50 @@ int	initialize_fds(int ***fds, int n_cmds)
 
 //Single hand pipes
 
-void	handle_single_cmd(t_mini *mini)
-{
-	int	pid;
-	int	status;
-	int	res;
+// void	handle_single_cmd(t_mini *mini)
+// {
+// 	int	pid;
+// 	int	status;
+// 	int	res;
+// 	int	fd1;
+// 	int	fd2;
+// 	int	fd_1;
+// 	int	fd_2;
 
-	if (builtin_check_and_run(mini, mini->cmds))
-		return ;
-	res = 0;
-	pid = fork();
+// 	fd1 = dup(STDIN_FILENO);
+// 	fd2 = dup(STDOUT_FILENO);
+// 	fd_1 = mini->cmds->fd_in;
+// 	fd_2 = mini->cmds->fd_out;
 
-	if (!pid)
-	{
-		if (STDIN_FILENO != mini->cmds->fd_in)
-			dup2(mini->cmds->fd_in, STDIN_FILENO);
-		if (STDOUT_FILENO != mini->cmds->fd_out)
-			dup2(mini->cmds->fd_out, STDOUT_FILENO);
-		res = execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
-		mini->env);
-	}
-	
-	if (res == -1)
-		ft_execute_err_1(mini->cmds->args[0], "command not found");
-	waitpid(pid, &status, 0);
-	mini->exit_code = WEXITSTATUS(status);
-}
+
+
+// 	if (STDIN_FILENO != mini->cmds->fd_in)
+// 	{
+// 		dup2(fd_1, STDIN_FILENO);
+// 		close(mini->cmds->fd_in);
+// 	}
+// 	if (STDOUT_FILENO != mini->cmds->fd_out)
+// 	{
+// 		dup2(fd_2, STDOUT_FILENO);
+// 		close(mini->cmds->fd_out);
+// 	}
+// 	if (builtin_check_and_run(mini, mini->cmds))
+// 	{
+// 		dup2(fd1, STDIN_FILENO);
+// 		dup2(fd2, STDOUT_FILENO);
+// 		return ;
+// 	}
+// 	res = 0;
+// 	pid = fork();
+// 	if (!pid)
+// 	{
+// 		res = execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
+// 		mini->env);
+// 	}
+// 	dup2(fd1, STDIN_FILENO);
+// 	dup2(fd2, STDOUT_FILENO);
+// 	if (res == -1)
+// 		ft_execute_err_1(mini->cmds->args[0], "command not found");
+// 	waitpid(pid, &status, 0);
+// 	mini->exit_code = WEXITSTATUS(status);
+// }

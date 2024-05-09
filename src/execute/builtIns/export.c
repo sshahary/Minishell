@@ -20,9 +20,9 @@ static void	printexport(char **env)
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd("declare -x ", STDIN_FILENO);
-		ft_putstr_fd(env[i], STDIN_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(env[i], 1);
+		write(1, "\n", 1);
 		i++;
 	}
 }
