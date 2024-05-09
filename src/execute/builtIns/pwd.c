@@ -15,9 +15,7 @@
 void	pwd(t_mini *mini)
 {
 	char	*pwd;
-	int		res;
 
-	res = 0;
 	pwd = getcwd(0, MAX_PATH_LENGTH);
 	ft_putendl_fd(pwd, 1);
 	free(pwd);
