@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 03:23:24 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 02:22:30 by sshahary         ###   ########.fr       */
+/*   Created: 2024/05/09 13:25:28 by sshahary          #+#    #+#             */
+/*   Updated: 2024/05/09 14:04:40 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,21 @@ void handle_multiple_cmds(t_mini *mini)
 {
 	int n_cmds;
 	int **fds;
-
-	int fd1 = dup(STDIN_FILENO);
-	int fd2 = dup(STDOUT_FILENO);
-
+	// int fd1 = dup(STDIN_FILENO);
+	// int fd2 = dup(STDOUT_FILENO);
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
 		return;
 	mini->pids = malloc(sizeof(pid_t) * n_cmds);
 	if (!mini->pids)
-	{
-		close(fd1);
-		close(fd2);
 		return;
-	}
 	fork_process(mini, n_cmds, fds);
 	close_fds(fds, n_cmds);
-	dup2(fd1, STDIN_FILENO);
-	dup2(fd2, STDOUT_FILENO);
-	close(fd1);
-	close(fd2);
-
+	// dup2(fd1, STDIN_FILENO);
+	// dup2(fd2, STDOUT_FILENO);
+	// close(fd1);
+	// close(fd2);
 	wait_pids(mini, n_cmds);
-}
-
-void execute_redirection(int fd_in, int fd_out)
-{
-	if (fd_in != -1){
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-	}
-
-	if (fd_out != -1) {
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
 }
 
 void fork_process(t_mini *mini, int n_cmds, int **fds)
@@ -59,10 +39,8 @@ void fork_process(t_mini *mini, int n_cmds, int **fds)
 	int i;
 
 	i = 0;
-	// printf("fd:%d\n", *fds[0]);
-	// printf("fd1:%d\n", *fds[1]);
 	cmds = mini->cmds;
-	while (cmds && i < n_cmds)
+	while (i < n_cmds)
 	{
 		mini->pids[i] = fork();
 		if (mini->pids[i] == -1)
@@ -70,20 +48,28 @@ void fork_process(t_mini *mini, int n_cmds, int **fds)
 			ft_putendl_fd("Fork Error", 2);
 			exit(EXIT_FAILURE);
 		}
+
+// sleep (9999999);
+		// if (STDIN_FILENO != mini->cmds->fd_in)
+		// 	dup2(mini->cmds->fd_in, STDIN_FILENO);
+		// if (STDOUT_FILENO != mini->cmds->fd_out)
+		// 	dup2(mini->cmds->fd_out, STDOUT_FILENO);
 		if (mini->pids[i] == 0)
 		{
-			execute_pipe_cmd(mini, i, cmds, fds);
+			
+			// dprintf (2, "fd in = %d\n", mini->cmds->fd_in);
+			// dprintf (2, "fd out = %d\n", mini->cmds->fd_out);
+			execute_pipe_cmd( mini, i, cmds, fds);
 			if (builtin_check_and_run(mini, cmds))
 				exit(EXIT_SUCCESS);
+			// sleep(54444);
 			execve(find_path(mini, cmds->args[0]), cmds->args, mini->env);
-			perror("execve");
-			exit(EXIT_FAILURE);
 		}
-		cmds = cmds->next;
+		if (cmds->next)
+			cmds = cmds->next;
 		i++;
 	}
 }
-
 void execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd)
 {
 	(void)cmd;
@@ -104,11 +90,9 @@ void execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd)
 	// execve(find_path(mini, cmd->args[0]), cmd->args, mini->env);
 }
 
-
 void close_fds(int **fds, int n_cmds)
 {
 	int i;
-
 	i = 0;
 	while (i < n_cmds)
 	{
@@ -118,11 +102,10 @@ void close_fds(int **fds, int n_cmds)
 	}
 }
 
-void	wait_pids(t_mini *mini, int n_cmds)
+void wait_pids(t_mini *mini, int n_cmds)
 {
 	int i;
 	int status;
-
 	i = 0;
 	while (i < n_cmds)
 	{
@@ -135,4 +118,3 @@ void	wait_pids(t_mini *mini, int n_cmds)
 		i++;
 	}
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 10:33:17 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:10:48 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	expander(t_mini *mini)
 		}
 		mini->cmds = mini->cmds->next;
 	}
+
 	mini->cmds = temp;
 	return (1);
 }
