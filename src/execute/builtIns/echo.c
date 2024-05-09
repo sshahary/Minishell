@@ -23,7 +23,7 @@ static	int		args_count(char **args)
 	return (size);
 }
 
-void	echo(t_cmds *cmds, t_mini mini)
+void	echo(t_cmds *cmds, t_mini *mini)
 {
 	int	i;
 	int	newline;
@@ -40,15 +40,15 @@ void	echo(t_cmds *cmds, t_mini mini)
 		}
 		while (cmds->args[i])
 		{
-			ft_putstr_fd(cmds->args[i], cmds->fd_out);
+			ft_putstr_fd(cmds->args[i], mini->cmds->fd_out);
 			if (cmds->args[i + 1] && cmds->args[i][0] != '\0')
-				write(cmds->fd_out, " ", 1);
+				write(mini->cmds->fd_out, " ", 1);
 			i++;
 		}
 	}
 	if (newline == 0)
-		ft_putchar_fd('\n', cmds->fd_out);
-	
+		ft_putchar_fd('\n', mini->cmds->fd_out);
+	mini->exit_code = 0;
 }
 
 // int	main(void)

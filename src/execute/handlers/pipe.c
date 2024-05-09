@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/05 10:47:45 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/08 23:45:20 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@ char	*find_path(t_mini *mini, char *cmd)
 	int		i;
 
 	if (access (cmd, X_OK) == 0)
-	{
-		if (execve(cmd,mini->cmds->args, mini->env) == -1)
-		{
-			//TODO
-		}
-	}
+		return (cmd);
 	i = 0;
 	path = get_env("PATH", mini->env);
 	all_path = ft_split(path, ':');
@@ -93,6 +88,7 @@ void	handle_single_cmd(t_mini *mini)
 		return ;
 	res = 0;
 	pid = fork();
+
 	if (!pid)
 	{
 		if (STDIN_FILENO != mini->cmds->fd_in)
@@ -102,6 +98,7 @@ void	handle_single_cmd(t_mini *mini)
 		res = execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
 		mini->env);
 	}
+	
 	if (res == -1)
 		ft_execute_err_1(mini->cmds->args[0], "command not found");
 	waitpid(pid, &status, 0);

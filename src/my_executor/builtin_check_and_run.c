@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 14:14:06 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/04 14:39:00 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:52:53 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	builtin_check_and_run(t_mini *mini, t_cmds *cmd)
 {
 	char	*builtin;
 
-	(void) mini;
+	// (void) mini;
 
 	builtin = cmd->args[0];
 	if (!ft_strcmp(builtin, "echo"))
-		echo(cmd);
+		echo(cmd, mini);
 	else if (!ft_strcmp(builtin, "cd"))
 		cd(mini, cmd);
 	else if (!ft_strcmp(builtin, "env"))

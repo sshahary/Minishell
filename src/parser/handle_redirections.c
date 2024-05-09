@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:19:22 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/01 17:02:02 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:32:14 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ static void	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini)
 	else if (!ft_strcmp(re, "<<"))
 	{
 		cmd->fd_in = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
-		heredoc(cmd->fd_in, path, mini);
+		heredoc(cmd->fd_in, path, mini);									//after this reopen as readonly flag commented by ANNA Asemsey
+		close(cmd->fd_in);
+		cmd->fd_in = open(".heredoc", O_RDONLY);
 	}
 	else if (!ft_strcmp(re, ">>"))
 		cmd->fd_out = open(path, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if ((!ft_strcmp(re, ">>") || !ft_strcmp(re, ">")) && \
+	else if ((!ft_strcmp(re, ">>") || !ft_strcmp(re, ">")) && \
 	cmd->fd_out != STDOUT_FILENO)
 		close(cmd->fd_out);
 	else if ((!ft_strcmp(re, "<<") || !ft_strcmp(re, "<")) && \

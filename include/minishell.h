@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/05 17:16:50 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 01:59:32 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	handle_single_cmd(t_mini *mini);
 void	handle_multiple_cmds(t_mini *mini);
 void	fork_process(t_mini *mini, int n_cmds, int **fds);
 void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
+// void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int *fd);
 void	close_fds(int **fds, int n_cmds);
 void	wait_pids(t_mini *mini, int n_cmds);
 int		initialize_fds(int ***fds, int n_cmds);
@@ -179,7 +180,7 @@ void	pwd(t_mini *mini);
 // void	cd(t_mini *mini);
 void	cd(t_mini *mini, t_cmds *cmds);
 // void	echo(char **argv);
-void	echo(t_cmds *cmds, t_mini mini);
+void	echo(t_cmds *cmds, t_mini *mini);
 // void	echo(t_mini *mini, t_cmds *cmds);
 void	env(t_mini *mini, t_cmds *cmds);
 // void	export(t_mini *mini);
@@ -208,6 +209,8 @@ void	ft_exit(char *msg);
 int		ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
+
+void execute_redirection(int fd_in, int fd_out);
 
 
 #endif
