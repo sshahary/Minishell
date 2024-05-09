@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 01:59:32 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:36:02 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	print_cmds(t_mini *mini);
 char	*ft_strnjoin(char *s1, char *s2, int n);
 void	merge_arrays(char ***array1, char **array2, int *i);
 int		expand_and_join(char *str, int *i, char **ex_str, t_mini *mini);
+void	clean_cmds(t_mini *mini);
 
 // Handling Redirections
 void	handle_redirection(t_mini *mini);
