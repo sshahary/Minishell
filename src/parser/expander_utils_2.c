@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:40:11 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/03 10:33:34 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:27:40 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	merge_arrays(char ***array1, char **array2, int *i)
 	if (!new_array)
 		return ;
 	merge_arrays_helper(new_array, array1, array2, i);
-	new_array[size1 + size2] = NULL;
+	new_array[size1 + size2 - 1] = NULL;
 	(*i) = (*i) + size2 - 1;
 	*array1 = new_array;
 }
@@ -77,5 +77,38 @@ int	expand_and_join(char *str, int *i, char **ex_str, t_mini *mini)
 	}
 	*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
 	free(temp);
+	return (1);
+}
+
+int	handle_expansion(char *str, int *i, char **ex_str, t_mini *mini)
+{
+	(*i)++;
+	if (str[*i] && (str[*i] == '$' || str[*i] == '?'))
+	{
+		if (!handle_pid_exitcode_expansion(str, i, ex_str, mini))
+			return (0);
+	}
+	else
+	{
+		if (!expand_and_join(str, i, ex_str, mini))
+			return (0);
+	}
+	return (1);
+}
+
+int	handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\"')
+	{
+		if (str[*i] == '$' && str[(*i) + 1] != '\"')
+			handle_expansion(str, i, ex_str, mini);
+		else
+		{
+			*ex_str = ft_strnjoin(*ex_str, &str[*i], 1);
+			(*i)++;
+		}
+	}
+	(*i)++;
 	return (1);
 }

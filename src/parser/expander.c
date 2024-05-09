@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 14:10:48 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:28:20 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@ void	replace_and_free_args(char ***args, int *n)
 	free(temp2);
 }
 
+void	clean_cmds(t_mini *mini)
+{
+	t_cmds	*cmds;
+
+	cmds = mini->cmds;
+	while (mini->cmds)
+	{
+		if (!mini->cmds->args[0])
+			remove_cmd_node(mini, mini->cmds);
+		else
+		{
+			if (mini->cmds->next)
+				mini->cmds = mini->cmds->next;
+			else
+				break ;
+		}
+	}
+	if (mini->cmds)
+	{
+		while (mini->cmds->prev)
+			mini->cmds = mini->cmds->prev;
+	}
+}
+
 int	expander(t_mini *mini)
 {
 	t_cmds	*temp;
@@ -43,7 +67,7 @@ int	expander(t_mini *mini)
 		while (mini->cmds->args && mini->cmds->args[i])
 		{
 			if (!check_and_expand(&mini->cmds->args[i], mini, &s_flag))
-				return (0);
+				remove_element(&mini->cmds->args, i);
 			if (s_flag == 1)
 			{
 				s_flag = 0;
@@ -53,69 +77,48 @@ int	expander(t_mini *mini)
 		}
 		mini->cmds = mini->cmds->next;
 	}
-
 	mini->cmds = temp;
+	clean_cmds(mini);
 	return (1);
+}
+
+static void	check_and_expand_helper(char *str, char **es, t_mini *mini, int *sf)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+			handle_quotes(str, &i, es);
+		if (str[i] == '\"')
+			handle_dquotes(str, &i, es, mini);
+		if (str[i] == '$' && str[i + 1])
+		{
+			if (handle_expansion(str, &i, es, mini))
+				*sf = 1;
+		}
+		if (str[i] == ' ')
+			i++;
+		else
+			*es = ft_strnjoin(*es, &str[i++], 1);
+	}
 }
 
 int	check_and_expand(char **s, t_mini *mini, int *s_flag)
 {
 	char	*expanded_str;
-	int		i;
 	char	*str;
-	(void) s_flag;
 
 	expanded_str = NULL;
 	str = *s;
-	i = 0;
-	while (str[i])
+	check_and_expand_helper(str, &expanded_str, mini, s_flag);
+	if (expanded_str[0] != '\0')
 	{
-		if (str[i] == '\'')
-			handle_quotes(str, &i, &expanded_str);
-		if (str[i] == '\"')
-			handle_dquotes(str, &i, &expanded_str, mini);
-		if (str[i] == '$' && str[i + 1])
-		{
-			if (handle_expansion(str, &i, &expanded_str, mini))
-				*s_flag = 1;
-		}
-		else
-			expanded_str = ft_strnjoin(expanded_str, &str[i++], 1);
-	}
-	free(str);
-	*s = expanded_str;
-	return (1);
-}
-
-int	handle_expansion(char *str, int *i, char **ex_str, t_mini *mini)
-{
-	(*i)++;
-	if (str[*i] && (str[*i] == '$' || str[*i] == '?'))
-	{
-		if (!handle_pid_exitcode_expansion(str, i, ex_str, mini))
-			return (0);
+		free(str);
+		*s = expanded_str;
 	}
 	else
-	{
-		if (!expand_and_join(str, i, ex_str, mini))
-			return (0);
-	}
-	return (1);
-}
-
-int	handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini)
-{
-	(*i)++;
-	while (str[*i] && str[*i] != '\"')
-	{
-		if (str[*i] == '$' && str[(*i) + 1] != '\"')
-			handle_expansion(str, i, ex_str, mini);
-		else
-		{
-			*ex_str = ft_strnjoin(*ex_str, &str[*i], 1);
-			(*i)++;
-		}
-	}
-	(*i)++;
+		return (0);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:19:22 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 14:20:32 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:03:54 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini)
 	else if (!ft_strcmp(re, "<<"))
 	{
 		cmd->fd_in = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
-		heredoc(cmd->fd_in, path, mini);									//after this reopen as readonly flag commented by ANNA Asemsey
+		heredoc(cmd->fd_in, path, mini);
 		close(cmd->fd_in);
 		cmd->fd_in = open(".heredoc", O_RDONLY);
 	}

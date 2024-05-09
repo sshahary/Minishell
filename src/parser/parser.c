@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 14:16:37 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:14:45 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	get_cmds(t_mini *mini)
 		return (0);
 	if (cmds == NULL)
 		return (1);
-	// reverse_cmds(&cmds);
 	mini->cmds = cmds;
 	return (1);
 }
