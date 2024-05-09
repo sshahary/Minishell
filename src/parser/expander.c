@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 16:36:59 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:28:45 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	replace_and_free_args(char ***args, int *n)
 {
-	int		i;
 	char	*temp;
 	char	**temp1;
 	char	**temp2;
 
-	i = 0;
 	temp = (*args)[*n];
 	temp1 = ft_split((*args)[*n], ' ');
 	temp2 = *args;
@@ -31,9 +29,6 @@ void	replace_and_free_args(char ***args, int *n)
 
 void	clean_cmds(t_mini *mini)
 {
-	t_cmds	*cmds;
-
-	cmds = mini->cmds;
 	while (mini->cmds)
 	{
 		if (!mini->cmds->args[0])
@@ -119,6 +114,9 @@ int	check_and_expand(char **s, t_mini *mini, int *s_flag)
 		*s = expanded_str;
 	}
 	else
+	{
+		free(expanded_str);
 		return (0);
+	}
 	return (1);
 }

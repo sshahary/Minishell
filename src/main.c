@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 16:41:32 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:57:52 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 			free(mini.input);
 			continue ;
 		}
-		// print_cmds(&mini);
+		print_cmds(&mini);
 		executor(&mini);
 		free(mini.input);
 		free_cmds(&mini);
@@ -51,11 +51,11 @@ int	main(int argc, char **argv, char **env)
 
 static int	check_input(char *input)
 {
-	// if (ft_strcmp("exit", input) == 0)
-	// {
-	// 	free(input);
-	// 	exit(EXIT_SUCCESS);
-	// }
+	if (ft_strcmp("exit", input) == 0)
+	{
+		free(input);
+		exit(EXIT_SUCCESS);
+	}
 	if (ft_strcmp("clear", input) == 0)
 	{
 		free(input);
