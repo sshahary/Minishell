@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/11 15:32:44 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:39:44 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ typedef struct s_lexer
 int		lexer(t_mini *mini);
 t_token	*lexer_handle_redirection_out(t_lexer	*lexer);
 t_token	*lexer_handle_word(t_lexer	*lexer);
-t_token	*lexer_handle_error();
-t_token	*lexer_handle_eof();
+t_token	*lexer_handle_error(void);
+t_token	*lexer_handle_eof(void);
 void	free_tokens(t_token *tokens);
 
 // Parser
@@ -107,8 +107,6 @@ void	handle_redirection(t_mini *mini);
 void	heredoc(int fd, char *del, t_mini *mini);
 void	remove_element(char ***array_ptr, int index);
 void	remove_cmd_node(t_mini *mini, t_cmds *node_to_remove);
-
-// int	tokens_size(t_token *tokens);
 void	print_cmds(t_mini *mini);
 
 //Execution
@@ -154,6 +152,5 @@ int		ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
 int		path_err(char *exe1, char *exe2, char *msg);
-
 
 #endif
