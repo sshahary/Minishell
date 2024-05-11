@@ -6,11 +6,14 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:04:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/28 17:50:01 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:34:59 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static t_token	*get_word(int sp, int ep, int quotes, t_lexer *l);
+static void		lexer_handle_quotes(t_lexer *lexer, int *quotes);
 
 t_token	*lexer_handle_redirection_out(t_lexer	*lexer)
 {
@@ -54,7 +57,7 @@ t_token	*lexer_handle_word(t_lexer	*l)
 	return (get_word(sp, l->position, quotes, l));
 }
 
-t_token	*get_word(int sp, int ep, int quotes, t_lexer *l)
+static t_token	*get_word(int sp, int ep, int quotes, t_lexer *l)
 {
 	int		word_length;
 	t_token	*token;
@@ -70,7 +73,7 @@ t_token	*get_word(int sp, int ep, int quotes, t_lexer *l)
 	return (token);
 }
 
-void	lexer_handle_quotes(t_lexer *lexer, int *quotes)
+static void	lexer_handle_quotes(t_lexer *lexer, int *quotes)
 {
 	if (lexer->input[lexer->position] == '\'' && !lexer->squote && \
 	!lexer->dquote && lexer->input[lexer->position - 1] != '\\')

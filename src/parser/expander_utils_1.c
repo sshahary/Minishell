@@ -6,11 +6,13 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:55 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 14:26:55 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:34:29 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	merge_helper(char **new, char ***array1, char **array2, int *i);
 
 char	*ft_strnjoin(char *s1, char *s2, int n)
 {
@@ -41,52 +43,22 @@ char	*ft_strnjoin(char *s1, char *s2, int n)
 	return (str);
 }
 
-int	handle_pid_exitcode_expansion(char *str, int *i, char **ex_str, t_mini *m)
+char	*get_env(const char *name, char **env)
 {
-	char	*expansion;
+	int	name_len;
+	int	i;
 
-	if (str[*i] && str[*i] == '$')
+	name_len = ft_strlen(name);
+	i = 0;
+	while (env && env[i])
 	{
-		(*i)++;
-		expansion = ft_itoa((int)getpid());
-		if (!expansion)
-			return (0);
-		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
-		if (!(*ex_str))
-			return (0);
-		free(expansion);
+		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		{
+			return (&(env[i][name_len + 1]));
+		}
+		i++;
 	}
-	else if (str[*i] && str[*i] == '?')
-	{
-		(*i)++;
-		expansion = ft_itoa(m->exit_code);
-		if (!expansion)
-			return (0);
-		*ex_str = ft_strnjoin(*ex_str, expansion, ft_strlen(expansion));
-		if (!ex_str)
-			return (0);
-		free(expansion);
-	}
-	return (1);
-}
-
-int	handle_quotes(char *str, int *i, char **ex_str)
-{
-	int	sp;
-	int	ep;
-
-	(*i)++;
-	sp = *i;
-	while (str[*i] && str[*i] != '\'')
-	{
-		(*i)++;
-		ep = *i;
-	}
-	(*i)++;
-	*ex_str = ft_strnjoin(*ex_str, &str[sp], ep - sp);
-	if (!(*ex_str))
-		return (0);
-	return (1);
+	return (NULL);
 }
 
 void	print_cmds(t_mini *mini)
@@ -109,20 +81,50 @@ void	print_cmds(t_mini *mini)
 	}
 }
 
-char	*get_env(const char *name, char **env)
+void	merge_arrays(char ***array1, char **array2, int *i)
 {
-	int	name_len;
-	int	i;
+	char	**new_array;
+	int		size1;
+	int		size2;
 
-	name_len = ft_strlen(name);
-	i = 0;
-	while (env && env[i])
+	size1 = 0;
+	size2 = 0;
+	while ((*array1)[size1])
+		size1++;
+	while (array2[size2])
+		size2++;
+	new_array = malloc(sizeof(char *) * (size1 + size2));
+	if (!new_array)
+		return ;
+	merge_helper(new_array, array1, array2, i);
+	*array1 = new_array;
+}
+
+static void	merge_helper(char **new, char ***array1, char **array2, int *i)
+{
+	int	j;
+	int	k;
+	int	l;
+
+	j = 0;
+	l = (*i);
+	while (j < l)
 	{
-		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
-		{
-			return (&(env[i][name_len + 1]));
-		}
-		i++;
+		new[j] = (*array1)[j];
+		j++;
 	}
-	return (NULL);
+	k = 0;
+	while (array2[k])
+	{
+		new[j] = array2[k];
+		j++;
+		k++;
+	}
+	l++;
+	while ((*array1)[l])
+	{
+		new[j] = (*array1)[l++];
+		j++;
+	}
+	new[j] = NULL;
 }

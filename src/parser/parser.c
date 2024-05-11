@@ -6,11 +6,16 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:57:54 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 14:39:31 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:14:01 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	get_cmds(t_mini *mini);
+static int	create_cmds(t_token *tokens, t_cmds **cmds);
+static int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds);
+static int	get_args(t_token **tokens, t_cmds *cmd);
 
 int	parser(t_mini *mini)
 {
@@ -40,7 +45,7 @@ int	parser(t_mini *mini)
 	return (1);
 }
 
-int	get_cmds(t_mini *mini)
+static int	get_cmds(t_mini *mini)
 {
 	t_token	*tokens;
 	t_cmds	*cmds;
@@ -55,7 +60,7 @@ int	get_cmds(t_mini *mini)
 	return (1);
 }
 
-int	create_cmds(t_token *tokens, t_cmds **cmds)
+static int	create_cmds(t_token *tokens, t_cmds **cmds)
 {
 	t_cmds	*prev_cmd;
 
@@ -78,7 +83,7 @@ int	create_cmds(t_token *tokens, t_cmds **cmds)
 	return (1);
 }
 
-int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
+static int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 {
 	t_cmds	*new_cmd;
 
@@ -101,7 +106,7 @@ int	create_new_cmd(t_cmds **prev_cmd, t_token **tokens, t_cmds **cmds)
 	return (1);
 }
 
-int	get_args(t_token **tokens, t_cmds *cmd)
+static int	get_args(t_token **tokens, t_cmds *cmd)
 {
 	int		arg_count;
 	t_token	*temp;

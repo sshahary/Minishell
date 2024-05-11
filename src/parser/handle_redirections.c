@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:19:22 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 15:03:26 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:34:45 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static void	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini)
 		cmd->fd_out = open(path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (!ft_strcmp(re, "<<"))
 	{
-		cmd->fd_in = open("lib/libft/.heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
+		cmd->fd_in = open("lib/libft/.heredoc", \
+		O_CREAT | O_RDWR | O_TRUNC, 0644);
 		heredoc(cmd->fd_in, path, mini);
 		close(cmd->fd_in);
 		cmd->fd_in = open("lib/libft/.heredoc", O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:33:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/26 09:36:23 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:10:47 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static t_lexer	*init_lexer(char *input);
 static t_token	*get_token(t_lexer *lexer);
+static t_token	*lexer_handle_pipe(t_lexer	*lexer);
+static t_token	*lexer_handle_redirection_in(t_lexer	*lexer);
 
 int	lexer(t_mini *mini)
 {
@@ -57,7 +59,7 @@ static t_lexer	*init_lexer(char *input)
 	return (lexer);
 }
 
-t_token	*get_token(t_lexer *lexer)
+static t_token	*get_token(t_lexer *lexer)
 {
 	while (!(lexer->position >= ft_strlen(lexer->input)))
 	{
@@ -77,7 +79,7 @@ t_token	*get_token(t_lexer *lexer)
 	return (lexer_handle_eof());
 }
 
-t_token	*lexer_handle_pipe(t_lexer	*lexer)
+static t_token	*lexer_handle_pipe(t_lexer	*lexer)
 {
 	t_token	*token;
 
@@ -90,7 +92,7 @@ t_token	*lexer_handle_pipe(t_lexer	*lexer)
 	return (token);
 }
 
-t_token	*lexer_handle_redirection_in(t_lexer	*lexer)
+static t_token	*lexer_handle_redirection_in(t_lexer	*lexer)
 {
 	t_token	*token;
 

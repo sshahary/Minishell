@@ -6,11 +6,13 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:55 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 17:08:35 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:35:12 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*redirection_to_string(t_token *tokens);
 
 int	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
 {
@@ -37,7 +39,7 @@ int	fill_args_array(int arg_count, t_cmds **cmd, t_token **tokens)
 	return (1);
 }
 
-char	*redirection_to_string(t_token *tokens)
+static char	*redirection_to_string(t_token *tokens)
 {
 	char	*output;
 
@@ -61,65 +63,60 @@ char	*redirection_to_string(t_token *tokens)
 	return (output);
 }
 
-int	check_syntax_errors(t_mini *mini)
+void	free_tokens(t_token *tokens)
 {
-	t_token	*tokens;
+	t_token	*current;
+	t_token	*next;
 
-	tokens = mini->tokens;
-	while (tokens)
+	current = tokens;
+	while (current != NULL)
 	{
-		if (!check_pipe_and_redirection_errors(tokens))
-		{
-			mini->exit_code = 258;
-			return (0);
-		}
-		tokens = tokens->next;
+		next = current->next;
+		if (current->value != NULL)
+			free(current->value);
+		free(current);
+		current = next;
 	}
-	return (1);
 }
 
-int	check_pipe_and_redirection_errors(t_token *t)
+void	free_cmds(t_mini *mini)
 {
-	if (t->type == 1)
+	int		i;
+	t_cmds	*temp;
+
+	while (mini->cmds)
 	{
-		if (t->prev == NULL || (t->next && t->next->type == END))
+		i = 0;
+		while (mini->cmds->args && mini->cmds->args[i])
 		{
-			print_error_msg(t->type);
-			return (0);
+			free(mini->cmds->args[i]);
+			i++;
 		}
-		else if (t->next->type != WORD || t->prev->type != WORD)
-		{
-			print_error_msg(t->type);
-			return (0);
-		}
+		if (mini->cmds->args)
+			free(mini->cmds->args);
+		temp = mini->cmds->next;
+		free(mini->cmds);
+		mini->cmds = temp;
 	}
-	else if (t->type == 2 || t->type == 3 || t->type == 4 || t->type == 5)
-	{
-		if (t->next->type != WORD)
-		{
-			print_error_msg(END);
-			return (0);
-		}
-	}
-	return (1);
 }
 
-void	reverse_cmds(t_cmds **head)
+void	clean_cmds(t_mini *mini)
 {
-	t_cmds	*prev_node;
-	t_cmds	*current_node;
-	t_cmds	*next_node;
-
-	prev_node = NULL;
-	current_node = *head;
-	next_node = NULL;
-	while (current_node != NULL)
+	while (mini->cmds)
 	{
-		next_node = current_node->next;
-		current_node->next = prev_node;
-		current_node->prev = next_node;
-		prev_node = current_node;
-		current_node = next_node;
+		if (!mini->cmds->args[0])
+			remove_cmd_node(mini, mini->cmds);
+		else
+		{
+			if (mini->cmds->next)
+				mini->cmds = mini->cmds->next;
+			else
+				break ;
+		}
 	}
-	*head = prev_node;
+	if (mini->cmds)
+	{
+		while (mini->cmds->prev)
+			mini->cmds = mini->cmds->prev;
+	}
 }

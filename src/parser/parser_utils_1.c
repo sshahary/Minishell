@@ -6,11 +6,14 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/30 17:04:30 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:20:22 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	check_pipe_and_redirection_errors(t_token *t);
+static void	print_error_msg(t_type type);
 
 t_token	*lexer_handle_eof(void)
 {
@@ -23,40 +26,50 @@ t_token	*lexer_handle_eof(void)
 	return (token);
 }
 
-void	free_tokens(t_token *tokens)
+int	check_syntax_errors(t_mini *mini)
 {
-	t_token	*current;
-	t_token	*next;
+	t_token	*tokens;
 
-	current = tokens;
-	while (current != NULL)
+	tokens = mini->tokens;
+	while (tokens)
 	{
-		next = current->next;
-		if (current->value != NULL)
-			free(current->value);
-		free(current);
-		current = next;
+		if (!check_pipe_and_redirection_errors(tokens))
+		{
+			mini->exit_code = 258;
+			return (0);
+		}
+		tokens = tokens->next;
 	}
+	return (1);
 }
 
-int	tokens_size(t_token *tokens)
+static int	check_pipe_and_redirection_errors(t_token *t)
 {
-	t_token	*current;
-	t_token	*next;
-	int		i;
-
-	current = tokens;
-	i = 0;
-	while (current != NULL)
+	if (t->type == 1)
 	{
-		next = current->next;
-		current = next;
-		i++;
+		if (t->prev == NULL || (t->next && t->next->type == END))
+		{
+			print_error_msg(t->type);
+			return (0);
+		}
+		else if (t->next->type != WORD || t->prev->type != WORD)
+		{
+			print_error_msg(t->type);
+			return (0);
+		}
 	}
-	return (i);
+	else if (t->type == 2 || t->type == 3 || t->type == 4 || t->type == 5)
+	{
+		if (t->next->type != WORD)
+		{
+			print_error_msg(END);
+			return (0);
+		}
+	}
+	return (1);
 }
 
-void	print_error_msg(t_type type)
+static void	print_error_msg(t_type type)
 {
 	if (type == PIPE)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
@@ -71,25 +84,4 @@ void	print_error_msg(t_type type)
 	else
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n"\
 		, 2);
-}
-
-void	free_cmds(t_mini *mini)
-{
-	int		i;
-	t_cmds	*temp;
-
-	while (mini->cmds)
-	{
-		i = 0;
-		while (mini->cmds->args && mini->cmds->args[i])
-		{
-			free(mini->cmds->args[i]);
-			i++;
-		}
-		if (mini->cmds->args)
-			free(mini->cmds->args);
-		temp = mini->cmds->next;
-		free(mini->cmds);
-		mini->cmds = temp;
-	}
 }
