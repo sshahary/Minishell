@@ -61,6 +61,7 @@ $(NAME): $(OBJS)
 clean:
 	@echo "Cleaning object files..."
 	@rm -rf $(OBJS)
+	@rm -rf lib/libft/.heredoc
 	@make clean -sC $(LIBFT_PATH)
 
 
