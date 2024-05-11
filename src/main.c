@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 19:13:13 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:40:58 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	main(int argc, char **argv, char **env)
 
 static int	check_input(char *input)
 {
-	if (ft_strcmp("exit", input) == 0)
-	{
-		free(input);
-		exit(EXIT_SUCCESS);
-	}
+	// if (ft_strcmp("exit", input) == 0)
+	// {
+	// 	free(input);
+	// 	exit(EXIT_SUCCESS);
+	// }
 	if (ft_strcmp("clear", input) == 0)
 	{
 		free(input);

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 18:28:45 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:38:43 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	replace_and_free_args(char ***args, int *n)
 	temp1 = ft_split((*args)[*n], ' ');
 	temp2 = *args;
 	merge_arrays(args, temp1, n);
+
 	free(temp);
 	free(temp1);
 	free(temp2);
@@ -62,7 +63,10 @@ int	expander(t_mini *mini)
 		while (mini->cmds->args && mini->cmds->args[i])
 		{
 			if (!check_and_expand(&mini->cmds->args[i], mini, &s_flag))
+			{
 				remove_element(&mini->cmds->args, i);
+				i--;
+			}
 			if (s_flag == 1)
 			{
 				s_flag = 0;
@@ -86,15 +90,13 @@ static void	check_and_expand_helper(char *str, char **es, t_mini *mini, int *sf)
 	{
 		if (str[i] == '\'')
 			handle_quotes(str, &i, es);
-		if (str[i] == '\"')
+		else if (str[i] == '\"')
 			handle_dquotes(str, &i, es, mini);
-		if (str[i] == '$' && str[i + 1])
+		else if (str[i] == '$' && str[i + 1])
 		{
 			if (handle_expansion(str, &i, es, mini))
 				*sf = 1;
 		}
-		if (str[i] == ' ')
-			i++;
 		else
 			*es = ft_strnjoin(*es, &str[i++], 1);
 	}
@@ -108,15 +110,12 @@ int	check_and_expand(char **s, t_mini *mini, int *s_flag)
 	expanded_str = NULL;
 	str = *s;
 	check_and_expand_helper(str, &expanded_str, mini, s_flag);
-	if (expanded_str[0] != '\0')
+	if (!expanded_str)
+		return (0);
+	else
 	{
 		free(str);
 		*s = expanded_str;
-	}
-	else
-	{
-		free(expanded_str);
-		return (0);
 	}
 	return (1);
 }

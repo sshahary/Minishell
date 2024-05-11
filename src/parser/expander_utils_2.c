@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:40:11 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/09 16:27:40 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:30:56 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,19 @@ void	merge_arrays_helper(char **new, char ***array1, char **array2, int *i)
 	}
 	k = 0;
 	while (array2[k])
-		new[j++] = array2[k++];
+	{
+		new[j] = array2[k];
+		j++;
+		k++;
+	}
 	l++;
-	j--;
 	while ((*array1)[l])
+	{
 		new[j] = (*array1)[l++];
+		j++;
+	}
+	new[j] = NULL;
+
 }
 
 void	merge_arrays(char ***array1, char **array2, int *i)
@@ -50,8 +58,6 @@ void	merge_arrays(char ***array1, char **array2, int *i)
 	if (!new_array)
 		return ;
 	merge_arrays_helper(new_array, array1, array2, i);
-	new_array[size1 + size2 - 1] = NULL;
-	(*i) = (*i) + size2 - 1;
 	*array1 = new_array;
 }
 
