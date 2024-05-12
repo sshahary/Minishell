@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 12:26:50 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:49:03 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,38 @@ char	*find_path(t_mini *mini, char *cmd)
 
 	if (access (cmd, X_OK) == 0)
 		return (cmd);
-	i = 0;
+	i = -1;
 	path = get_env("PATH", mini->env);
 	if (!path)
 		path_err(path, cmd, "command not found");
 	all_path = ft_split(path, ':');
 	temp = ft_strjoin("/", cmd);
-	while (all_path[i])
+	while (all_path[++i])
 	{
 		new_cmd = ft_strjoin(all_path[i], temp);
 		if (access (new_cmd, X_OK) == 0)
 			break ;
-		i++;
 		free(new_cmd);
 	}
 	free(temp);
 	if (!all_path[i])
 		path_err(all_path[i], cmd, "command not found");
 	return (new_cmd);
+}
+
+int	pre_check(t_mini *mini, int *fd)
+{
+	if (!mini->cmds->args)
+		return (0);
+	if (int_strchr(mini->cmds->args[0], '/') \
+	&& check_if_file_exits(mini, mini->cmds->args[0]))
+		return (0);
+	fds_fill(fd, mini);
+	redirect_fds(fd[2], fd[3], mini);
+	if (builtin_check_and_run(mini, mini->cmds))
+	{
+		restore_fds(fd[0], fd[1]);
+		return (0);
+	}
+	return (1);
 }

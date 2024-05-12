@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 12:44:33 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/12 22:20:25 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:37:24 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	configure_terminal(void)
 
 void	signal_handler(void)
 {
-	struct	sigaction sig_int;
-	struct	sigaction sig_quit;
+	struct sigaction	sig_int;
+	struct sigaction	sig_quit;
 
 	configure_terminal();
 	ft_memset(&sig_int, 0, sizeof(struct sigaction));

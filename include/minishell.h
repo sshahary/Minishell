@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 22:23:02 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:51:54 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ void	heredoc(int fd, char *del, t_mini *mini);
 void	remove_element(char ***array_ptr, int index);
 void	remove_cmd_node(t_mini *mini, t_cmds *node_to_remove);
 void	print_cmds(t_mini *mini);
-int	check_if_file_exits(t_mini *mini, char *path);
+int		check_if_file_exits(t_mini *mini, char *path);
+int		check_file(char *path);
+int		set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini);
 
 // Signals
 void	signal_handler(void);
@@ -127,7 +129,6 @@ char	*find_path(t_mini *mini, char *cmd);
 void	handle_single_cmd(t_mini *mini);
 void	handle_multiple_cmds(t_mini *mini);
 int		initialize_fds(int ***fds, int n_cmds);
-// void	fork_process(t_mini *mini, int n_cmds, int **fds);
 void	fork_process(t_mini *mini, int n_cmds, int **fds);
 
 void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds);
@@ -135,6 +136,10 @@ void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
 void	setup_child_process(t_mini *mini, t_cmds *cmds, int fd_1, int fd_2);
 void	close_fds(int **fds, int n_cmds);
 void	wait_pids(t_mini *mini, int n_cmds);
+int		pre_check(t_mini *mini, int *fd);
+void	fds_fill(int *fd, t_mini *mini);
+void	redirect_fds(int fd1, int fd2, t_mini *mini);
+void	restore_fds(int fd1, int fd2);
 
 //BuiltIns
 void	echo(t_cmds *cmds, t_mini *mini);
