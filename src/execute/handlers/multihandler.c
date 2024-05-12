@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multihandler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 13:56:26 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:58:49 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,18 @@ void	handle_multiple_cmds(t_mini *mini)
 {
 	int	n_cmds;
 	int	**fds;
-	int fd[2];
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
 		return ;
 	mini->pids = malloc(sizeof(pid_t) * n_cmds);
 	if (!mini->pids)
 		return ;
-	fork_process(mini, n_cmds, fds, fd);
+	fork_process(mini, n_cmds, fds);
 	close_fds(fds, n_cmds);
 	wait_pids(mini, n_cmds);
 }
 
-void	fork_process(t_mini *mini, int n_cmds, int **fds, int fd[2])
+void	fork_process(t_mini *mini, int n_cmds, int **fds)
 {
 	t_cmds	*cmds;
 	int		i;
@@ -37,7 +36,7 @@ void	fork_process(t_mini *mini, int n_cmds, int **fds, int fd[2])
 	cmds = mini->cmds;
 	while (i < n_cmds)
 	{
-		fork_child_proccess(mini, cmds, i, fds, fd);
+		fork_child_proccess(mini, cmds, i, fds);
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;

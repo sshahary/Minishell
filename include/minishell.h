@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 13:56:16 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:58:43 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void	handle_single_cmd(t_mini *mini);
 void	handle_multiple_cmds(t_mini *mini);
 int		initialize_fds(int ***fds, int n_cmds);
 // void	fork_process(t_mini *mini, int n_cmds, int **fds);
-void	fork_process(t_mini *mini, int n_cmds, int **fds, int fd[2]);
+void	fork_process(t_mini *mini, int n_cmds, int **fds);
 
-void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds, int *fd);
+void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds);
 void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd);
 void	setup_child_process(t_mini *mini, t_cmds *cmds, int fd_1, int fd_2);
 void	close_fds(int **fds, int n_cmds);
