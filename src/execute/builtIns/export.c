@@ -77,6 +77,7 @@ void	export(t_mini *mini, t_cmds *cmds)
 {
 	int	i;
 	int	res;
+	char	*token;
 
 	res = 0;
 	i = 0;
@@ -86,12 +87,14 @@ void	export(t_mini *mini, t_cmds *cmds)
 	{
 		while (cmds->args[++i])
 		{
-			remove_char(cmds->args[i], '\'');
-			if (isvalidenv(ft_strtok(cmds->args[i], '=')) == 0)
+			token = ft_strtok(cmds->args[i], '=');
+			if (token == NULL || token[0] == '\0')
 			{
-				ft_iderr("export", cmds->args[i]);
-				mini->exit_code = 1;
+				ft_iderr("export", cmds->args[i], mini->exit_code);
+				continue ;
 			}
+			if (isvalidenv(token) == 0)
+				ft_iderr("export", cmds->args[i], mini->exit_code);
 			else
 			{
 				remove_char(cmds->args[i], '_');

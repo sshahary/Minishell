@@ -17,6 +17,10 @@ int	isvalidenv(char *name)
 	int	i;
 
 	i = 0;
+	if (name[0] == '=' || (name[0] == '=' && name[1] == '\0'))
+		return (0);
+	if (name[1] == '=')
+		return (0);
 	if (name[0] >= '0' && name[0] <= '9')
 		return (0);
 	while (name[i])
@@ -76,6 +80,11 @@ void	unset(t_mini *mini, t_cmds *cmds)
 
 	res = 0;
 	i = 1;
+	 if (cmds->args[0] && !cmds->args[1])
+	 {
+		mini->exit_code = 0;
+		return;
+	}
 	while (cmds->args[i])
 	{
 		if (isvalidenv(cmds->args[i]))
@@ -89,6 +98,6 @@ void	unset(t_mini *mini, t_cmds *cmds)
 			res = 1;
 		i++;
 	}
-	if (res != 0)
+	if (!res)
 		mini->exit_code = 1;
 }
