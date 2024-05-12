@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multihandler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 13:33:40 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:56:26 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,35 @@ void	handle_multiple_cmds(t_mini *mini)
 {
 	int	n_cmds;
 	int	**fds;
-
+	int fd[2];
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
 		return ;
 	mini->pids = malloc(sizeof(pid_t) * n_cmds);
 	if (!mini->pids)
 		return ;
-	fork_process(mini, n_cmds, fds);
+	fork_process(mini, n_cmds, fds, fd);
 	close_fds(fds, n_cmds);
 	wait_pids(mini, n_cmds);
 }
 
-void	fork_process(t_mini *mini, int n_cmds, int **fds)
+void	fork_process(t_mini *mini, int n_cmds, int **fds, int fd[2])
 {
 	t_cmds	*cmds;
 	int		i;
-	int		fd[2];
 
 	i = 0;
 	cmds = mini->cmds;
 	while (i < n_cmds)
 	{
 		fork_child_proccess(mini, cmds, i, fds, fd);
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
 	}
 }
 
-void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds, int *fd)
+void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds)
 {
 	int	fd_1;
 	int	fd_2;
@@ -64,8 +61,6 @@ void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds, int *fd)
 	if (mini->pids[i] == 0)
 	{
 		execute_pipe_cmd(mini, i, cmds, fds);
-		fd[0] = dup(STDIN_FILENO);
-		fd[1] = dup(STDOUT_FILENO);
 		setup_child_process(mini, cmds, fd_1, fd_2);
 		if (builtin_check_and_run(mini, cmds))
 			exit(EXIT_SUCCESS);
@@ -94,12 +89,13 @@ void	execute_pipe_cmd(t_mini *mini, int i, t_cmds *cmd, int **fd)
 
 void	setup_child_process(t_mini *mini, t_cmds *cmds, int fd_1, int fd_2)
 {
-	if (STDIN_FILENO != mini->cmds->fd_in)
+	(void)mini;
+	if (STDIN_FILENO != cmds->fd_in)
 	{
 		dup2(fd_1, STDIN_FILENO);
 		close (cmds->fd_in);
 	}
-	if (STDOUT_FILENO != mini->cmds->fd_out)
+	if (STDOUT_FILENO != cmds->fd_out)
 	{
 		dup2(fd_2, STDOUT_FILENO);
 		close (cmds->fd_out);

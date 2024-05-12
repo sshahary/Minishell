@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 22:29:32 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:26:50 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*find_path(t_mini *mini, char *cmd)
 		return (cmd);
 	i = 0;
 	path = get_env("PATH", mini->env);
+	if (!path)
+		path_err(path, cmd, "command not found");
 	all_path = ft_split(path, ':');
 	temp = ft_strjoin("/", cmd);
 	while (all_path[i])

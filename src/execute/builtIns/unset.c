@@ -44,25 +44,25 @@ int	checkequal(char *str, char *env)
 	return (0);
 }
 
-int	envunset(char *str, char ***env)
+int	envunset(char *str, char **env)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	while (((*env)[j]) != NULL)
+	while (((env)[j]) != NULL)
 		j++;
 	if (j < 1)
 		return (-1);
 	i = -1;
-	while ((*env)[++i] != NULL)
+	while ((env)[++i] != NULL)
 	{
-		if (checkequal(str, (*env)[i]))
+		if (checkequal(str, (env)[i]))
 		{
-			free((*env)[i]);
-			(*env)[i] = ft_strdup((*env)[j - 1]);
-			free((*env)[j - 1]);
-			(*env)[j - 1] = NULL;
+			// free((env)[i]);
+			(env)[i] = ft_strdup((env)[j - 1]);
+			// free((env)[j - 1]);
+			(env)[j - 1] = NULL;
 			return (1);
 		}
 	}
@@ -80,7 +80,7 @@ void	unset(t_mini *mini, t_cmds *cmds)
 	{
 		if (isvalidenv(cmds->args[i]))
 		{
-			if (envunset(cmds->args[i], &(mini->env)))
+			if (envunset(cmds->args[i], (mini->env)))
 				return ;
 			else
 				res = 1;
