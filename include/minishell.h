@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/11 15:39:44 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:46:31 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
 # include "../lib/libft/libft.h"
 
 # define MAX_PATH_LENGTH 1024
+
+extern int	g_sig;
 
 typedef enum s_type
 {
@@ -108,6 +111,10 @@ void	heredoc(int fd, char *del, t_mini *mini);
 void	remove_element(char ***array_ptr, int index);
 void	remove_cmd_node(t_mini *mini, t_cmds *node_to_remove);
 void	print_cmds(t_mini *mini);
+
+// Signals
+void	signal_handler(void);
+void	configure_terminal(void);
 
 //Execution
 void	executor(t_mini *mini);

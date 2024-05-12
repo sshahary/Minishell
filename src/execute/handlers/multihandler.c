@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multihandler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 22:27:54 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:33:40 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds, int *fd)
 
 	fd_1 = cmds->fd_in;
 	fd_2 = cmds->fd_out;
+	g_sig = 1;
 	mini->pids[i] = fork();
 	if (mini->pids[i] == -1)
 	{

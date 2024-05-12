@@ -22,6 +22,7 @@ SRCS	:=	src/main.c \
 			src/parser/expander_utils_2.c \
 			src/parser/handle_redirections.c \
 			src/parser/heredoc.c \
+			src/utils/signal.c \
 			src/execute/builtins/cd.c \
 			src/execute/builtins/echo.c \
 			src/execute/builtins/pwd.c \

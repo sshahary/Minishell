@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singlehandler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:15:26 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 18:54:11 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:33:20 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	handle_single_cmd(t_mini *mini)
 		return ;
 	}
 	res = 0;
+	g_sig = 1;
 	pid = fork();
 	if (!pid)
 	{
@@ -65,5 +66,6 @@ void	handle_single_cmd(t_mini *mini)
 	if (res == -1)
 		ft_execute_err_1(mini->cmds->args[0], "command not found");
 	waitpid(pid, &status, 0);
+	g_sig = 0;
 	mini->exit_code = WEXITSTATUS(status);
 }

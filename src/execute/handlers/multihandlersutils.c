@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multihandlersutils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:25:28 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/09 22:29:15 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:32:46 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	wait_pids(t_mini *mini, int n_cmds)
 		mini->exit_code = WEXITSTATUS(status);
 		i++;
 	}
+	g_sig = 0;
 }

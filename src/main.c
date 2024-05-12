@@ -6,12 +6,14 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:40:02 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 14:26:58 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:45:53 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
+
+int	g_sig = 0;
 
 // void	check_leaks(void)
 // {
@@ -30,12 +32,15 @@ int	main(int argc, char **argv, char **env)
 	mini.env = env;
 	rl_bind_key('\t', rl_complete);
 	using_history();
+	signal_handler();
+	configure_terminal();
 	while (1)
 	{
+		g_sig = 0;
 		mini.input = readline("➜ ");
 		add_history(mini.input);
 		if (!check_input(mini.input))
-			continue ;
+			break ;
 		if (!parser(&mini))
 		{
 			free(mini.input);
@@ -51,18 +56,7 @@ int	main(int argc, char **argv, char **env)
 
 static int	check_input(char *input)
 {
-	// if (ft_strcmp("exit", input) == 0)
-	// {
-	// 	free(input);
-	// 	exit(EXIT_SUCCESS);
-	// }
-	if (ft_strcmp("clear", input) == 0)
-	{
-		free(input);
-		printf("\033[H\033[J");
-		return (0);
-	}
-	if (!input || input[0] == '\0')
+	if (!input)
 	{
 		if (input)
 			free (input);
