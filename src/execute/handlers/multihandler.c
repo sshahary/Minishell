@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/13 00:56:34 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:36:42 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_multiple_cmds(t_mini *mini)
 {
 	int	n_cmds;
 	int	**fds;
-	int i;
+	int	i;
 
 	i = 0;
 	n_cmds = count_cmds(mini->cmds);
