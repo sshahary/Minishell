@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 13:02:52 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 15:36:58 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:44:26 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ static int	handle_quotes(char *str, int *i, char **ex_str)
 
 	(*i)++;
 	sp = *i;
+	if (str[*i] == '\'')
+	{
+		(*i)++;
+		return (1);
+	}
 	while (str[*i] && str[*i] != '\'')
 	{
 		(*i)++;

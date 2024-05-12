@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 13:58:43 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:03:15 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	heredoc(int fd, char *del, t_mini *mini);
 void	remove_element(char ***array_ptr, int index);
 void	remove_cmd_node(t_mini *mini, t_cmds *node_to_remove);
 void	print_cmds(t_mini *mini);
+int	check_if_file_exits(char *path);
 
 // Signals
 void	signal_handler(void);

@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 10:35:51 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 15:20:22 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:24:05 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static int	check_pipe_and_redirection_errors(t_token *t)
 			print_error_msg(t->type);
 			return (0);
 		}
-		else if (t->next->type != WORD || t->prev->type != WORD)
+		else if (t->prev->type != WORD || ((t->next->type == REDIRECT_IN || \
+		t->next->type == REDIRECT_OUT || t->next->type == REDIRECT_OUT_APPEND \
+		|| t->next->type == HEREDOC) && t->next->next->type != WORD))
 		{
 			print_error_msg(t->type);
 			return (0);

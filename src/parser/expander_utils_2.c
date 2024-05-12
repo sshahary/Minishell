@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:40:11 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/11 15:34:34 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:20:05 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	handle_dquotes(char *str, int *i, char **ex_str, t_mini *mini)
 	(*i)++;
 	while (str[*i] && str[*i] != '\"')
 	{
-		if (str[*i] == '$' && str[(*i) + 1] != '\"')
+		if (str[*i] == '$' && str[(*i) + 1] != '\"' && str[(*i) + 1] != ' ')
 			handle_expansion(str, i, ex_str, mini);
 		else
 		{
