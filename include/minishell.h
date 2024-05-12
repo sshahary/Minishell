@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 21:40:04 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:23:02 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,18 +142,17 @@ void	pwd(t_mini *mini);
 void	cd(t_mini *mini, t_cmds *cmds);
 void	env(t_mini *mini, t_cmds *cmds);
 void	export(t_mini *mini, t_cmds *cmds);
+void	printexport(char **env);
 void	unset(t_mini *mini, t_cmds *cmds);
 void	mini_exit(t_mini *mini, t_cmds *cmds);
 int		isvalidenv(char *name);
 
 //Extras
 int		ft_dstrlen(char **str);
-void	ft_pfree(void **str);
 int		remove_char(char *str, char c);
 int		checkexport(char *path, char ***env);
 char	*ft_strtok(char *str, char sep);
 int		str_is_digit(char *str);
-int		isvalidnum(char *str);
 
 //Errors
 void	check_error(char *name, char *str, char *msg);

@@ -12,20 +12,6 @@
 
 #include "../../../include/minishell.h"
 
-static void	printexport(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(env[i], 1);
-		write(1, "\n", 1);
-		i++;
-	}
-}
-
 static void	addexport(char *path, char **new, int i)
 {
 	new[i] = ft_strdup(path);
@@ -73,11 +59,32 @@ int	checkexport(char *path, char ***env)
 	return (1);
 }
 
+static int	processargument(t_mini *mini, char *arg)
+{
+	char	*token;
+	int		res;
+
+	res = 0;
+	token = ft_strtok(arg, '=');
+	if (token == NULL || token[0] == '\0')
+	{
+		ft_iderr("export", arg, mini->exit_code);
+		return (res);
+	}
+	if (isvalidenv(token) == 0)
+		ft_iderr("export", arg, mini->exit_code);
+	else
+	{
+		remove_char(arg, '_');
+		res = checkexport(arg, &(mini->env));
+	}
+	return (res);
+}
+
 void	export(t_mini *mini, t_cmds *cmds)
 {
 	int	i;
 	int	res;
-	char	*token;
 
 	res = 0;
 	i = 0;
@@ -87,21 +94,9 @@ void	export(t_mini *mini, t_cmds *cmds)
 	{
 		while (cmds->args[++i])
 		{
-			token = ft_strtok(cmds->args[i], '=');
-			if (token == NULL || token[0] == '\0')
-			{
-				ft_iderr("export", cmds->args[i], mini->exit_code);
-				continue ;
-			}
-			if (isvalidenv(token) == 0)
-				ft_iderr("export", cmds->args[i], mini->exit_code);
-			else
-			{
-				remove_char(cmds->args[i], '_');
-				res = checkexport(cmds->args[i], &(mini->env));
-			}
+			res = processargument(mini, cmds->args[i]);
+			if (res != 1)
+				mini->exit_code = 1;
 		}
 	}
-	if (res != 1)
-		mini->exit_code = 1;
 }

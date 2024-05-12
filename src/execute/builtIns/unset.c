@@ -63,9 +63,7 @@ int	envunset(char *str, char **env)
 	{
 		if (checkequal(str, (env)[i]))
 		{
-			// free((env)[i]);
 			(env)[i] = ft_strdup((env)[j - 1]);
-			// free((env)[j - 1]);
 			(env)[j - 1] = NULL;
 			return (1);
 		}
@@ -80,10 +78,10 @@ void	unset(t_mini *mini, t_cmds *cmds)
 
 	res = 0;
 	i = 1;
-	 if (cmds->args[0] && !cmds->args[1])
-	 {
+	if (cmds->args[0] && !cmds->args[1])
+	{
 		mini->exit_code = 0;
-		return;
+		return ;
 	}
 	while (cmds->args[i])
 	{
