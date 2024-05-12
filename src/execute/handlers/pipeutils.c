@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:38:44 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 22:49:03 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:34:01 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*find_path(t_mini *mini, char *cmd)
 
 int	pre_check(t_mini *mini, int *fd)
 {
-	if (!mini->cmds->args)
+	if (!mini->cmds->args || !mini->cmds->args[0])
 		return (0);
 	if (int_strchr(mini->cmds->args[0], '/') \
 	&& check_if_file_exits(mini, mini->cmds->args[0]))

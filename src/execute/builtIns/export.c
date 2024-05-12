@@ -68,11 +68,11 @@ static int	processargument(t_mini *mini, char *arg)
 	token = ft_strtok(arg, '=');
 	if (token == NULL || token[0] == '\0')
 	{
-		ft_iderr("export", arg, mini->exit_code);
+		ft_iderr("export", arg);
 		return (res);
 	}
 	if (isvalidenv(token) == 0)
-		ft_iderr("export", arg, mini->exit_code);
+		ft_iderr("export", arg);
 	else
 	{
 		remove_char(arg, '_');

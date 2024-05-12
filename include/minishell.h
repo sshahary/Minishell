@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:17:22 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 22:51:54 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/13 00:15:52 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int		str_is_digit(char *str);
 //Errors
 void	check_error(char *name, char *str, char *msg);
 void	ft_exit(char *msg);
-int		ft_iderr(char *str1, char *str2, int exitcode);
+int		ft_iderr(char *str1, char *str2);
 int		ft_execute_err_1(char *str, char *msg);
 int		ft_execute_err_2(char *exe1, char *exe2, char *msg);
 int		path_err(char *exe1, char *exe2, char *msg);

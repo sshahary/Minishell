@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 22:34:26 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/12 22:36:24 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:35:18 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,13 @@ int	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini)
 	{
 		cmd->fd_in = open("lib/libft/.heredoc", \
 		O_CREAT | O_RDWR | O_TRUNC, 0644);
-		cmd->fd_in = open(path, O_RDONLY);
 		heredoc(cmd->fd_in, path, mini);
 		close(cmd->fd_in);
 		cmd->fd_in = open("lib/libft/.heredoc", O_RDONLY);
 	}
 	if (cmd->fd_in == -1 || cmd->fd_out == -1)
 	{
-		perror("minishell: ");
+		perror("minishell");
 		return (0);
 	}
 	return (1);
@@ -75,9 +74,7 @@ void	handle_directory(char *path)
 int	check_if_file_exits(t_mini *mini, char *path)
 {
 	struct stat	file_stat;
-	int			fd;
 
-	fd = 0;
 	if (stat(path, &file_stat) == 0)
 	{
 		if (!S_ISDIR(file_stat.st_mode))

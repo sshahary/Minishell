@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:33:00 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/12 22:36:35 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:20:11 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	handle_redirection(t_mini *mini)
 
 static int	handle_redirection_helper(t_mini *mini, t_cmds *cmd, int *i)
 {
-	if (cmd->args[*i][0] == '<' && cmd->args[*i][1] == '\0')
+	if (cmd->args[*i][0] == '<')
 	{
 		if (!handle_redirection_in(mini, cmd, i))
 		{

@@ -6,7 +6,7 @@
 /*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 22:23:13 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/13 00:56:34 by sshahary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,28 @@ void	handle_multiple_cmds(t_mini *mini)
 {
 	int	n_cmds;
 	int	**fds;
+	int i;
 
+	i = 0;
 	n_cmds = count_cmds(mini->cmds);
 	if (!initialize_fds(&fds, n_cmds))
 		return ;
 	mini->pids = malloc(sizeof(pid_t) * n_cmds);
 	if (!mini->pids)
+	{
+		free(fds);
 		return ;
+	}
 	fork_process(mini, n_cmds, fds);
 	close_fds(fds, n_cmds);
 	wait_pids(mini, n_cmds);
+	free(mini->pids);
+	while (i < n_cmds)
+	{
+		free(fds[i]);
+		i++;
+	}
+	free(fds);
 }
 
 void	fork_process(t_mini *mini, int n_cmds, int **fds)
