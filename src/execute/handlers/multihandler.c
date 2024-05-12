@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:05:06 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 13:58:49 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:06:38 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	fork_child_proccess(t_mini *mini, t_cmds *cmds, int i, int **fds)
 	}
 	if (mini->pids[i] == 0)
 	{
+		if (!cmds->args)
+			exit(1);
 		execute_pipe_cmd(mini, i, cmds, fds);
 		setup_child_process(mini, cmds, fd_1, fd_2);
 		if (builtin_check_and_run(mini, cmds))

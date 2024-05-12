@@ -5,7 +5,9 @@
 		"unistd.h": "c",
 		"__tuple": "c",
 		"array": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"cstring": "c",
+		"libft.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

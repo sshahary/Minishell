@@ -1,61 +1,88 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_redirections.c                              :+:      :+:    :+:   */
+/*   handle_redirection_new.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 15:19:22 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/05/12 17:15:31 by rpambhar         ###   ########.fr       */
+/*   Created: 2024/05/12 20:33:00 by rpambhar          #+#    #+#             */
+/*   Updated: 2024/05/12 22:13:56 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	handle_redirection_helper(t_mini *mini, t_cmds *cmd, int *i);
+static void	remove_args(t_cmds *cmd);
 static int	handle_redirection_in(t_mini *mini, t_cmds *cmd, int *i);
 static int	handle_redirection_out(t_mini *mini, t_cmds *cmd, int *i);
+static int	check_file(char *path);
 static int	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini);
-int	check_if_file_exits(char *path);
 
 void	handle_redirection(t_mini *mini)
 {
 	t_cmds	*temp;
-	t_cmds	*next_temp;
 	int		i;
 
 	temp = mini->cmds;
-	while (temp)
+	while (mini->cmds)
 	{
 		i = 0;
-		while (temp->args[i])
+		while (mini->cmds->args[i])
 		{
-			next_temp = temp->next;
-			if (temp->args[i][0] == '<' && temp->args[i][1] == '\0')
+			if (!handle_redirection_helper(mini, mini->cmds, &i))
 			{
-				if (!handle_redirection_in(mini, temp, &i))
-				{
-					remove_cmd_node(mini, temp);
-					break ;
-				}
+				if (!mini->cmds->next)
+					return ;
+				break;
 			}
-			else if (temp->args[i][0] == '>')
-				if (!handle_redirection_out(mini, temp, &i))
-				{
-					remove_cmd_node(mini, temp);
-					break ;
-				}
 			i++;
 		}
-		temp = next_temp;
+		mini->cmds = mini->cmds->next;
 	}
+	mini->cmds = temp;
+}
+
+static int	handle_redirection_helper(t_mini *mini, t_cmds *cmd, int *i)
+{
+	if (cmd->args[*i][0] == '<' && cmd->args[*i][1] == '\0')
+	{
+		if (!handle_redirection_in(mini, cmd, i))
+		{
+			remove_args(cmd);
+			return (0);
+		}
+	}
+	else if (cmd->args[*i][0] == '>')
+	{
+		if (!handle_redirection_out(mini, cmd, i))
+		{
+			remove_args(cmd);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+static void	remove_args(t_cmds *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->args[i])
+	{
+		free(cmd->args[i]);
+		i++;
+	}
+	free(cmd->args);
+	cmd->args = NULL;
 }
 
 static int	handle_redirection_in(t_mini *mini, t_cmds *cmd, int *i)
 {
-	if (!cmd->args[(*i) + 1])
+	if (!cmd->args[*i + 1])
 		return (1);
-	if (!ft_strcmp(cmd->args[*i], "<") && \
-	!check_if_file_exits(cmd->args[(*i) + 1]))
+	if (!ft_strcmp(cmd->args[*i], "<") && !check_file(cmd->args[(*i) + 1]))
 	{
 		mini->exit_code = 1;
 		return (0);
@@ -63,8 +90,6 @@ static int	handle_redirection_in(t_mini *mini, t_cmds *cmd, int *i)
 	if (!set_fd(cmd->args[*i], cmd->args[(*i) + 1], cmd, mini))
 	{
 		mini->exit_code = 1;
-		remove_element(&cmd->args, *i);
-		remove_element(&cmd->args, *i);
 		return (0);
 	}
 	remove_element(&cmd->args, *i);
@@ -75,18 +100,33 @@ static int	handle_redirection_in(t_mini *mini, t_cmds *cmd, int *i)
 
 static int	handle_redirection_out(t_mini *mini, t_cmds *cmd, int *i)
 {
-	if (!cmd->args[(*i) + 1])
+	if (!cmd->args[*i + 1])
 		return (1);
 	if (!set_fd(cmd->args[*i], cmd->args[(*i) + 1], cmd, mini))
 	{
 		mini->exit_code = 1;
-		remove_element(&cmd->args, *i);
-		remove_element(&cmd->args, *i);
 		return (0);
 	}
 	remove_element(&cmd->args, *i);
 	remove_element(&cmd->args, *i);
 	(*i)--;
+	return (1);
+}
+
+static int	check_file(char *path)
+{
+	struct stat	file_stat;
+
+	if (stat(path, &file_stat) == 0)
+	{
+		if (S_ISDIR(file_stat.st_mode))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(path, 2);
+			ft_putstr_fd(": is a directory\n", 2);
+			exit(126);
+		}
+	}
 	return (1);
 }
 
@@ -119,24 +159,37 @@ static int	set_fd(char *re, char *path, t_cmds *cmd, t_mini *mini)
 	return (1);
 }
 
-int	check_if_file_exits(char *path)
+
+
+int	check_if_file_exits(t_mini *mini, char *path)
 {
 	struct stat	file_stat;
+	int fd;
 
+	fd = 0;
 	if (stat(path, &file_stat) == 0)
 	{
-		if (S_ISDIR(file_stat.st_mode))
+		if (!S_ISDIR(file_stat.st_mode))
 		{
+			if (access(path, R_OK) == -1)
+			{
+				mini->exit_code = 126;
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(path, 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+				return (1);
+			}
+		}
+		else
+		{
+			mini->exit_code = 126;
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(path, 2);
 			ft_putstr_fd(": is a directory\n", 2);
-			exit(126);
-		}
-		else
 			return (1);
+		}
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": is not a file or directory\n", 2);
+
 	return (0);
 }
+

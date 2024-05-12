@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshahary <sshahary@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:13:43 by rpambhar          #+#    #+#             */
-/*   Updated: 2024/04/24 15:07:19 by sshahary         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:02:56 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int		ft_tolower(int n);
 int		ft_toupper(int n);
 int		ft_isspace(const char c);
 int		ft_strcmp(const char *s1, const char *s2);
+int	int_strchr(char *str, char c);
 
 typedef struct s_lst
 {

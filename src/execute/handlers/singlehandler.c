@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:15:26 by sshahary          #+#    #+#             */
-/*   Updated: 2024/05/12 17:07:45 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:13:26 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	handle_single_cmd(t_mini *mini)
 	int	res;
 	int	fd[4];
 
+	if (!mini->cmds->args)
+		return ;
+	if (int_strchr(mini->cmds->args[0], '/') && check_if_file_exits(mini, mini->cmds->args[0]))
+		return ;
 	fds_fill(fd, mini);
 	redirect_fds(fd[2], fd[3], mini);
 	if (builtin_check_and_run(mini, mini->cmds))
@@ -59,13 +63,19 @@ void	handle_single_cmd(t_mini *mini)
 	pid = fork();
 	if (!pid)
 	{
+		if (!mini->cmds->args)
+			exit(1);
 		res = execve(find_path(mini, mini->cmds->args[0]), mini->cmds->args, \
 		mini->env);
+		if (res == -1)
+		{
+			ft_execute_err_1(mini->cmds->args[0], "command not found");
+			exit (127);
+		}
 	}
 	restore_fds(fd[0], fd[1]);
-	if (res == -1)
-		ft_execute_err_1(mini->cmds->args[0], "command not found");
 	waitpid(pid, &status, 0);
-	g_sig = 0;
 	mini->exit_code = WEXITSTATUS(status);
+	g_sig = 0;
+
 }

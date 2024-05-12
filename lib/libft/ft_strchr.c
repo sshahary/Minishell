@@ -6,7 +6,7 @@
 /*   By: rpambhar <rpambhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 16:14:17 by rpambhar          #+#    #+#             */
-/*   Updated: 2023/10/19 12:03:08 by rpambhar         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:02:48 by rpambhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@ char	*ft_strchr(const char *str, int c)
 		{
 			return ((char *)(str + i));
 		}
+		i++;
+	}
+	return (0);
+}
+
+int	int_strchr(char *str, char c)
+{
+	int	i;
+	int	len;
+
+	if (!str)
+		return (0);
+	i = 0;
+	len = ft_strlen(str);
+	while (i < len)
+	{
+		if (str[i] == c)
+			return (1);
 		i++;
 	}
 	return (0);
